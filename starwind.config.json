@@ -59,6 +59,18 @@
     {
       "name": "avatar",
       "version": "1.2.3"
+    },
+    {
+      "name": "slider",
+      "version": "1.0.2"
+    },
+    {
+      "name": "select",
+      "version": "1.9.0"
+    },
+    {
+      "name": "color-picker",
+      "version": "1.1.0"
     }
   ]
 }
