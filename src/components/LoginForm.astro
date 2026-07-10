@@ -1,0 +1,58 @@
+---
+import { Button } from "@/components/starwind/button";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/starwind/card";
+import { Input } from "@/components/starwind/input";
+import { Label } from "@/components/starwind/label";
+---
+
+<Card class="mx-auto w-full max-w-sm">
+    <CardHeader>
+        <CardTitle class="text-2xl">Login</CardTitle>
+        <CardDescription
+            >Entre com o seu nome de usuário, um email será enviado com o link
+            de acesso.</CardDescription
+        >
+    </CardHeader>
+    <form method="post" action="/login">
+        <CardContent class="flex flex-col gap-4">
+            <input
+                type="hidden"
+                name="authenticity_token"
+                value="ECR%= csrf_token %ECR"
+            />
+            ECR% if redirect_to %ECR
+            <input
+                type="hidden"
+                name="redirect_to"
+                value="ECR%= redirect_to %ECR"
+            />
+            ECR% end %ECR
+            <div class="flex w-full flex-col gap-2">
+                <Label for="username">Usuário</Label>
+                <Input
+                    id="username"
+                    name="username"
+                    type="text"
+                    placeholder="Nome de Usuário"
+                    required
+                />
+            </div>
+        </CardContent>
+        <CardFooter class="flex flex-col gap-4 border-none">
+            <Button variant="primary" type="submit" class="w-full">Login</Button
+            >
+            <p class="text-center text-muted-foreground">
+                Não tem uma conta? <a href="mailto:jose.afga@gmail.com"
+                    >jose.afga@gmail.com</a
+                >
+            </p>
+        </CardFooter>
+    </form>
+</Card>

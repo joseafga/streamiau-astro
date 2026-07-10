@@ -1,0 +1,60 @@
+---
+import "@/styles/starwind.css";
+const { title } = Astro.props;
+---
+
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+
+        <script is:inline>
+            function initTheme() {
+                const colorTheme = localStorage.getItem("colorTheme");
+                if (!colorTheme) {
+                    // if no color theme yet, use the users preferences
+                    if (
+                        window.matchMedia &&
+                        window.matchMedia("(prefers-color-scheme: dark)")
+                            .matches
+                    ) {
+                        document.documentElement.classList.add("dark");
+                        localStorage.setItem("colorTheme", "dark");
+                    } else {
+                        document.documentElement.classList.remove("dark");
+                        localStorage.setItem("colorTheme", "light");
+                    }
+                } else {
+                    // assign the theme based on the value in local storage
+                    if (colorTheme === "dark") {
+                        document.documentElement.classList.add("dark");
+                    } else if (colorTheme === "light") {
+                        document.documentElement.classList.remove("dark");
+                    } else if (colorTheme === "system") {
+                        // use system preference
+                        const prefersDark = window.matchMedia(
+                            "(prefers-color-scheme: dark)",
+                        ).matches;
+                        document.documentElement.classList.toggle(
+                            "dark",
+                            prefersDark,
+                        );
+                    }
+                }
+            }
+
+            // runs on initial page load
+            initTheme();
+
+            // runs on view transitions navigation
+            document.addEventListener("astro:after-swap", initTheme);
+        </script>
+    </head>
+    <body>
+        <slot />
+    </body>
+</html>
