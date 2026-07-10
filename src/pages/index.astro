@@ -1,9 +1,17 @@
 ---
-import { Button } from "@/components/starwind/button";
+import Logo from "@/components/Logo.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Página Inicial">
-    <h1>Astro</h1>
-    <Button>Hello World</Button>
+<Layout title="Streamiau!">
+    <main class="overflow-hidden">
+        <div class="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+            <div class="pointer-events-none w-full max-w-sm">
+                <Logo class="mx-auto size-64 sm:size-96" />
+                <div class="mx-auto max-w-md text-center">
+                    <h1 class="font-streamiau text-4xl sm:text-6xl uppercase">Streamiau!</h1>
+                </div>
+            </div>
+        </div>
+    </main>
 </Layout>

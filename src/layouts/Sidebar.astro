@@ -1,0 +1,177 @@
+---
+import "@/styles/starwind.css";
+import Logo from "@/components/Logo.astro";
+import CodeIcon from "@tabler/icons/outline/code.svg";
+import NumbersIcon from "@tabler/icons/outline/numbers.svg";
+import LibraryIcon from "@tabler/icons/outline/library.svg";
+import SettingsIcon from "@tabler/icons/outline/settings.svg";
+
+import BellIcon from "@tabler/icons/outline/bell.svg";
+import BookOpenIcon from "@tabler/icons/outline/book.svg";
+import ChartPieIcon from "@tabler/icons/outline/chart-pie.svg";
+import ChevronRightIcon from "@tabler/icons/outline/chevron-right.svg";
+import ChevronUpIcon from "@tabler/icons/outline/chevron-up.svg";
+import CodeIcon from "@tabler/icons/outline/code.svg";
+import CreditCardIcon from "@tabler/icons/outline/credit-card.svg";
+import FrameIcon from "@tabler/icons/outline/frame.svg";
+import LogoutIcon from "@tabler/icons/outline/logout.svg";
+import MapIcon from "@tabler/icons/outline/map.svg";
+import BotIcon from "@tabler/icons/outline/robot.svg";
+import BadgeCheckIcon from "@tabler/icons/outline/rosette-discount-check.svg";
+import Settings2Icon from "@tabler/icons/outline/settings-2.svg";
+import SparklesIcon from "@tabler/icons/outline/sparkles.svg";
+import TerminalIcon from "@tabler/icons/outline/terminal-2.svg";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/starwind/avatar";
+import { Dropdown, DropdownContent, DropdownItem, DropdownTrigger } from "@/components/starwind/dropdown";
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarGroupLabel,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    SidebarProvider,
+    SidebarTrigger,
+} from "@/components/starwind/sidebar";
+
+const { title } = Astro.props;
+const items = [
+    { title: "Contadores", url: "#", icon: NumbersIcon, active: false },
+    { title: "Frases", url: "#", icon: LibraryIcon, active: false },
+    { title: "Configurações", url: "#", icon: SettingsIcon, active: false },
+];
+
+// Set current page as active
+for (let item of items) {
+    if (item.title === title) {
+        item.active = true;
+    }
+}
+---
+
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+
+        <script is:inline>
+            function initTheme() {
+                const colorTheme = localStorage.getItem("colorTheme");
+                if (!colorTheme) {
+                    // if no color theme yet, use the users preferences
+                    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                        document.documentElement.classList.add("dark");
+                        localStorage.setItem("colorTheme", "dark");
+                    } else {
+                        document.documentElement.classList.remove("dark");
+                        localStorage.setItem("colorTheme", "light");
+                    }
+                } else {
+                    // assign the theme based on the value in local storage
+                    if (colorTheme === "dark") {
+                        document.documentElement.classList.add("dark");
+                    } else if (colorTheme === "light") {
+                        document.documentElement.classList.remove("dark");
+                    } else if (colorTheme === "system") {
+                        // use system preference
+                        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                        document.documentElement.classList.toggle("dark", prefersDark);
+                    }
+                }
+            }
+
+            // runs on initial page load
+            initTheme();
+
+            // runs on view transitions navigation
+            document.addEventListener("astro:after-swap", initTheme);
+        </script>
+    </head>
+    <body>
+        <SidebarProvider>
+            <Sidebar collapsible="icon">
+                <SidebarHeader>
+                    <SidebarMenu>
+                        <SidebarMenuItem>
+                            <SidebarMenuButton size="lg" href="#">
+                                <div
+                                    class="bg-primary text-primary-foreground flex aspect-square size-12 items-center justify-center rounded-lg group-data-[collapsible=icon]:size-10! group-data-[collapsible=icon]:[&_svg]:size-10! [&_svg]:shrink-0"
+                                >
+                                    <Logo size="48" stroke="green" />
+                                </div>
+                                <div class="grid flex-1 text-left text-sm leading-tight">
+                                    <span class="truncate font-streamiau font-bold uppercase text-xl">Streamiau!</span>
+                                </div>
+                            </SidebarMenuButton>
+                        </SidebarMenuItem>
+                    </SidebarMenu>
+                </SidebarHeader>
+
+                <SidebarContent>
+                    <SidebarGroup>
+                        <SidebarGroupLabel>Módulos</SidebarGroupLabel>
+                        <SidebarGroupContent>
+                            <SidebarMenu>
+                                {
+                                    items.map((item) => (
+                                        <SidebarMenuItem>
+                                            <SidebarMenuButton href={item.url} isActive={item.active}>
+                                                <item.icon />
+                                                <span>{item.title}</span>
+                                            </SidebarMenuButton>
+                                        </SidebarMenuItem>
+                                    ))
+                                }
+                            </SidebarMenu>
+                        </SidebarGroupContent>
+                    </SidebarGroup>
+                </SidebarContent>
+
+                <SidebarFooter>
+                    <SidebarMenu>
+                        <SidebarMenuItem>
+                            <Dropdown>
+                                <DropdownTrigger asChild>
+                                    <SidebarMenuButton size="lg">
+                                        <Avatar class="size-10 shrink-0 rounded-lg">
+                                            <AvatarFallback class="rounded-full">ECR%= initials %ECR</AvatarFallback>
+                                        </Avatar>
+                                        <div class="grid flex-1 text-left text-sm leading-tight">
+                                            <span class="truncate font-semibold">ECR%= username %ECR</span>
+                                        </div>
+                                        <ChevronUpIcon class="ml-auto size-4" />
+                                    </SidebarMenuButton>
+                                </DropdownTrigger>
+                                <DropdownContent class="w-full min-w-48 rounded-lg" side="top">
+                                    <DropdownItem as="a" href="/logout">
+                                        <LogoutIcon class="mr-2 size-4" />
+                                        Sair
+                                    </DropdownItem>
+                                </DropdownContent>
+                            </Dropdown>
+                        </SidebarMenuItem>
+                    </SidebarMenu>
+                </SidebarFooter>
+            </Sidebar>
+
+            <main class="bg-background flex flex-1 flex-col">
+                <header class="flex h-12 shrink-0 items-center gap-2 border-b px-4">
+                    <SidebarTrigger />
+                    <span class="text-muted-foreground text-sm">{title}</span>
+                </header>
+                <div class="flex-1 p-6">
+                    <slot />
+                </div>
+            </main>
+        </SidebarProvider>
+    </body>
+</html>
