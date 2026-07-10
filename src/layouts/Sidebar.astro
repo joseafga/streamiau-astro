@@ -34,7 +34,7 @@ const items = [
 
 // Set current page as active
 for (let item of items) {
-    if (item.title === props.title) {
+    if (props.title.startsWith(item.title)) {
         item.active = true;
     }
 }
