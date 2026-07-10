@@ -10,6 +10,7 @@ import {
 } from "@/components/starwind/card";
 import { Input } from "@/components/starwind/input";
 import { Label } from "@/components/starwind/label";
+import { Prose } from "@/components/starwind/prose";
 ---
 
 <Card class="mx-auto w-full max-w-sm">
@@ -48,11 +49,13 @@ import { Label } from "@/components/starwind/label";
         <CardFooter class="flex flex-col gap-4 border-none">
             <Button variant="primary" type="submit" class="w-full">Login</Button
             >
-            <p class="text-center text-muted-foreground">
-                Não tem uma conta? <a href="mailto:jose.afga@gmail.com"
-                    >jose.afga@gmail.com</a
-                >
-            </p>
+            <Prose>
+                <p class="text-center text-muted-foreground">
+                    Não tem uma conta? <a href="mailto:jose.afga@gmail.com"
+                        >jose.afga@gmail.com</a
+                    >
+                </p>
+            </Prose>
         </CardFooter>
     </form>
 </Card>
