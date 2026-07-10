@@ -41,7 +41,7 @@ import {
 
 const { title } = Astro.props;
 const items = [
-    { title: "Contadores", url: "#", icon: NumbersIcon, active: false },
+    { title: "Contadores", url: "/counter", icon: NumbersIcon, active: false },
     { title: "Frases", url: "#", icon: LibraryIcon, active: false },
     { title: "Configurações", url: "#", icon: SettingsIcon, active: false },
 ];
@@ -167,7 +167,7 @@ for (let item of items) {
                     <SidebarTrigger />
                     <span class="text-muted-foreground text-sm">{title}</span>
                 </header>
-                <div class="flex-1 p-6">
+                <div class="relative flex w-full flex-1 flex-col mt-4">
                     <slot />
                 </div>
             </main>
