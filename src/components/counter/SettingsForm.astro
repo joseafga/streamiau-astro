@@ -4,44 +4,44 @@ import { Label } from "@/components/starwind/label";
 import { Input } from "@/components/starwind/input";
 import { ColorPicker } from "@/components/starwind/color-picker";
 
-const { prefix, text_color, prefix_size, counter_size } = Astro.props;
-const prefix_size_marks = [0, 61, 122, 183, 244];
-const counter_size_marks = [0, 61, 122, 183, 244];
+const { prefix, font_color, font_size_prefix, font_size_counter } = Astro.props;
+const font_size_prefix_marks = [0, 61, 122, 183, 244];
+const font_size_counter_marks = [0, 61, 122, 183, 244];
 ---
 
 <div class="flex flex-col space-y-2">
-    <Label for="text-prefix">Prefixo</Label>
-    <Input id="text-prefix" value={prefix} placeholder="Contador" autocomplete="off" />
+    <Label for="prefix-input">Prefixo</Label>
+    <Input id="prefix-input" name="prefix" value={prefix} placeholder="Contador" autocomplete="off" />
 </div>
 
 <div class="flex flex-col space-y-2">
     <Label for="color-picker">Cor do texto</Label>
     <div class="flex items-center gap-4">
-        <ColorPicker id="color-picker" defaultValue={text_color} size="lg" autocomplete="off" />
-        <span id="color-text">{text_color}</span>
+        <ColorPicker id="color-picker" name="font-color" defaultValue={font_color} size="lg" autocomplete="off" />
+        <span id="color-text">{font_color}</span>
     </div>
 </div>
 
 <div class="flex flex-col space-y-2">
-    <label for="prefix-size">Tamanho do prefixo</label>
-    <Slider type="single" id="prefix-size" name="prefix-size" value={prefix_size} max={244} />
+    <label for="font-size-prefix-slider">Tamanho do prefixo</label>
+    <Slider type="single" id="font-size-prefix-slider" name="font-size-prefix" value={font_size_prefix} max={244} />
     <div class="flex items-center justify-between text-muted-foreground text-xs tabular-nums">
-        <span class="w-6 text-left">{prefix_size_marks[0]}</span>
-        <span class="w-6 text-center">{prefix_size_marks[1]}</span>
-        <span class="w-6 text-center">{prefix_size_marks[2]}</span>
-        <span class="w-6 text-center">{prefix_size_marks[3]}</span>
-        <span class="w-6 text-right">{prefix_size_marks[4]}</span>
+        <span class="w-6 text-left">{font_size_prefix_marks[0]}</span>
+        <span class="w-6 text-center">{font_size_prefix_marks[1]}</span>
+        <span class="w-6 text-center">{font_size_prefix_marks[2]}</span>
+        <span class="w-6 text-center">{font_size_prefix_marks[3]}</span>
+        <span class="w-6 text-right">{font_size_prefix_marks[4]}</span>
     </div>
 </div>
 
 <div class="flex flex-col space-y-2">
-    <label for="counter-size">Tamanho do contador</label>
-    <Slider type="single" id="counter-size" name="counter-size" value={counter_size} max={244} />
+    <label for="font-size-counter-slider">Tamanho do contador</label>
+    <Slider type="single" id="font-size-counter-slider" name="font-size-counter" value={font_size_counter} max={244} />
     <div class="flex items-center justify-between text-muted-foreground text-xs tabular-nums">
-        <span class="w-6 text-left">{counter_size_marks[0]}</span>
-        <span class="w-6 text-center">{counter_size_marks[1]}</span>
-        <span class="w-6 text-center">{counter_size_marks[2]}</span>
-        <span class="w-6 text-center">{counter_size_marks[3]}</span>
-        <span class="w-6 text-right">{counter_size_marks[4]}</span>
+        <span class="w-6 text-left">{font_size_counter_marks[0]}</span>
+        <span class="w-6 text-center">{font_size_counter_marks[1]}</span>
+        <span class="w-6 text-center">{font_size_counter_marks[2]}</span>
+        <span class="w-6 text-center">{font_size_counter_marks[3]}</span>
+        <span class="w-6 text-right">{font_size_counter_marks[4]}</span>
     </div>
 </div>

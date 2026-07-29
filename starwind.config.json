@@ -91,6 +91,10 @@
     {
       "name": "popover",
       "version": "1.0.2"
+    },
+    {
+      "name": "spinner",
+      "version": "1.0.2"
     }
   ]
 }

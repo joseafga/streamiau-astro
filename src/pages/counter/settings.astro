@@ -74,10 +74,10 @@ let default_style = {
     });
 
     // -- SETTINGS --
-    const text_prefix = document.getElementById("text-prefix");
-    text_prefix?.addEventListener("input", (e) => {
-        console.log("Value changed:", text_prefix.value);
-        preview_style.prefix = text_prefix.value;
+    const prefix = document.getElementById("prefix");
+    prefix?.addEventListener("input", (e) => {
+        console.log("Value changed:", prefix.value);
+        preview_style.prefix = prefix.value;
 
         update_widget_preview();
     });
