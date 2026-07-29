@@ -33,9 +33,11 @@ const items = [
 ];
 
 // Set current page as active
+let currentPage = "";
 for (let item of items) {
     if (props.title.startsWith(item.title)) {
         item.active = true;
+        currentPage = item.title;
     }
 }
 ---
@@ -110,7 +112,7 @@ for (let item of items) {
         <main class="bg-background flex flex-1 flex-col">
             <header class="flex h-12 shrink-0 items-center gap-2 border-b px-4">
                 <SidebarTrigger />
-                <span class="text-muted-foreground text-sm">{props.title}</span>
+                <span class="text-muted-foreground text-sm">{currentPage}</span>
             </header>
             <div class="relative flex w-full flex-1 flex-col mt-4">
                 <slot />

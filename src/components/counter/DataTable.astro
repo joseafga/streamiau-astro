@@ -1,0 +1,95 @@
+---
+import TrashIcon from "@tabler/icons/outline/trash.svg";
+import { RadioGroup, RadioGroupItem } from "@/components/starwind/radio-group";
+import { Label } from "@/components/starwind/label";
+
+import {
+    Table,
+    TableHeader,
+    TableHead,
+    TableBody,
+    TableRow,
+    TableCell,
+    TableCaption,
+} from "@/components/starwind/table";
+import { Button } from "@/components/starwind/button";
+---
+
+<RadioGroup
+    id="counter-radio"
+    name="counter-radio"
+    defaultValue="dd54dc73-ff21-470e-9acc-bd9d9a53f984"
+    legend="Choose an option"
+>
+    <Table>
+        <TableHeader>
+            <TableRow>
+                <TableHead>Selecione UUID</TableHead>
+                <TableHead>Valor</TableHead>
+                <TableHead class="text-right">Ações</TableHead>
+            </TableRow>
+        </TableHeader>
+        <TableBody>
+            <TableRow>
+                <TableCell class="font-medium">
+                    <div class="flex gap-2 items-center">
+                        <RadioGroupItem
+                            id="option-1"
+                            value="dd54dc73-ff21-470e-9acc-bd9d9a53f984"
+                            name="counter-radio-1"
+                        />
+                        <Label for="option-1">dd54dc73-ff21-470e-9acc-bd9d9a53f984</Label>
+                    </div>
+                </TableCell>
+                <TableCell>10</TableCell>
+                <TableCell class="text-right">
+                    <div class="flex flex-row-reverse gap-2">
+                        <Button variant="error" size="icon" aria-label="Submit">
+                            <TrashIcon />
+                        </Button>
+                    </div>
+                </TableCell>
+            </TableRow>
+            <TableRow>
+                <TableCell class="font-medium">
+                    <div class="flex gap-2 items-center">
+                        <RadioGroupItem
+                            id="option-2"
+                            value="844b7135-02ff-4220-99d1-cd0399f0c781"
+                            name="counter-radio-1"
+                        />
+                        <Label for="option-2">844b7135-02ff-4220-99d1-cd0399f0c781</Label>
+                    </div>
+                </TableCell>
+                <TableCell>43</TableCell>
+                <TableCell class="text-right">
+                    <div class="flex flex-row-reverse gap-2">
+                        <Button variant="error" size="icon" aria-label="Submit">
+                            <TrashIcon />
+                        </Button>
+                    </div>
+                </TableCell>
+            </TableRow>
+            <TableRow>
+                <TableCell class="font-medium">
+                    <div class="flex gap-2 items-center">
+                        <RadioGroupItem
+                            id="option-3"
+                            value="c02f17b2-ce04-49fd-899b-bcb6bed4a850"
+                            name="counter-radio-1"
+                        />
+                        <Label for="option-3">c02f17b2-ce04-49fd-899b-bcb6bed4a850</Label>
+                    </div>
+                </TableCell>
+                <TableCell>146</TableCell>
+                <TableCell class="text-right">
+                    <div class="flex flex-row-reverse gap-2">
+                        <Button variant="error" size="icon" aria-label="Submit">
+                            <TrashIcon />
+                        </Button>
+                    </div>
+                </TableCell>
+            </TableRow>
+        </TableBody>
+    </Table>
+</RadioGroup>
