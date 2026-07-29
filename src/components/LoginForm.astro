@@ -2,7 +2,6 @@
 import { Button } from "@/components/starwind/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/starwind/card";
 import { Input } from "@/components/starwind/input";
-import { Label } from "@/components/starwind/label";
 import { Prose } from "@/components/starwind/prose";
 ---
 
@@ -18,7 +17,6 @@ import { Prose } from "@/components/starwind/prose";
             <input type="hidden" name="redirect_to" value="ECR%= redirect_to %ECR" />
             ECR% end %ECR
             <div class="flex w-full flex-col gap-2">
-                <Label for="username">Nome de Usuário</Label>
                 <Input id="username" name="username" type="text" placeholder="Nome de Usuário" required />
             </div>
             <Button variant="primary" type="submit" class="w-full">Login</Button>
