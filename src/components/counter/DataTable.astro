@@ -18,7 +18,7 @@ import { Button } from "@/components/starwind/button";
 <RadioGroup
     id="counter-radio"
     name="counter-radio"
-    defaultValue="dd54dc73-ff21-470e-9acc-bd9d9a53f984"
+    defaultValue="ECR%= counters.first?.try(&.[:uuid]) %ECR"
     legend="Choose an option"
 >
     <Table>
@@ -30,18 +30,19 @@ import { Button } from "@/components/starwind/button";
             </TableRow>
         </TableHeader>
         <TableBody>
+            ECR% counters.each_with_index do |counter, index| %ECR
             <TableRow>
                 <TableCell class="font-medium">
                     <div class="flex gap-2 items-center">
                         <RadioGroupItem
-                            id="option-1"
-                            value="dd54dc73-ff21-470e-9acc-bd9d9a53f984"
+                            id="option-ECR%= index %ECR"
+                            value="ECR%= counter[:uuid] %ECR"
                             name="counter-radio-1"
                         />
-                        <Label for="option-1">dd54dc73-ff21-470e-9acc-bd9d9a53f984</Label>
+                        <Label for="option-ECR%= index %ECR">ECR%= counter[:uuid] %ECR</Label>
                     </div>
                 </TableCell>
-                <TableCell>10</TableCell>
+                <TableCell>ECR%= counter[:value] %ECR</TableCell>
                 <TableCell class="text-right">
                     <div class="flex flex-row-reverse gap-2">
                         <Button variant="error" size="icon" aria-label="Submit">
@@ -50,46 +51,7 @@ import { Button } from "@/components/starwind/button";
                     </div>
                 </TableCell>
             </TableRow>
-            <TableRow>
-                <TableCell class="font-medium">
-                    <div class="flex gap-2 items-center">
-                        <RadioGroupItem
-                            id="option-2"
-                            value="844b7135-02ff-4220-99d1-cd0399f0c781"
-                            name="counter-radio-1"
-                        />
-                        <Label for="option-2">844b7135-02ff-4220-99d1-cd0399f0c781</Label>
-                    </div>
-                </TableCell>
-                <TableCell>43</TableCell>
-                <TableCell class="text-right">
-                    <div class="flex flex-row-reverse gap-2">
-                        <Button variant="error" size="icon" aria-label="Submit">
-                            <TrashIcon />
-                        </Button>
-                    </div>
-                </TableCell>
-            </TableRow>
-            <TableRow>
-                <TableCell class="font-medium">
-                    <div class="flex gap-2 items-center">
-                        <RadioGroupItem
-                            id="option-3"
-                            value="c02f17b2-ce04-49fd-899b-bcb6bed4a850"
-                            name="counter-radio-1"
-                        />
-                        <Label for="option-3">c02f17b2-ce04-49fd-899b-bcb6bed4a850</Label>
-                    </div>
-                </TableCell>
-                <TableCell>146</TableCell>
-                <TableCell class="text-right">
-                    <div class="flex flex-row-reverse gap-2">
-                        <Button variant="error" size="icon" aria-label="Submit">
-                            <TrashIcon />
-                        </Button>
-                    </div>
-                </TableCell>
-            </TableRow>
+            ECR% end %ECR
         </TableBody>
     </Table>
 </RadioGroup>
