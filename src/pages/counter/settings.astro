@@ -2,26 +2,106 @@
 import Layout from "@/layouts/Sidebar.astro";
 import { Button } from "@/components/starwind/button";
 import SettingsForm from "@/components/counter/SettingsForm.astro";
+import Preview from "@/components/counter/Preview.astro";
+
+let default_style = {
+    prefix: "Contador:",
+    text_color: "rgb(112, 85, 189)",
+    prefix_size: 42,
+    counter_size: 100,
+};
 ---
 
 <Layout title="Contadores - Streamiau!">
-    <div class="flex flex-1 flex-col gap-4 p-4 pt-0">
-        <div class="bg-muted/50 min-h-screen flex-1 rounded-xl md:min-h-min p-8">
-            <div class="mb-8">
-                <h1 class="text-3xl font-extrabold tracking-tight text-balance">Configurações do Contador</h1>
-                <p class="text-muted-foreground text-sm leading-3.5 [&:not(:first-child)]:mt-6">
-                    As configurações realizadas são aplicadas em todos contadores conectados no momento.
-                </p>
-            </div>
+    <div class="grid auto-rows-min gap-4 p-4 md:grid-cols-2">
+        <div class="bg-muted/50 rounded-xl min-h-min">
+            <h1 class="text-lg font-extrabold w-full text-center p-6 pb-0">Aparência do Contador</h1>
 
-            <form class="flex flex-col flex-1 space-y-4">
-                <SettingsForm />
-
-                <div class="flex flex-row-reverse gap-4 mt-4 border-t-2 pt-4">
+            <form id="counter-settings-form" class="mx-auto flex flex-col gap-4 p-6">
+                <SettingsForm {...default_style} />
+                <div class="flex flex-row gap-4 mt-4">
                     <Button type="submit">Aplicar</Button>
                     <Button variant="outline" href="/counter">Cancelar</Button>
                 </div>
             </form>
         </div>
+
+        <div class="bg-muted/50 rounded-xl min-h-min">
+            <div class="flex flex-col h-full items-center text-center gap-4 p-6">
+                <h1 class="text-lg font-extrabold">Prévia</h1>
+                <Preview />
+            </div>
+        </div>
     </div>
 </Layout>
+
+<script is:inline define:vars={{ default_style }}>
+    let preview_style = default_style;
+    let url_uuid = "";
+
+    const widget_url_input = document.getElementById("widget-url");
+    const preview_prefix = document.getElementById("preview-prefix");
+    const preview_counter = document.getElementById("preview-counter");
+
+    const update_widget_preview = function () {
+        preview_prefix.textContent = preview_style.prefix;
+        preview_prefix.style.color = preview_style.text_color;
+        preview_counter.style.color = preview_style.text_color;
+        preview_prefix.style.fontSize = `${preview_style.prefix_size}px`;
+        preview_counter.style.fontSize = `${preview_style.counter_size}px`;
+
+        let url = `https://streamiau.joseafga.com.br/widgets/counter/${url_uuid}?style=${encodeURIComponent(JSON.stringify(preview_style))}`;
+        widget_url_input.value = url;
+    };
+
+    // TODO: get UUID
+
+    const copy_url_button = document.getElementById("copy-widget-url");
+    widget_url_input.addEventListener("focus", () => widget_url_input.select());
+    widget_url_input.addEventListener("click", () => widget_url_input.select());
+
+    copy_url_button?.addEventListener("click", async () => {
+        try {
+            await navigator.clipboard.writeText(widget_url_input.value);
+            widget_url_input.select();
+        } catch (e) {
+            console.error("Fail to copy URL:", e);
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        update_widget_preview();
+    });
+
+    // -- SETTINGS --
+    const text_prefix = document.getElementById("text-prefix");
+    text_prefix?.addEventListener("input", (e) => {
+        console.log("Value changed:", text_prefix.value);
+        preview_style.prefix = text_prefix.value;
+
+        update_widget_preview();
+    });
+
+    const prefix_size_slider = document.getElementById("prefix-size");
+    prefix_size_slider?.addEventListener("slider-change", (e) => {
+        preview_style.prefix_size = e.detail.value;
+
+        update_widget_preview();
+    });
+
+    const counter_size_slider = document.getElementById("counter-size");
+    counter_size_slider?.addEventListener("slider-change", (e) => {
+        preview_style.counter_size = e.detail.value;
+
+        update_widget_preview();
+    });
+
+    const color_picker = document.getElementById("color-picker");
+    const color_text = document.getElementById("color-text");
+    color_picker?.addEventListener("starwind-color-picker:change", (e) => {
+        color_text.textContent = e.detail.value;
+        preview_style.text_color = e.detail.value;
+
+        update_widget_preview();
+    });
+</script>

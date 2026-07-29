@@ -16,10 +16,12 @@ let default_style = {
 
 <Layout title="Contadores - Streamiau!">
     <div class="grid auto-rows-min gap-4 p-4 md:grid-cols-2">
-        <div class="bg-muted/50 min-h-screen flex-1 rounded-xl md:min-h-min p-4 col-span-2">
+        <div class="bg-muted/50 flex-1 rounded-xl min-h-min p-4 md:col-span-2">
             <DataTable />
         </div>
         <div class="bg-muted/50 rounded-xl">
+            <h1 class="text-lg font-extrabold w-full text-center p-6 pb-0">Aparência do Contador</h1>
+
             <form id="counter-settings-form" class="mx-auto flex flex-col gap-4 p-6">
                 <SettingsForm {...default_style} />
                 <div class="mt-4">
@@ -29,7 +31,7 @@ let default_style = {
         </div>
         <div class="bg-muted/50 rounded-xl">
             <div class="flex flex-col h-full items-center text-center gap-4 p-6">
-                <h1 class="text-lg font-bold">Prévia</h1>
+                <h1 class="text-lg font-extrabold">Prévia</h1>
                 <Preview />
             </div>
         </div>
