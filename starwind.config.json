@@ -95,6 +95,10 @@
     {
       "name": "spinner",
       "version": "1.0.2"
+    },
+    {
+      "name": "checkbox",
+      "version": "1.4.3"
     }
   ]
 }

@@ -12,6 +12,7 @@ let default_style = {
     font_color: "rgb(112, 85, 189)",
     font_size_prefix: 42,
     font_size_counter: 100,
+    fixed_style: false,
 };
 ---
 
@@ -61,7 +62,7 @@ let default_style = {
         preview_prefix.style.fontSize = `${preview_style.font_size_prefix}px`;
         preview_counter.style.fontSize = `${preview_style.font_size_counter}px`;
 
-        let url = `https://streamiau.joseafga.com.br/widgets/counter/${selected_uuid}?style=${encodeURIComponent(JSON.stringify(preview_style))}`;
+        let url = `https://streamiau.joseafga.com.br/widgets/counter/${selected_uuid}?settings=${encodeURIComponent(JSON.stringify(preview_style))}`;
         widget_url_input.value = url;
     };
 
@@ -115,6 +116,13 @@ let default_style = {
     color_picker?.addEventListener("starwind-color-picker:change", (e) => {
         color_text.textContent = e.detail.value;
         preview_style.font_color = e.detail.value;
+
+        update_widget_preview();
+    });
+
+    const fixed_style_checkbox = document.getElementById("fixed-style-checkbox");
+    fixed_style_checkbox?.addEventListener("change", (event) => {
+        preview_style.fixed_style = event.target.checked;
 
         update_widget_preview();
     });

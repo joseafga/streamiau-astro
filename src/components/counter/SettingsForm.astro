@@ -3,6 +3,7 @@ import { Slider } from "@/components/starwind/slider";
 import { Label } from "@/components/starwind/label";
 import { Input } from "@/components/starwind/input";
 import { ColorPicker } from "@/components/starwind/color-picker";
+import { Checkbox } from "@/components/starwind/checkbox";
 
 const { prefix, font_color, font_size_prefix, font_size_counter } = Astro.props;
 const font_size_prefix_marks = [0, 61, 122, 183, 244];
@@ -44,4 +45,8 @@ const font_size_counter_marks = [0, 61, 122, 183, 244];
         <span class="w-6 text-center">{font_size_counter_marks[3]}</span>
         <span class="w-6 text-right">{font_size_counter_marks[4]}</span>
     </div>
+</div>
+
+<div class="flex flex-col space-y-2">
+    <Checkbox id="fixed-style-checkbox" name="fixed-style" label="Não alterar a aparência posteriormente" />
 </div>
