@@ -1,10 +1,10 @@
 ---
-import { Label } from "@/components/starwind/label";
 import {
     Select,
     SelectContent,
     SelectGroup,
     SelectItem,
+    SelectSeparator,
     SelectTrigger,
     SelectValue,
 } from "@/components/starwind/select";
@@ -14,7 +14,7 @@ import { Slider } from "@/components/starwind/slider";
 import { Checkbox } from "@/components/starwind/checkbox";
 
 const { prefix, font_color, font_size_prefix, font_size_counter } = Astro.props;
-const fonts_select = ["Inter", "Roboto", "Sniglet", "sans-serif", "serif", "monospace"];
+const fonts_select = ["Inter", "Roboto", "Sniglet"];
 const font_size_prefix_marks = [0, 61, 122, 183, 244];
 const font_size_counter_marks = [0, 61, 122, 183, 244];
 ---
@@ -33,6 +33,10 @@ const font_size_counter_marks = [0, 61, 122, 183, 244];
                         </SelectItem>
                     ))
                 }
+                <SelectSeparator class="border-b border-b-input" />
+                <SelectItem value="sans-serif" style="font-family: sans-serif">sans-serif</SelectItem>
+                <SelectItem value="serif" style="font-family: serif">serif</SelectItem>
+                <SelectItem value="monospace" style="font-family: monospace">monoespaçada</SelectItem>
             </SelectGroup>
         </SelectContent>
     </Select>
