@@ -97,7 +97,7 @@
     }
     body {
         @apply bg-background text-foreground scheme-light dark:scheme-dark;
-        font-family: "Inter Variable", var(--font-sans);
+        font-family: "Inter", var(--font-sans);
     }
     button {
         @apply cursor-pointer;

@@ -1,22 +1,48 @@
 ---
-import { Slider } from "@/components/starwind/slider";
 import { Label } from "@/components/starwind/label";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/starwind/select";
 import { Input } from "@/components/starwind/input";
 import { ColorPicker } from "@/components/starwind/color-picker";
+import { Slider } from "@/components/starwind/slider";
 import { Checkbox } from "@/components/starwind/checkbox";
 
 const { prefix, font_color, font_size_prefix, font_size_counter } = Astro.props;
+const fonts_select = ["Inter", "Roboto", "Sniglet", "sans-serif", "serif", "monospace"];
 const font_size_prefix_marks = [0, 61, 122, 183, 244];
 const font_size_counter_marks = [0, 61, 122, 183, 244];
 ---
 
 <div class="flex flex-col space-y-2">
-    <Label for="prefix-input">Prefixo</Label>
-    <Input id="prefix-input" name="prefix" value={prefix} placeholder="Contador" autocomplete="off" />
+    <Select id="font-family-select" name="font-family">
+        <SelectTrigger class="w-full">
+            <SelectValue placeholder="Selecione uma fonte..." />
+        </SelectTrigger>
+        <SelectContent>
+            <SelectGroup>
+                {
+                    fonts_select.map((font) => (
+                        <SelectItem value={font} style={{ fontFamily: font }}>
+                            {font}
+                        </SelectItem>
+                    ))
+                }
+            </SelectGroup>
+        </SelectContent>
+    </Select>
 </div>
 
 <div class="flex flex-col space-y-2">
-    <Label for="color-picker">Cor do texto</Label>
+    <Input id="prefix-input" name="prefix" value={prefix} placeholder="Prefixo" autocomplete="off" />
+</div>
+
+<div class="flex flex-col space-y-2">
     <div class="flex items-center gap-4">
         <ColorPicker id="color-picker" name="font-color" defaultValue={font_color} size="lg" autocomplete="off" />
         <span id="color-text">{font_color}</span>

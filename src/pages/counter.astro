@@ -8,7 +8,8 @@ import Preview from "@/components/counter/Preview.astro";
 import SettingsForm from "@/components/counter/SettingsForm.astro";
 
 let default_style = {
-    prefix: "Contador:",
+    font_family: "Inter",
+    prefix: "Prefixo:",
     font_color: "rgb(112, 85, 189)",
     font_size_prefix: 42,
     font_size_counter: 100,
@@ -56,6 +57,8 @@ let default_style = {
     let selected_uuid = counter_radio.getAttribute("data-value");
 
     const update_widget_preview = function () {
+        preview_prefix.style.fontFamily = preview_style.font_family;
+        preview_counter.style.fontFamily = preview_style.font_family;
         preview_prefix.textContent = preview_style.prefix;
         preview_prefix.style.color = preview_style.font_color;
         preview_counter.style.color = preview_style.font_color;
@@ -89,25 +92,27 @@ let default_style = {
     });
 
     // -- SETTINGS --
+    const font_family = document.getElementById("font-family-select");
+    font_family?.addEventListener("starwind-select:change", (e) => {
+        preview_style.font_family = e.detail.value;
+        update_widget_preview();
+    });
+
     const prefix = document.getElementById("prefix-input");
     prefix?.addEventListener("input", (e) => {
-        console.log("Value changed:", prefix.value);
         preview_style.prefix = prefix.value;
-
         update_widget_preview();
     });
 
     const font_size_prefix_slider = document.getElementById("font-size-prefix-slider");
     font_size_prefix_slider?.addEventListener("slider-change", (e) => {
         preview_style.font_size_prefix = e.detail.value;
-
         update_widget_preview();
     });
 
     const font_size_counter_slider = document.getElementById("font-size-counter-slider");
     font_size_counter_slider?.addEventListener("slider-change", (e) => {
         preview_style.font_size_counter = e.detail.value;
-
         update_widget_preview();
     });
 
@@ -116,14 +121,12 @@ let default_style = {
     color_picker?.addEventListener("starwind-color-picker:change", (e) => {
         color_text.textContent = e.detail.value;
         preview_style.font_color = e.detail.value;
-
         update_widget_preview();
     });
 
     const fixed_style_checkbox = document.getElementById("fixed-style-checkbox");
     fixed_style_checkbox?.addEventListener("change", (event) => {
         preview_style.fixed_style = event.target.checked;
-
         update_widget_preview();
     });
 
