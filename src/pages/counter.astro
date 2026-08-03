@@ -65,7 +65,7 @@ let default_style = {
         preview_prefix.style.fontSize = `${preview_style.font_size_prefix}px`;
         preview_counter.style.fontSize = `${preview_style.font_size_counter}px`;
 
-        let url = `https://streamiau.joseafga.com.br/widgets/counter/${selected_uuid}?settings=${encodeURIComponent(JSON.stringify(preview_style))}`;
+        let url = `ECR%= env.request.uri.scheme %ECR://ECR%= env.request.uri.host %ECR/widgets/counter/?username=ECR%= username %ECR&uuid=${selected_uuid}&settings=${encodeURIComponent(JSON.stringify(preview_style))}`;
         widget_url_input.value = url;
     };
 
