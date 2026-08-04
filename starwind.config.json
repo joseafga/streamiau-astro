@@ -99,6 +99,10 @@
     {
       "name": "checkbox",
       "version": "1.4.3"
+    },
+    {
+      "name": "toast",
+      "version": "1.0.2"
     }
   ]
 }

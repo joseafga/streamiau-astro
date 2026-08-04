@@ -1,6 +1,8 @@
 ---
 import "@/styles/starwind.css";
 import DarkMode from "@/components/DarkMode.astro";
+import { Toaster } from "@/components/starwind/toast";
+
 const { title } = Astro.props;
 ---
 
@@ -15,5 +17,7 @@ const { title } = Astro.props;
     </head>
     <body>
         <slot />
+
+        <Toaster position="top-center" />
     </body>
 </html>

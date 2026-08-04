@@ -1,6 +1,6 @@
 ---
 import { Button } from "@/components/starwind/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/starwind/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/starwind/card";
 import { Input } from "@/components/starwind/input";
 import { Prose } from "@/components/starwind/prose";
 ---
@@ -10,7 +10,7 @@ import { Prose } from "@/components/starwind/prose";
         <CardTitle class="text-2xl">Login</CardTitle>
         <CardDescription>Entre com o seu nome de usuário, um email será enviado com o link de acesso.</CardDescription>
     </CardHeader>
-    <form method="post" action="/login">
+    <form id="login-form" method="post" action="/login">
         <CardContent class="flex flex-col gap-4">
             <input type="hidden" name="authenticity_token" value="ECR%= csrf_token %ECR" />
             ECR% if redirect_to %ECR
@@ -21,10 +21,45 @@ import { Prose } from "@/components/starwind/prose";
             </div>
             <Button variant="primary" type="submit" class="w-full">Login</Button>
             <Prose>
-                <p class="text-center text-muted-foreground">
-                    Não tem uma conta? <a href="mailto:jose.afga@gmail.com">jose.afga@gmail.com</a>
+                <p class="text-sm text-center text-muted-foreground">
+                    Ainda não tem conta? <a href="mailto:streamiau@joseafga.com.br">streamiau@joseafga.com.br</a>
                 </p>
             </Prose>
         </CardContent>
     </form>
 </Card>
+
+<script>
+    import { toast } from "@/components/starwind/toast";
+
+    const login_form = document.getElementById("login-form") as HTMLFormElement;
+
+    login_form?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(login_form);
+
+        toast.promise(
+            fetch(login_form.action, {
+                method: "POST",
+                body: formData,
+            }).then(async (res) => {
+                const message = await res.text();
+
+                if (!res.ok) throw new Error(message);
+                return message;
+            }),
+            {
+                loading: "Realizando o login...",
+                success: (message) => ({
+                    title: "Sucesso",
+                    description: message,
+                }),
+                error: (err) => ({
+                    title: "Erro",
+                    description: err.message,
+                }),
+            },
+        );
+    });
+</script>
