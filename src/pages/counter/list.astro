@@ -1,0 +1,29 @@
+---
+import Layout from "@/layouts/Sidebar.astro";
+import DataTable from "@/components/counter/DataTable.astro";
+import SettingsWithPreview from "@/components/counter/SettingsWithPreview.astro";
+
+const data = {
+    username: "ECR%= username %ECR",
+};
+---
+
+<Layout title="Contadores - Streamiau!">
+    <div class="grid auto-rows-min gap-4 p-4 md:grid-cols-2">
+        <div class="bg-muted/50 flex-1 rounded-xl min-h-min p-4 md:col-span-2">
+            <DataTable />
+        </div>
+        <SettingsWithPreview class="bg-muted/50 rounded-xl" />
+    </div>
+</Layout>
+
+<script is:inline id="page-data" type="application/json" set:html={JSON.stringify(data)} />
+
+<script>
+    import { $username } from "@/stores/counter.js";
+
+    const page_data = document.getElementById("page-data") as HTMLScriptElement;
+    const data = JSON.parse(page_data.textContent);
+
+    $username.set(data.username);
+</script>

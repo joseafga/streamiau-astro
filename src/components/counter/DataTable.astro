@@ -55,3 +55,17 @@ import { Button } from "@/components/starwind/button";
         </TableBody>
     </Table>
 </RadioGroup>
+
+<script>
+    import type { RadioGroupChangeEvent } from "@/components/starwind/radio-group";
+    import { $uuid } from "@/stores/counter.js";
+
+    const counter_radio = document.getElementById("counter-radio");
+    counter_radio?.addEventListener("starwind:value-change", (e) => {
+        const event = e as RadioGroupChangeEvent;
+        $uuid.set(event.detail.value);
+    });
+
+    // initial state
+    $uuid.set(counter_radio?.getAttribute("data-value") || "");
+</script>
