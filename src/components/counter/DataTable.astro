@@ -26,6 +26,8 @@ import { Button } from "@/components/starwind/button";
             <TableRow>
                 <TableHead>Selecione UUID</TableHead>
                 <TableHead>Valor</TableHead>
+                <TableHead>Data</TableHead>
+                <TableHead>Anotação</TableHead>
                 <TableHead class="text-right">Ações</TableHead>
             </TableRow>
         </TableHeader>
@@ -43,6 +45,8 @@ import { Button } from "@/components/starwind/button";
                     </div>
                 </TableCell>
                 <TableCell>ECR%= counter[:value] %ECR</TableCell>
+                <TableCell>ECR%= counter[:date] %ECR</TableCell>
+                <TableCell>ECR%= counter[:note] %ECR</TableCell>
                 <TableCell class="text-right">
                     <div class="flex flex-row-reverse gap-2">
                         <Button variant="error" size="icon" aria-label="Submit">
