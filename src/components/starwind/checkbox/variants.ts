@@ -1,64 +1,76 @@
 import { tv } from "tailwind-variants";
 
+export const checkboxWrapper = tv({
+  base: "relative flex items-center space-x-2",
+});
+
 export const checkbox = tv({
-  slots: {
-    base: "starwind-checkbox relative flex items-center space-x-2",
-    input: [
-      "peer border-input bg-background dark:bg-input/30 shrink-0 transform-gpu rounded-sm border",
-      "transition-all focus-visible:ring-3",
-      "outline-0 focus:ring-0 focus:ring-offset-0",
-      "not-disabled:cursor-pointer disabled:cursor-not-allowed disabled:opacity-50",
-      "aria-invalid:border-error aria-invalid:focus-visible:ring-error/40",
-    ],
-    icon: [
-      "pointer-events-none absolute stroke-3 p-0.5 opacity-0 transition-opacity peer-checked:opacity-100",
-      "starwind-check-icon",
-    ],
-    label:
-      "font-medium peer-not-disabled:cursor-pointer peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
-  },
+  base: [
+    "peer border-input bg-background dark:bg-input/30 relative flex shrink-0 items-center justify-center rounded-sm border",
+    "transition-all focus-visible:ring-3",
+    "after:absolute after:-inset-x-3 after:-inset-y-2",
+    "outline-0 focus:ring-0 focus:ring-offset-0",
+    "not-data-disabled:cursor-pointer data-disabled:cursor-not-allowed data-disabled:opacity-50",
+    "data-error-visible:border-error data-error-visible:focus-visible:ring-error/40",
+  ],
   variants: {
     size: {
-      sm: { input: "size-4", icon: "size-4", label: "text-sm" },
-      md: { input: "size-5", icon: "size-5", label: "text-base" },
-      lg: { input: "size-6", icon: "size-6", label: "text-lg" },
+      sm: "size-4",
+      md: "size-5",
+      lg: "size-6",
     },
     variant: {
-      default: {
-        input: "checked:bg-foreground focus-visible:ring-outline/50 focus-visible:border-outline",
-        icon: "text-background",
-      },
-      primary: {
-        input:
-          "checked:bg-primary checked:border-primary focus-visible:ring-primary/50 focus-visible:border-primary",
-        icon: "text-primary-foreground",
-      },
-      secondary: {
-        input:
-          "checked:bg-secondary checked:border-secondary focus-visible:ring-secondary/50 focus-visible:border-secondary",
-        icon: "text-secondary-foreground",
-      },
-      info: {
-        input:
-          "checked:bg-info checked:border-info focus-visible:ring-info/50 focus-visible:border-info",
-        icon: "text-info-foreground",
-      },
-      success: {
-        input:
-          "checked:bg-success checked:border-success focus-visible:ring-success/50 focus-visible:border-success",
-        icon: "text-success-foreground",
-      },
-      warning: {
-        input:
-          "checked:bg-warning checked:border-warning focus-visible:ring-warning/50 focus-visible:border-warning",
-        icon: "text-warning-foreground",
-      },
-      error: {
-        input:
-          "checked:bg-error checked:border-error focus-visible:ring-error/50 focus-visible:border-error",
-        icon: "text-error-foreground",
-      },
+      default: "data-checked:bg-foreground data-checked:border-foreground focus-visible:ring-outline/50 focus-visible:border-outline",
+      primary: "data-checked:bg-primary data-checked:border-primary focus-visible:ring-primary/50 focus-visible:border-primary",
+      secondary: "data-checked:bg-secondary data-checked:border-secondary focus-visible:ring-secondary/50 focus-visible:border-secondary",
+      info: "data-checked:bg-info data-checked:border-info focus-visible:ring-info/50 focus-visible:border-info",
+      success: "data-checked:bg-success data-checked:border-success focus-visible:ring-success/50 focus-visible:border-success",
+      warning: "data-checked:bg-warning data-checked:border-warning focus-visible:ring-warning/50 focus-visible:border-warning",
+      error: "data-checked:bg-error data-checked:border-error focus-visible:ring-error/50 focus-visible:border-error",
     },
   },
-  defaultVariants: { size: "md", variant: "default" },
+  defaultVariants: {
+    size: "md",
+    variant: "default",
+  },
+});
+
+export const checkboxIndicator = tv({
+  base: [
+    "pointer-events-none grid place-content-center p-0.5 opacity-0 transition-opacity [&>svg]:size-full",
+  ],
+  variants: {
+    size: {
+      sm: "size-4",
+      md: "size-5",
+      lg: "size-6",
+    },
+    variant: {
+      default: "text-background",
+      primary: "text-primary-foreground",
+      secondary: "text-secondary-foreground",
+      info: "text-info-foreground",
+      success: "text-success-foreground",
+      warning: "text-warning-foreground",
+      error: "text-error-foreground",
+    },
+  },
+  defaultVariants: {
+    size: "md",
+    variant: "default",
+  },
+});
+
+export const checkboxLabel = tv({
+  base: "font-medium peer-not-data-disabled:cursor-pointer peer-data-disabled:cursor-not-allowed peer-data-disabled:opacity-70",
+  variants: {
+    size: {
+      sm: "text-sm",
+      md: "text-base",
+      lg: "text-lg",
+    },
+  },
+  defaultVariants: {
+    size: "md",
+  },
 });

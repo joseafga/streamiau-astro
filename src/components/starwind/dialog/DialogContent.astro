@@ -2,49 +2,45 @@
 import X from "@tabler/icons/outline/x.svg";
 import type { HTMLAttributes } from "astro/types";
 
+import "./styles.css";
+import DialogPrimitive from "@starwind-ui/astro/dialog";
+import { Button } from "../button";
 import { dialogBackdrop, dialogCloseButton, dialogContent } from "./variants";
 
-type Props = HTMLAttributes<"dialog"> & {
-  /**
-   * Open and close animation duration in milliseconds
-   */
-  animationDuration?: number;
-};
+type Props = HTMLAttributes<"dialog">;
 
-const { class: className, animationDuration = 200, ...rest } = Astro.props;
+const { class: className, ...rest } = Astro.props;
 ---
 
-<!-- dialog overlay -->
 <slot name="backdrop">
-  <div
+  <DialogPrimitive.Backdrop
     class={dialogBackdrop()}
     data-state="closed"
+    hidden
     data-slot="dialog-backdrop"
-    style={{ animationDuration: `${animationDuration}ms` }}
-  >
-  </div>
+  />
 </slot>
 
-<dialog
+<DialogPrimitive.Popup
   class={dialogContent({ class: className })}
   data-state="closed"
-  style={{ animationDuration: `${animationDuration}ms` }}
   {...rest}
   data-slot="dialog-content"
 >
   <slot />
-  <button type="button" class={dialogCloseButton()} data-dialog-close aria-label="Close dialog">
+
+  <Button
+    variant="ghost"
+    size="icon-sm"
+    class={dialogCloseButton()}
+    aria-label="Close dialog"
+    data-slot="dialog-close"
+    data-sw-dialog-close
+  >
     <slot name="icon">
       <X class="size-5 transition-opacity" />
     </slot>
-    <span class="sr-only">Close</span>
-  </button>
-  <div class="pointer-events-none fixed inset-0" data-floating-root data-slot="floating-root"></div>
-</dialog>
 
-<style>
-  .starwind-dialog-content {
-    --nested-offset: 1rem;
-    --nested-scale: 0.05;
-  }
-</style>
+    <span class="sr-only">Close</span>
+  </Button>
+</DialogPrimitive.Popup>

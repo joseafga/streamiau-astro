@@ -1,13 +1,30 @@
 ---
-import type { ComponentProps } from "astro/types";
+import SheetPrimitive from "@starwind-ui/astro/drawer";
+import type { HTMLAttributes } from "astro/types";
 
-import { DialogClose } from "@/components/starwind/dialog";
+type Props = HTMLAttributes<"button"> & {
+  asChild?: boolean;
+};
 
-type Props = ComponentProps<typeof DialogClose>;
+const { asChild = false, class: className, ...rest } = Astro.props;
 
-const { class: className, ...rest } = Astro.props;
+const closeClassName = className;
 ---
 
-<DialogClose class:list={["starwind-sheet-close", className]} {...rest}>
-  <slot />
-</DialogClose>
+{
+  asChild ? (
+    <div
+      class={closeClassName}
+      data-as-child
+      {...rest}
+      data-slot="sheet-close"
+      data-sw-drawer-close
+    >
+      <slot />
+    </div>
+  ) : (
+    <SheetPrimitive.Close class={closeClassName} {...rest} data-slot="sheet-close">
+      <slot>Close</slot>
+    </SheetPrimitive.Close>
+  )
+}

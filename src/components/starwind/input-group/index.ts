@@ -12,6 +12,7 @@ import {
   inputGroupText,
   inputGroupTextarea,
 } from "./variants";
+
 const InputGroupVariants = {
   inputGroup,
   inputGroupAddon,
@@ -19,6 +20,15 @@ const InputGroupVariants = {
   inputGroupInput,
   inputGroupText,
   inputGroupTextarea,
+};
+
+const InputGroupParts = {
+  Root: InputGroup,
+  Addon: InputGroupAddon,
+  Button: InputGroupButton,
+  Input: InputGroupInput,
+  Text: InputGroupText,
+  Textarea: InputGroupTextarea,
 };
 
 export {
@@ -31,11 +41,4 @@ export {
   InputGroupVariants,
 };
 
-export default {
-  Root: InputGroup,
-  Addon: InputGroupAddon,
-  Button: InputGroupButton,
-  Input: InputGroupInput,
-  Text: InputGroupText,
-  Textarea: InputGroupTextarea,
-};
+export default InputGroupParts;

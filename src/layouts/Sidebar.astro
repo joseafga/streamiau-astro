@@ -1,15 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Logo from "@/components/Logo.astro";
-import CodeIcon from "@tabler/icons/outline/code.svg";
 import NumbersIcon from "@tabler/icons/outline/numbers.svg";
 import LibraryIcon from "@tabler/icons/outline/library.svg";
 import SettingsIcon from "@tabler/icons/outline/settings.svg";
 import ChevronUpIcon from "@tabler/icons/outline/chevron-up.svg";
 import LogoutIcon from "@tabler/icons/outline/logout.svg";
 
+import { ThemeToggle } from "@/components/starwind/theme-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/starwind/avatar";
-import { Dropdown, DropdownContent, DropdownItem, DropdownTrigger } from "@/components/starwind/dropdown";
+import { Dropdown, DropdownContent, DropdownLinkItem, DropdownTrigger } from "@/components/starwind/dropdown";
 import {
     Sidebar,
     SidebarContent,
@@ -97,11 +97,11 @@ for (let item of items) {
                                     <ChevronUpIcon class="ml-auto size-4" />
                                 </SidebarMenuButton>
                             </DropdownTrigger>
-                            <DropdownContent class="w-full min-w-48 rounded-lg" side="top">
-                                <DropdownItem as="a" href="/logout">
+                            <DropdownContent class="min-w-48" side="top" align="end">
+                                <DropdownLinkItem href="/logout">
                                     <LogoutIcon class="mr-2 size-4" />
                                     Sair
-                                </DropdownItem>
+                                </DropdownLinkItem>
                             </DropdownContent>
                         </Dropdown>
                     </SidebarMenuItem>
@@ -113,6 +113,8 @@ for (let item of items) {
             <header class="flex h-12 shrink-0 items-center gap-2 border-b px-4">
                 <SidebarTrigger />
                 <span class="text-muted-foreground text-sm">{currentPage}</span>
+
+                <ThemeToggle class="ml-auto" ariaLabel="Mudar tema" size="sm" variant="default" />
             </header>
             <div class="relative flex w-full flex-1 flex-col mt-4">
                 <slot />

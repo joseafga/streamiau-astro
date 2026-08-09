@@ -1,63 +1,29 @@
 ---
-import PanelLeft from "@tabler/icons/outline/layout-sidebar.svg";
+import SidebarPrimitive from "@starwind-ui/astro/sidebar";
+import LayoutSidebar from "@tabler/icons/outline/layout-sidebar.svg";
 import type { ComponentProps } from "astro/types";
-
-import { Button } from "@/components/starwind/button";
-
+import { Button } from "../button";
 import { sidebarTrigger } from "./variants";
 
 type Props = ComponentProps<typeof Button>;
 
-const { class: className, size = "icon-sm", variant = "ghost", ...rest } = Astro.props;
+const { size = "icon-sm", variant = "ghost", class: className, ...rest } = Astro.props;
 ---
 
-<Button
-  variant={variant}
-  size={size}
-  class={sidebarTrigger({ class: className })}
-  data-sidebar="trigger"
-  aria-label="Toggle Sidebar"
-  {...rest}
-  data-slot="sidebar-trigger"
->
-  <slot name="icon">
-    <PanelLeft />
-  </slot>
-  <span class="sr-only">Toggle Sidebar</span>
-</Button>
+<SidebarPrimitive.Trigger asChild={true}>
+  <Button
+    variant={variant}
+    size={size}
+    class={sidebarTrigger({ class: className })}
+    data-sidebar="trigger"
+    aria-label="Toggle Sidebar"
+    {...rest}
+    data-slot="sidebar-trigger"
+  >
+    <slot name="icon">
+      <LayoutSidebar aria-hidden="true" />
+    </slot>
 
-<script>
-  class SidebarTriggerHandler {
-    private trigger: HTMLElement;
-    private provider: HTMLElement | null;
-
-    constructor(trigger: HTMLElement) {
-      this.trigger = trigger;
-      this.provider = trigger.closest<HTMLElement>('[data-slot="sidebar-provider"]');
-      this.init();
-    }
-
-    private init() {
-      this.trigger.addEventListener("click", this.handleClick.bind(this));
-    }
-
-    private handleClick() {
-      if (this.provider) {
-        this.provider.dispatchEvent(new CustomEvent("sidebar:toggle"));
-      }
-    }
-  }
-
-  const triggerInstances = new WeakMap<HTMLElement, SidebarTriggerHandler>();
-
-  const setupSidebarTriggers = () => {
-    document.querySelectorAll<HTMLElement>(".starwind-sidebar-trigger").forEach((trigger) => {
-      if (triggerInstances.has(trigger)) return;
-      triggerInstances.set(trigger, new SidebarTriggerHandler(trigger));
-    });
-  };
-
-  setupSidebarTriggers();
-  document.addEventListener("astro:after-swap", setupSidebarTriggers);
-  document.addEventListener("starwind:init", setupSidebarTriggers);
-</script>
+    <span class="sr-only">Toggle Sidebar</span>
+  </Button>
+</SidebarPrimitive.Trigger>

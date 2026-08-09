@@ -1,8 +1,9 @@
 import { tv } from "tailwind-variants";
 
-export const dialogBackdrop = tv({
+export const sheetBackdrop = tv({
   base: [
-    "starwind-dialog-backdrop fixed inset-0 top-0 left-0 z-50 hidden h-screen w-screen bg-black/80",
+    "fixed inset-0 top-0 left-0 z-50 hidden h-screen w-screen bg-black/80",
+    "data-starting-style:!animate-none data-starting-style:opacity-0",
     "data-[state=open]:animate-in fade-in",
     "data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards fade-out",
     "data-[state=closed]:duration-300 data-[state=open]:duration-500",
@@ -11,8 +12,8 @@ export const dialogBackdrop = tv({
 
 export const sheetContent = tv({
   base: [
-    "starwind-dialog-content",
     "bg-background fixed z-50 flex-col gap-4 shadow-lg transition ease-in-out open:flex",
+    "data-starting-style:!animate-none data-starting-style:opacity-0",
     "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards",
     "data-[state=closed]:duration-300 data-[state=open]:duration-500",
   ],
@@ -43,24 +44,31 @@ export const sheetContent = tv({
 
 export const sheetCloseButton = tv({
   base: [
-    "starwind-dialog-close",
     "absolute top-4 right-4 rounded-xs [&>svg]:opacity-70 hover:[&>svg]:opacity-100",
     "focus-visible:ring-outline/50 transition-[color,box-shadow] outline-none focus-visible:ring-3",
   ],
 });
 
 export const sheetDescription = tv({
-  base: ["text-muted-foreground text-sm"],
+  base: [
+    "text-muted-foreground text-sm",
+  ],
 });
 
 export const sheetFooter = tv({
-  base: ["mt-auto flex flex-col gap-2 p-4"],
+  base: [
+    "mt-auto flex flex-col gap-2 p-4",
+  ],
 });
 
 export const sheetHeader = tv({
-  base: ["flex flex-col gap-1.5 p-4"],
+  base: [
+    "flex flex-col gap-1.5 p-4",
+  ],
 });
 
 export const sheetTitle = tv({
-  base: ["starwind-sheet-title", "text-foreground font-heading font-semibold"],
+  base: [
+    "text-foreground font-heading font-semibold",
+  ],
 });

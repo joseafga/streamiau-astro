@@ -2,6 +2,7 @@ import Sidebar from "./Sidebar.astro";
 import SidebarContent from "./SidebarContent.astro";
 import SidebarFooter from "./SidebarFooter.astro";
 import SidebarGroup from "./SidebarGroup.astro";
+import SidebarGroupAction from "./SidebarGroupAction.astro";
 import SidebarGroupContent from "./SidebarGroupContent.astro";
 import SidebarGroupLabel from "./SidebarGroupLabel.astro";
 import SidebarHeader from "./SidebarHeader.astro";
@@ -27,6 +28,7 @@ import {
   sidebarFooter,
   sidebarGap,
   sidebarGroup,
+  sidebarGroupAction,
   sidebarGroupContent,
   sidebarGroupLabel,
   sidebarHeader,
@@ -41,6 +43,7 @@ import {
   sidebarMenuSkeleton,
   sidebarMenuSub,
   sidebarMenuSubButton,
+  sidebarMenuSubItem,
   sidebarMobileContent,
   sidebarProvider,
   sidebarRail,
@@ -50,30 +53,58 @@ import {
 
 const SidebarVariants = {
   sidebar,
-  sidebarGap,
   sidebarContainer,
-  sidebarInner,
-  sidebarMobileContent,
   sidebarContent,
   sidebarFooter,
+  sidebarGap,
   sidebarGroup,
+  sidebarGroupAction,
   sidebarGroupContent,
   sidebarGroupLabel,
   sidebarHeader,
+  sidebarInner,
+  sidebarInput,
   sidebarInset,
   sidebarMenu,
   sidebarMenuAction,
   sidebarMenuBadge,
   sidebarMenuButton,
   sidebarMenuItem,
+  sidebarMenuSkeleton,
   sidebarMenuSub,
   sidebarMenuSubButton,
+  sidebarMenuSubItem,
+  sidebarMobileContent,
   sidebarProvider,
   sidebarRail,
-  sidebarMenuSkeleton,
-  sidebarInput,
   sidebarSeparator,
   sidebarTrigger,
+};
+
+const SidebarParts = {
+  Root: SidebarProvider,
+  Sidebar,
+  Content: SidebarContent,
+  Footer: SidebarFooter,
+  Group: SidebarGroup,
+  GroupAction: SidebarGroupAction,
+  GroupContent: SidebarGroupContent,
+  GroupLabel: SidebarGroupLabel,
+  Header: SidebarHeader,
+  Input: SidebarInput,
+  Inset: SidebarInset,
+  Menu: SidebarMenu,
+  MenuAction: SidebarMenuAction,
+  MenuBadge: SidebarMenuBadge,
+  MenuButton: SidebarMenuButton,
+  MenuItem: SidebarMenuItem,
+  MenuSkeleton: SidebarMenuSkeleton,
+  MenuSub: SidebarMenuSub,
+  MenuSubButton: SidebarMenuSubButton,
+  MenuSubItem: SidebarMenuSubItem,
+  Rail: SidebarRail,
+  Separator: SidebarSeparator,
+  Trigger: SidebarTrigger,
 };
 
 export {
@@ -81,6 +112,7 @@ export {
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
+  SidebarGroupAction,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
@@ -102,27 +134,4 @@ export {
   SidebarVariants,
 };
 
-export default {
-  Root: SidebarProvider,
-  Sidebar,
-  Content: SidebarContent,
-  Footer: SidebarFooter,
-  Group: SidebarGroup,
-  GroupContent: SidebarGroupContent,
-  GroupLabel: SidebarGroupLabel,
-  Header: SidebarHeader,
-  Input: SidebarInput,
-  Inset: SidebarInset,
-  Menu: SidebarMenu,
-  MenuAction: SidebarMenuAction,
-  MenuBadge: SidebarMenuBadge,
-  MenuButton: SidebarMenuButton,
-  MenuItem: SidebarMenuItem,
-  MenuSkeleton: SidebarMenuSkeleton,
-  MenuSub: SidebarMenuSub,
-  MenuSubButton: SidebarMenuSubButton,
-  MenuSubItem: SidebarMenuSubItem,
-  Rail: SidebarRail,
-  Separator: SidebarSeparator,
-  Trigger: SidebarTrigger,
-};
+export default SidebarParts;

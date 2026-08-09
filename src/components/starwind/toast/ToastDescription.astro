@@ -1,6 +1,6 @@
 ---
+import ToastPrimitive from "@starwind-ui/astro/toast";
 import type { HTMLAttributes } from "astro/types";
-
 import { toastDescription } from "./variants";
 
 type Props = HTMLAttributes<"div">;
@@ -8,11 +8,10 @@ type Props = HTMLAttributes<"div">;
 const { class: className, ...rest } = Astro.props;
 ---
 
-<div
+<ToastPrimitive.Description
   class={toastDescription({ class: className })}
-  data-toast-description
   {...rest}
   data-slot="toast-description"
 >
   <slot />
-</div>
+</ToastPrimitive.Description>

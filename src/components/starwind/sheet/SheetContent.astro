@@ -1,45 +1,48 @@
 ---
+import SheetPrimitive from "@starwind-ui/astro/drawer";
 import X from "@tabler/icons/outline/x.svg";
 import type { HTMLAttributes } from "astro/types";
-
-import { dialogBackdrop, sheetCloseButton, sheetContent } from "./variants";
+import { Button } from "../button";
+import { sheetBackdrop, sheetCloseButton, sheetContent } from "./variants";
 
 type Props = HTMLAttributes<"dialog"> & {
-  /**
-   * Side of the page the sheet opens from
-   */
   side?: "top" | "right" | "bottom" | "left";
 };
 
-const { side = "right", class: className, ...rest } = Astro.props;
+const { class: className, side = "right", ...rest } = Astro.props;
 ---
 
-<!-- dialog overlay -->
 <slot name="backdrop">
-  <div class={dialogBackdrop()} data-state="closed" data-slot="dialog-backdrop"></div>
+  <SheetPrimitive.Backdrop
+    class={sheetBackdrop()}
+    data-state="closed"
+    hidden
+    data-slot="sheet-backdrop"
+  />
 </slot>
 
-<dialog
-  class={sheetContent({
-    side,
-    class: className,
-  })}
+<SheetPrimitive.Popup
+  class={sheetContent({ side, class: className })}
   data-state="closed"
-  data-close-duration="300"
+  side={side}
   {...rest}
   data-slot="sheet-content"
 >
   <slot />
-  <button
-    type="button"
+
+  <Button
+    variant="ghost"
+    size="icon-sm"
     class={sheetCloseButton()}
     data-slot="sheet-close"
-    aria-label="Close dialog"
+    data-sw-drawer-close
   >
     <slot name="icon">
       <X class="size-5 transition-opacity" />
     </slot>
-    <span class="sr-only">Close</span>
-  </button>
-  <div class="pointer-events-none fixed inset-0" data-floating-root data-slot="floating-root"></div>
-</dialog>
+
+    <span class="sr-only">Close sheet</span>
+  </Button>
+
+  <div class="pointer-events-none fixed inset-0" data-floating-root data-slot="floating-root" />
+</SheetPrimitive.Popup>

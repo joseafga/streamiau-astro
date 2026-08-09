@@ -12,6 +12,7 @@ import {
   popoverTitle,
   popoverTrigger,
 } from "./variants";
+
 const PopoverVariants = {
   popover,
   popoverContent,
@@ -19,6 +20,15 @@ const PopoverVariants = {
   popoverHeader,
   popoverTitle,
   popoverTrigger,
+};
+
+const PopoverParts = {
+  Root: Popover,
+  Trigger: PopoverTrigger,
+  Content: PopoverContent,
+  Header: PopoverHeader,
+  Title: PopoverTitle,
+  Description: PopoverDescription,
 };
 
 export {
@@ -31,11 +41,4 @@ export {
   PopoverVariants,
 };
 
-export default {
-  Root: Popover,
-  Trigger: PopoverTrigger,
-  Content: PopoverContent,
-  Header: PopoverHeader,
-  Title: PopoverTitle,
-  Description: PopoverDescription,
-};
+export default PopoverParts;

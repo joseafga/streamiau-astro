@@ -2,9 +2,9 @@ import { tv } from "tailwind-variants";
 
 export const inputGroup = tv({
   base: [
-    "border-input dark:bg-input/30 group/input-group relative flex h-11 w-full min-w-0 items-center rounded-lg border transition-colors outline-none",
+    "border-input dark:bg-input/30 group/input-group relative flex h-11 w-full min-w-0 items-center rounded-lg border transition-[color,box-shadow] outline-none focus-within:transition-none",
     "has-[[data-slot=input-group-control]:focus-visible]:border-outline has-[[data-slot=input-group-control]:focus-visible]:ring-outline/50 has-[[data-slot=input-group-control]:focus-visible]:ring-3",
-    "has-[[data-slot][aria-invalid=true]]:border-error has-[[data-slot][aria-invalid=true]]:ring-error/40 has-[[data-slot][aria-invalid=true]]:ring-3",
+    "has-[[data-slot][data-error-visible]]:border-error has-[[data-slot][data-error-visible]]:ring-error/40 has-[[data-slot][data-error-visible]]:ring-3",
     "has-disabled:bg-input/50 has-disabled:opacity-50",
     "has-[>textarea]:h-auto",
     "has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col",
@@ -25,10 +25,8 @@ export const inputGroupAddon = tv({
     align: {
       "inline-start": "order-first pl-2.5 has-[>button]:ml-[-0.3rem]",
       "inline-end": "order-last pr-2.5 has-[>button]:mr-[-0.3rem]",
-      "block-start":
-        "order-first w-full justify-start px-3 pt-2 group-has-[>input]/input-group:pt-2.5 [.border-b]:pb-2.5",
-      "block-end":
-        "order-last w-full justify-start px-3 pb-2 group-has-[>input]/input-group:pb-2.5 [.border-t]:pt-2.5",
+      "block-start": "order-first w-full justify-start px-3 pt-2 group-has-[>input]/input-group:pt-2.5 [.border-b]:pb-2.5",
+      "block-end": "order-last w-full justify-start px-3 pb-2 group-has-[>input]/input-group:pb-2.5 [.border-t]:pt-2.5",
     },
   },
   defaultVariants: {

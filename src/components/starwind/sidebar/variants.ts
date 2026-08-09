@@ -1,7 +1,18 @@
 import { tv } from "tailwind-variants";
 
 export const sidebar = tv({
-  base: "starwind-sidebar group peer text-sidebar-foreground hidden md:block",
+  base: "group peer text-sidebar-foreground hidden md:block",
+});
+
+export const sidebarContent = tv({
+  base: [
+    "flex min-h-0 flex-1 flex-col gap-2 overflow-auto",
+    "group-data-[collapsible=icon]:overflow-hidden",
+  ],
+});
+
+export const sidebarFooter = tv({
+  base: "flex flex-col gap-2 p-2",
 });
 
 export const sidebarGap = tv({
@@ -23,9 +34,7 @@ export const sidebarGap = tv({
 });
 
 export const sidebarContainer = tv({
-  base: [
-    "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex",
-  ],
+  base: "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex",
   variants: {
     side: {
       left: "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]",
@@ -46,37 +55,21 @@ export const sidebarContainer = tv({
   },
 });
 
-export const sidebarInner = tv({
-  base: "bg-sidebar flex h-full w-full flex-col",
-  variants: {
-    variant: {
-      sidebar: "",
-      floating: "border-sidebar-border rounded-lg border shadow-sm",
-      inset: "border-sidebar-border rounded-lg border shadow-sm",
-    },
-  },
-  defaultVariants: {
-    variant: "sidebar",
-  },
-});
-
-export const sidebarMobileContent = tv({
-  base: "bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden",
-});
-
-export const sidebarContent = tv({
-  base: [
-    "flex min-h-0 flex-1 flex-col gap-2 overflow-auto",
-    "group-data-[collapsible=icon]:overflow-hidden",
-  ],
-});
-
-export const sidebarFooter = tv({
-  base: "flex flex-col gap-2 p-2",
-});
-
 export const sidebarGroup = tv({
   base: "relative flex w-full min-w-0 flex-col p-2",
+});
+
+export const sidebarGroupAction = tv({
+  base: [
+    "text-sidebar-foreground ring-sidebar-outline",
+    "absolute top-3.5 right-3 flex aspect-square w-5 items-center justify-center rounded-md p-0",
+    "outline-hidden transition-transform",
+    "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+    "focus-visible:ring-2",
+    "after:absolute after:-inset-2 md:after:hidden",
+    "group-data-[collapsible=icon]:hidden",
+    "[&>svg]:size-4 [&>svg]:shrink-0",
+  ],
 });
 
 export const sidebarGroupContent = tv({
@@ -90,12 +83,26 @@ export const sidebarGroupLabel = tv({
     "outline-hidden transition-[margin,opacity] duration-200 ease-linear",
     "focus-visible:ring-2",
     "[&>svg]:size-4.5 [&>svg]:shrink-0",
-    "group-data-[collapsible=icon]:-mt-10 group-data-[collapsible=icon]:opacity-0",
+    "group-data-[collapsible=icon]:pointer-events-none group-data-[collapsible=icon]:-mt-10 group-data-[collapsible=icon]:opacity-0",
   ],
 });
 
 export const sidebarHeader = tv({
   base: "flex flex-col gap-2 p-2",
+});
+
+export const sidebarInner = tv({
+  base: "bg-sidebar flex h-full w-full flex-col",
+  variants: {
+    variant: {
+      sidebar: "",
+      floating: "border-sidebar-border rounded-lg border shadow-sm",
+      inset: "border-sidebar-border rounded-lg border shadow-sm",
+    },
+  },
+  defaultVariants: {
+    variant: "sidebar",
+  },
 });
 
 export const sidebarInput = tv({
@@ -125,7 +132,7 @@ export const sidebarMenuAction = tv({
     "[&>svg]:size-4 [&>svg]:shrink-0",
     "after:absolute after:-inset-2 md:after:hidden",
     "peer-data-[size=sm]/menu-button:top-1",
-    "peer-data-[size=default]/menu-button:top-1.5",
+    "peer-data-[size=md]/menu-button:top-1.5",
     "peer-data-[size=lg]/menu-button:top-2.5",
     "group-data-[collapsible=icon]:hidden",
   ],
@@ -148,7 +155,7 @@ export const sidebarMenuBadge = tv({
     "peer-hover/menu-button:text-sidebar-accent-foreground",
     "peer-data-[active=true]/menu-button:text-sidebar-accent-foreground",
     "peer-data-[size=sm]/menu-button:top-1",
-    "peer-data-[size=default]/menu-button:top-1.5",
+    "peer-data-[size=md]/menu-button:top-1.5",
     "peer-data-[size=lg]/menu-button:top-2.5",
     "group-data-[collapsible=icon]:hidden",
   ],
@@ -178,14 +185,14 @@ export const sidebarMenuButton = tv({
       ],
     },
     size: {
-      default: "h-10 text-base",
       sm: "h-8 text-sm",
+      md: "h-10 text-base",
       lg: "h-14 text-lg group-data-[collapsible=icon]:p-0!",
     },
   },
   defaultVariants: {
     variant: "default",
-    size: "default",
+    size: "md",
   },
 });
 
@@ -228,9 +235,16 @@ export const sidebarMenuSubButton = tv({
   },
 });
 
+export const sidebarMenuSubItem = tv({
+  base: "group/menu-sub-item relative",
+});
+
+export const sidebarMobileContent = tv({
+  base: "bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden",
+});
+
 export const sidebarProvider = tv({
   base: [
-    "starwind-sidebar-provider",
     "group/sidebar-wrapper flex min-h-svh w-full",
     "has-data-[variant=inset]:bg-sidebar",
   ],
@@ -238,7 +252,6 @@ export const sidebarProvider = tv({
 
 export const sidebarRail = tv({
   base: [
-    "starwind-sidebar-rail",
     "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear sm:flex",
     "group-data-[side=left]:-right-4 group-data-[side=right]:left-0",
     "after:absolute after:inset-y-0 after:left-1/2 after:w-[2px]",
@@ -259,5 +272,5 @@ export const sidebarSeparator = tv({
 });
 
 export const sidebarTrigger = tv({
-  base: "starwind-sidebar-trigger",
+  base: "",
 });

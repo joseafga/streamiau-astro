@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
 
 export const radioGroup = tv({
-  base: "starwind-radio-group disabled:cursor-not-allowed disabled:opacity-70",
+  base: "group/radio-group disabled:cursor-not-allowed disabled:opacity-70",
   variants: {
     orientation: {
       vertical: "grid gap-3",
@@ -14,52 +14,39 @@ export const radioGroup = tv({
 });
 
 export const radioWrapper = tv({
-  base: "relative isolate flex shrink-0",
-  variants: {
-    size: {
-      sm: "size-4",
-      md: "size-5",
-      lg: "size-6",
-    },
-  },
-  defaultVariants: {
-    size: "md",
-  },
+  base: [
+    "relative isolate flex shrink-0",
+    "group-data-[size=sm]/radio-group:size-4 group-data-[size=md]/radio-group:size-5 group-data-[size=lg]/radio-group:size-6",
+  ],
 });
 
 export const radioItem = tv({
   base: [
-    "starwind-radio-item peer z-10 h-full w-full",
-    "absolute inset-0 cursor-pointer opacity-0 outline-none focus:outline-none focus-visible:outline-none",
-    "disabled:cursor-not-allowed",
+    "group/radio peer relative z-10 flex h-full w-full cursor-pointer items-center justify-center rounded-full",
+    "outline-none focus:outline-none focus-visible:outline-none",
+    "data-disabled:cursor-not-allowed",
   ],
 });
 
 export const radioControl = tv({
   base: [
-    "starwind-radio-control",
     "border-input bg-background dark:bg-input/30",
-    "outline-none peer-focus-visible:ring-3",
     "absolute inset-0 rounded-full border shadow-xs",
-    "transition-[color,box-shadow] peer-checked:[&>svg]:opacity-100",
-    "peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
-    "peer-aria-invalid:border-error peer-focus-visible:peer-aria-invalid:ring-error/40",
+    "transition-[color,box-shadow]",
+    "group-focus-visible/radio:ring-3",
+    "group-data-disabled/radio:cursor-not-allowed group-data-disabled/radio:opacity-50",
+    "group-data-error-visible/radio:border-error group-focus-visible/radio:group-data-error-visible/radio:ring-error/40",
     "flex items-center justify-center",
   ],
   variants: {
     variant: {
-      default:
-        "peer-checked:border-foreground [&>svg]:fill-foreground peer-focus-visible:ring-outline/50",
-      primary:
-        "peer-checked:border-primary [&>svg]:fill-primary peer-focus-visible:ring-primary/50",
-      secondary:
-        "peer-checked:border-secondary [&>svg]:fill-secondary peer-focus-visible:ring-secondary/50",
-      info: "peer-checked:border-info [&>svg]:fill-info peer-focus-visible:ring-info/50",
-      success:
-        "peer-checked:border-success [&>svg]:fill-success peer-focus-visible:ring-success/50",
-      warning:
-        "peer-checked:border-warning [&>svg]:fill-warning peer-focus-visible:ring-warning/50",
-      error: "peer-checked:border-error [&>svg]:fill-error peer-focus-visible:ring-error/50",
+      default: "group-data-checked/radio:border-foreground [&>span>svg]:fill-foreground group-focus-visible/radio:ring-outline/50",
+      primary: "group-data-checked/radio:border-primary [&>span>svg]:fill-primary group-focus-visible/radio:ring-primary/50",
+      secondary: "group-data-checked/radio:border-secondary [&>span>svg]:fill-secondary group-focus-visible/radio:ring-secondary/50",
+      info: "group-data-checked/radio:border-info [&>span>svg]:fill-info group-focus-visible/radio:ring-info/50",
+      success: "group-data-checked/radio:border-success [&>span>svg]:fill-success group-focus-visible/radio:ring-success/50",
+      warning: "group-data-checked/radio:border-warning [&>span>svg]:fill-warning group-focus-visible/radio:ring-warning/50",
+      error: "group-data-checked/radio:border-error [&>span>svg]:fill-error group-focus-visible/radio:ring-error/50",
     },
   },
   defaultVariants: {
@@ -68,15 +55,10 @@ export const radioControl = tv({
 });
 
 export const radioIndicator = tv({
-  base: ["starwind-radio-indicator", "opacity-0 transition-opacity"],
-  variants: {
-    size: {
-      sm: "size-2",
-      md: "size-3",
-      lg: "size-4",
-    },
-  },
-  defaultVariants: {
-    size: "md",
-  },
+  base: [
+    "flex items-center justify-center",
+    "opacity-0 transition-opacity data-checked:opacity-100",
+    "[&>svg]:size-full [&>svg]:shrink-0",
+    "group-data-[size=sm]/radio-group:size-2 group-data-[size=md]/radio-group:size-3 group-data-[size=lg]/radio-group:size-4",
+  ],
 });

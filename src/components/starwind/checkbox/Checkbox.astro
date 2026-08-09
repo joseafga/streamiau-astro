@@ -3,65 +3,82 @@ import Check from "@tabler/icons/outline/check.svg";
 import type { HTMLAttributes } from "astro/types";
 import type { VariantProps } from "tailwind-variants";
 
-import { checkbox } from "./variants";
+import "./styles.css";
+import CheckboxPrimitive from "@starwind-ui/astro/checkbox";
+import { checkbox, checkboxIndicator, checkboxLabel, checkboxWrapper } from "./variants";
 
-type Props = Omit<HTMLAttributes<"input">, "type"> &
-  VariantProps<typeof checkbox> & {
-    /**
-     * Optional label text to display next to the checkbox
-     */
-    label?: string;
-  };
+type Props = Omit<HTMLAttributes<"span">, "defaultChecked" | "id" | "onChange"> & VariantProps<typeof checkbox> & {
+  checked?: boolean;
+  defaultChecked?: boolean;
+  disabled?: boolean;
+  form?: string;
+  id?: string;
+  indeterminate?: boolean;
+  label?: string;
+  name?: string;
+  nativeButton?: boolean;
+  readOnly?: boolean;
+  required?: boolean;
+  uncheckedValue?: string;
+  value?: string;
+};
 
-const { id, label, checked, size, variant, class: className, ...rest } = Astro.props;
+const {
+  variant,
+  size,
+  checked,
+  defaultChecked,
+  disabled = false,
+  form,
+  id,
+  indeterminate = false,
+  label,
+  name,
+  nativeButton = false,
+  readOnly = false,
+  required = false,
+  uncheckedValue,
+  value,
+  class: className,
+  ...rest
+} = Astro.props;
 
-const { base, input, icon, label: labelClass } = checkbox({ size, variant });
+const ariaLabel = rest["aria-label"] ?? label;
 ---
 
-<div class={base()}>
-  <input
-    type="checkbox"
+<div class={checkboxWrapper()} data-sw-checkbox-wrapper data-slot="checkbox-wrapper">
+  <CheckboxPrimitive.Root
+    class={checkbox({ variant, size, class: className })}
+    checked={checked}
+    defaultChecked={defaultChecked}
+    disabled={disabled}
+    form={form}
     id={id}
-    class={input({ class: className })}
-    {checked}
+    indeterminate={indeterminate}
+    name={name}
+    nativeButton={nativeButton}
+    readOnly={readOnly}
+    required={required}
+    uncheckedValue={uncheckedValue}
+    value={value}
     {...rest}
-    data-slot="checkbox-input"
-  />
-  <Check class={icon()} />
+    aria-label={ariaLabel}
+    data-slot="checkbox"
+  >
+    <CheckboxPrimitive.Indicator
+      keepMounted
+      class={checkboxIndicator({ variant, size })}
+      data-slot="checkbox-indicator"
+    >
+      <Check data-sw-checkbox-check-icon />
+    </CheckboxPrimitive.Indicator>
+  </CheckboxPrimitive.Root>
+
   {
     label && (
-      <label for={id} class={labelClass()} data-slot="checkbox-label">
+      <label for={id} class={checkboxLabel({ size })} data-slot="checkbox-label">
         {label}
       </label>
     )
   }
 </div>
-
-<style>
-  .starwind-checkbox input[type="checkbox"]:checked {
-    background-image: none;
-  }
-
-  /* Check drawing animation */
-  .starwind-check-icon {
-    stroke-dasharray: 65;
-    stroke-dashoffset: 65;
-    opacity: 0;
-  }
-
-  .starwind-checkbox input[type="checkbox"]:checked + .starwind-check-icon {
-    animation: draw-check 0.3s ease forwards;
-    animation-delay: 0.15s;
-  }
-
-  @keyframes draw-check {
-    0% {
-      stroke-dashoffset: 65;
-      opacity: 1;
-    }
-    100% {
-      stroke-dashoffset: 0;
-      opacity: 1;
-    }
-  }
-</style>

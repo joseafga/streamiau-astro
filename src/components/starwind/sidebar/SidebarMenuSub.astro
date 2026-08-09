@@ -3,16 +3,18 @@ import type { HTMLAttributes } from "astro/types";
 
 import { sidebarMenuSub } from "./variants";
 
-type Props = HTMLAttributes<"ul">;
+type Props = HTMLAttributes<"ul"> & {
+  "data-slot"?: string;
+};
 
-const { class: className, ...rest } = Astro.props;
+const { "data-slot": dataSlot = "sidebar-menu-sub", class: className, ...rest } = Astro.props;
 ---
 
 <ul
   class={sidebarMenuSub({ class: className })}
   data-sidebar="menu-sub"
   {...rest}
-  data-slot="sidebar-menu-sub"
+  data-slot={dataSlot}
 >
   <slot />
 </ul>

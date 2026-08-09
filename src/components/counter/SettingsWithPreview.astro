@@ -1,15 +1,7 @@
 ---
 import CopyIcon from "@tabler/icons/outline/copy.svg";
 import LinkIcon from "@tabler/icons/outline/link.svg";
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectSeparator,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/starwind/select";
+import { Select, SelectContent, SelectItem, SelectSeparator, SelectTrigger } from "@/components/starwind/select";
 import { Input } from "@/components/starwind/input";
 import { ColorPicker } from "@/components/starwind/color-picker";
 import { Slider } from "@/components/starwind/slider";
@@ -35,23 +27,19 @@ const font_size_counter_marks = [0, 61, 122, 183, 244];
         <input type="hidden" name="authenticity_token" value="ECR%= csrf_token %ECR" />
         <div class="flex flex-col space-y-2">
             <Select id="font-family-select" name="font-family">
-                <SelectTrigger class="w-full">
-                    <SelectValue placeholder="Selecione uma fonte..." />
-                </SelectTrigger>
+                <SelectTrigger class="w-full" placeholder="Selecione uma fonte..." />
                 <SelectContent>
-                    <SelectGroup>
-                        {
-                            fonts_select.map((font) => (
-                                <SelectItem value={font} style={{ fontFamily: font }}>
-                                    {font}
-                                </SelectItem>
-                            ))
-                        }
-                        <SelectSeparator class="border-b border-b-input" />
-                        <SelectItem value="sans-serif" style="font-family: sans-serif">sans-serif</SelectItem>
-                        <SelectItem value="serif" style="font-family: serif">serif</SelectItem>
-                        <SelectItem value="monospace" style="font-family: monospace">monoespaçada</SelectItem>
-                    </SelectGroup>
+                    {
+                        fonts_select.map((font) => (
+                            <SelectItem value={font} style={{ fontFamily: font }}>
+                                {font}
+                            </SelectItem>
+                        ))
+                    }
+                    <SelectSeparator />
+                    <SelectItem value="sans-serif" style="font-family: sans-serif">sans-serif</SelectItem>
+                    <SelectItem value="serif" style="font-family: serif">serif</SelectItem>
+                    <SelectItem value="monospace" style="font-family: monospace">monoespaçada</SelectItem>
                 </SelectContent>
             </Select>
         </div>
@@ -71,18 +59,17 @@ const font_size_counter_marks = [0, 61, 122, 183, 244];
                 <ColorPicker
                     id="color-picker"
                     name="font-color"
+                    format="rgb"
+                    formats={["rgb", "hex"]}
                     defaultValue={default_style.font_color}
                     size="lg"
-                    autocomplete="off"
                 />
-                <span id="color-text">{default_style.font_color}</span>
             </div>
         </div>
 
         <div class="flex flex-col space-y-2">
             <label for="font-size-prefix-slider">Tamanho do prefixo</label>
             <Slider
-                type="single"
                 id="font-size-prefix-slider"
                 name="font-size-prefix"
                 value={default_style.font_size_prefix}
@@ -100,7 +87,6 @@ const font_size_counter_marks = [0, 61, 122, 183, 244];
         <div class="flex flex-col space-y-2">
             <label for="font-size-counter-slider">Tamanho do contador</label>
             <Slider
-                type="single"
                 id="font-size-counter-slider"
                 name="font-size-counter"
                 value={default_style.font_size_counter}
@@ -152,9 +138,7 @@ const font_size_counter_marks = [0, 61, 122, 183, 244];
                                 <CopyIcon />
                             </InputGroupButton>
                         </PopoverTrigger>
-                        <PopoverContent side="top" sideOffset={12} animationDuration={100} class="w-22">
-                            Copiado!
-                        </PopoverContent>
+                        <PopoverContent side="top" sideOffset={12} class="w-22">Copiado!</PopoverContent>
                     </Popover>
                 </InputGroupAddon>
             </InputGroup>
@@ -163,7 +147,6 @@ const font_size_counter_marks = [0, 61, 122, 183, 244];
 </div>
 
 <script>
-    import type { SelectChangeEvent } from "@/components/starwind/select";
     import type { ColorPickerChangeEvent } from "@/components/starwind/color-picker/ColorPickerTypes";
 
     type ProgrammaticColorPickerElement = HTMLElement & {
@@ -200,7 +183,6 @@ const font_size_counter_marks = [0, 61, 122, 183, 244];
 
     // Copy URL feature
     widget_url_input.addEventListener("focus", () => widget_url_input.select());
-    widget_url_input.addEventListener("click", () => widget_url_input.select());
     copy_url_button.addEventListener("click", async () => {
         try {
             await navigator.clipboard.writeText(widget_url_input.value);
@@ -224,9 +206,9 @@ const font_size_counter_marks = [0, 61, 122, 183, 244];
 
     // -- SETTINGS --
     const font_family = document.getElementById("font-family-select") as HTMLDivElement;
-    font_family.addEventListener("starwind-select:change", (e) => {
-        const event = e as SelectChangeEvent;
-        $style.setKey("font_family", event.detail.value);
+    font_family.addEventListener("starwind:value-change", (event) => {
+        const { value } = (event as CustomEvent<{ value: string | null }>).detail;
+        if (value) $style.setKey("font_family", value);
     });
 
     const prefix = document.getElementById("prefix-input") as HTMLInputElement;
@@ -235,21 +217,22 @@ const font_size_counter_marks = [0, 61, 122, 183, 244];
     });
 
     const font_size_prefix_slider = document.getElementById("font-size-prefix-slider");
-    font_size_prefix_slider?.addEventListener("slider-change", (e) => {
-        $style.setKey("font_size_prefix", e.detail.value);
+    font_size_prefix_slider?.addEventListener("starwind:value-change", (event) => {
+        const { value } = (event as CustomEvent<{ value: number }>).detail;
+        $style.setKey("font_size_prefix", value);
     });
 
     const font_size_counter_slider = document.getElementById("font-size-counter-slider");
-    font_size_counter_slider?.addEventListener("slider-change", (e) => {
-        $style.setKey("font_size_counter", e.detail.value);
+    font_size_counter_slider?.addEventListener("starwind:value-change", (event) => {
+        const { value } = (event as CustomEvent<{ value: number }>).detail;
+        $style.setKey("font_size_counter", value);
     });
 
     const color_picker = document.getElementById("color-picker") as ProgrammaticColorPickerElement;
-    const color_text = document.getElementById("color-text") as HTMLSpanElement;
-    color_picker.addEventListener("starwind-color-picker:change", (e) => {
-        const event = e as ColorPickerChangeEvent;
-        color_text.textContent = event.detail.value;
-        $style.setKey("font_color", event.detail.value);
+    color_picker.addEventListener("starwind:value-change", (event) => {
+        const { valueAsString } = (event as CustomEvent<{ valueAsString: string }>).detail;
+        console.log(event);
+        $style.setKey("font_color", valueAsString);
     });
 
     const fixed_style_checkbox = document.getElementById("fixed-style-checkbox");
@@ -269,8 +252,6 @@ const font_size_counter_marks = [0, 61, 122, 183, 244];
         loading_icon?.classList.remove("hidden");
 
         const form_data = new FormData(form);
-        form_data.delete("colorFormat");
-        form_data.set("font-color", $style.get().font_color); // force use rgb or rgba as color
 
         try {
             const response = await fetch(`/counter/${$uuid.get()}/settings`, { method: "POST", body: form_data });

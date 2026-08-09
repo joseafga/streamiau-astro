@@ -1,6 +1,9 @@
 import Spinner from "./Spinner.astro";
 import { spinner } from "./variants";
-const SpinnerVariants = { spinner };
+
+const SpinnerVariants = {
+  spinner,
+};
 
 export { Spinner, SpinnerVariants };
 

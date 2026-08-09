@@ -2,83 +2,79 @@
 import type { HTMLAttributes } from "astro/types";
 import type { VariantProps } from "tailwind-variants";
 
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/starwind/tooltip";
-
+import "./styles.css";
+import SidebarPrimitive from "@starwind-ui/astro/sidebar";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { sidebarMenuButton } from "./variants";
 
-type Props = HTMLAttributes<"button"> &
-  Omit<HTMLAttributes<"a">, "type"> &
-  VariantProps<typeof sidebarMenuButton> & {
-    /**
-     * Render as a child element wrapper instead of a button
-     */
-    asChild?: boolean;
-    /**
-     * Whether the menu item is currently active
-     */
-    isActive?: boolean;
-    /**
-     * Tooltip text to show when sidebar is collapsed
-     */
-    tooltip?: string;
-  };
+type Props = HTMLAttributes<"button"> & Omit<HTMLAttributes<"a">, "type"> & VariantProps<typeof sidebarMenuButton> & {
+  asChild?: boolean;
+  isActive?: boolean;
+  tooltip?: string;
+};
 
 const {
   asChild = false,
   isActive = false,
   tooltip,
   variant,
-  size,
+  size = "md",
+  href,
   class: className,
   ...rest
 } = Astro.props;
 
-const Tag = Astro.props.href ? "a" : "button";
-
-const buttonClasses = sidebarMenuButton({ variant, size, class: className });
-const buttonDataAttrs = {
-  "data-slot": "sidebar-menu-button",
-  "data-sidebar": "menu-button",
-  "data-size": size || "default",
-  "data-active": isActive,
-};
+const Tag = asChild ? "div" : href ? "a" : "button";
+const buttonClassName = sidebarMenuButton({ variant, size, class: className });
 ---
 
 {
-  tooltip ? (
-    <Tooltip openDelay={0} closeDelay={0} class="starwind-sidebar-menu-button-tooltip w-full">
-      <TooltipTrigger>
-        {asChild ? (
-          <div class={buttonClasses} {...buttonDataAttrs} data-as-child>
-            <slot />
-          </div>
-        ) : (
-          <Tag class={buttonClasses} {...buttonDataAttrs} {...rest}>
+  Boolean(tooltip) ? (
+    <Tooltip openDelay={0} closeDelay={0} class="w-full">
+      <TooltipTrigger class="w-full">
+        <SidebarPrimitive.MenuButton asChild={true}>
+          <Tag
+            class={buttonClassName}
+            data-sidebar="menu-button"
+            data-size={size}
+            data-active={isActive}
+            data-tooltip={tooltip}
+            href={href}
+            data-slot="sidebar-menu-button"
+            type={Tag === "button" ? "button" : undefined}
+            data-as-child={asChild ? true : undefined}
+            {...rest}
+          >
             <slot />
           </Tag>
-        )}
+        </SidebarPrimitive.MenuButton>
       </TooltipTrigger>
+
       <TooltipContent
         side="right"
         align="center"
-        class="starwind-sidebar-tooltip-content whitespace-nowrap"
+        class="whitespace-nowrap"
+        data-sw-sidebar-tooltip-content
       >
         {tooltip}
       </TooltipContent>
     </Tooltip>
-  ) : asChild ? (
-    <div class={buttonClasses} {...buttonDataAttrs} data-as-child>
-      <slot />
-    </div>
   ) : (
-    <Tag class={buttonClasses} {...buttonDataAttrs} {...rest}>
-      <slot />
-    </Tag>
+    <SidebarPrimitive.MenuButton asChild={true}>
+      <Tag
+        class={buttonClassName}
+        data-sidebar="menu-button"
+        data-size={size}
+        data-active={isActive}
+        data-tooltip={tooltip}
+        href={href}
+        data-slot="sidebar-menu-button"
+        type={Tag === "button" ? "button" : undefined}
+        data-as-child={asChild ? true : undefined}
+        {...rest}
+      >
+        <slot />
+      </Tag>
+    </SidebarPrimitive.MenuButton>
   )
 }
-
-<style is:global>
-  :root:not([data-starwind-sidebar-tooltips="enabled"]) .starwind-sidebar-tooltip-content {
-    display: none !important;
-  }
-</style>

@@ -7,7 +7,7 @@ import SheetHeader from "./SheetHeader.astro";
 import SheetTitle from "./SheetTitle.astro";
 import SheetTrigger from "./SheetTrigger.astro";
 import {
-  dialogBackdrop,
+  sheetBackdrop,
   sheetCloseButton,
   sheetContent,
   sheetDescription,
@@ -17,13 +17,24 @@ import {
 } from "./variants";
 
 const SheetVariants = {
+  sheetBackdrop,
   sheetCloseButton,
+  sheetContent,
   sheetDescription,
   sheetFooter,
   sheetHeader,
   sheetTitle,
-  dialogBackdrop,
-  sheetContent,
+};
+
+const SheetParts = {
+  Root: Sheet,
+  Trigger: SheetTrigger,
+  Content: SheetContent,
+  Header: SheetHeader,
+  Footer: SheetFooter,
+  Title: SheetTitle,
+  Description: SheetDescription,
+  Close: SheetClose,
 };
 
 export {
@@ -38,13 +49,4 @@ export {
   SheetVariants,
 };
 
-export default {
-  Root: Sheet,
-  Trigger: SheetTrigger,
-  Content: SheetContent,
-  Header: SheetHeader,
-  Footer: SheetFooter,
-  Title: SheetTitle,
-  Description: SheetDescription,
-  Close: SheetClose,
-};
+export default SheetParts;
