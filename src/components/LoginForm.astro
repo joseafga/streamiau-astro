@@ -2,7 +2,6 @@
 import { Button } from "@/components/starwind/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/starwind/card";
 import { Input } from "@/components/starwind/input";
-import { Prose } from "@/components/starwind/prose";
 ---
 
 <Card class="mx-auto w-full max-w-sm">
@@ -20,11 +19,12 @@ import { Prose } from "@/components/starwind/prose";
                 <Input id="username" name="username" type="text" placeholder="Nome de Usuário" required />
             </div>
             <Button variant="primary" type="submit" class="w-full">Login</Button>
-            <Prose>
-                <p class="text-sm text-center text-muted-foreground">
-                    Ainda não tem conta? <a href="mailto:streamiau@joseafga.com.br">streamiau@joseafga.com.br</a>
-                </p>
-            </Prose>
+            <p class="text-sm text-center text-muted-foreground">
+                Ainda não tem conta? <a
+                    class="text-primary-accent whitespace-nowrap hover:underline"
+                    href="mailto:streamiau@joseafga.com.br">streamiau@joseafga.com.br</a
+                >
+            </p>
         </CardContent>
     </form>
 </Card>
