@@ -1,7 +1,18 @@
 ---
 import { Form } from "@/components/starwind/form";
-import { Field, FieldControl, FieldError, FieldGroup, FieldLabel } from "@/components/starwind/field";
+import { Field, FieldControl, FieldError, FieldGroup } from "@/components/starwind/field";
 import { Button } from "@/components/starwind/button";
+import { Spinner } from "@/components/starwind/spinner";
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogFooter,
+    DialogTitle,
+    DialogDescription,
+    DialogClose,
+} from "@/components/starwind/dialog";
+import { InputOtp, InputOtpGroup, InputOtpSlot, REGEXP_ONLY_DIGITS_AND_CHARS } from "@/components/starwind/input-otp";
 ---
 
 <div class="mx-auto w-full max-w-100 p-4">
@@ -22,7 +33,10 @@ import { Button } from "@/components/starwind/button";
                     <FieldControl id="username" type="text" placeholder="Nome de Usuário" required />
                     <FieldError match="valueMissing">É necessário preencher o nome de usuário.</FieldError>
                 </Field>
-                <Button variant="primary" type="submit" class="w-full">Login</Button>
+                <Button variant="primary" type="submit" class="w-full">
+                    <Spinner class="hidden" />
+                    Login
+                </Button>
             </FieldGroup>
 
             <p class="text-sm text-center text-muted-foreground">
@@ -35,37 +49,106 @@ import { Button } from "@/components/starwind/button";
     </Form>
 </div>
 
+<Dialog id="confirm-dialog">
+    <DialogContent>
+        <div class="flex flex-col gap-4">
+            <DialogHeader>
+                <DialogTitle>Código de confirmação</DialogTitle>
+                <DialogDescription
+                    >Enviamos um código para o seu e-mail. Digite-o abaixo para confirmar o login.</DialogDescription
+                >
+            </DialogHeader>
+            <form id="confirm-form" method="get" action="/login/confirm">
+                <input type="hidden" name="username" />
+                <InputOtp
+                    aria-label="Código de verificação"
+                    name="code"
+                    maxLength={8}
+                    pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
+                    size="lg"
+                    class="mx-auto my-8"
+                >
+                    <InputOtpGroup>
+                        <InputOtpSlot index={0} />
+                        <InputOtpSlot index={1} />
+                        <InputOtpSlot index={2} />
+                        <InputOtpSlot index={3} />
+                        <InputOtpSlot index={4} />
+                        <InputOtpSlot index={5} />
+                        <InputOtpSlot index={6} />
+                        <InputOtpSlot index={7} />
+                    </InputOtpGroup>
+                </InputOtp>
+                <DialogFooter>
+                    <DialogClose asChild>
+                        <Button variant="outline">Cancelar</Button>
+                    </DialogClose>
+                    <Button type="submit">Confirmar</Button>
+                </DialogFooter>
+            </form>
+        </div>
+    </DialogContent>
+</Dialog>
+
 <script>
     import { toast } from "@starwind-ui/astro/toast";
+    const openDialogEvent = new CustomEvent("dialog:open");
 
-    const login_form = document.getElementById("login-form") as HTMLFormElement;
+    function handleFormSubmit() {
+        const loginForm = document.getElementById("login-form") as HTMLFormElement;
+        const loginSubmitButton = loginForm.querySelector('button[type="submit"]') as HTMLButtonElement;
+        const confirmDialog = document.getElementById("confirm-dialog") as HTMLFormElement;
+        const loadingSpinner = loginForm.querySelector('svg[data-slot="spinner"]') as HTMLElement;
 
-    login_form?.addEventListener("submit", async (e) => {
-        e.preventDefault();
+        const loadingStart = () => {
+            loginForm.setAttribute("aria-busy", "true");
+            loadingSpinner?.classList.remove("hidden");
+            loginSubmitButton.disabled = true;
 
-        const formData = new FormData(login_form);
+            return toast.loading("Entrando...");
+        };
 
-        toast.promise(
-            fetch(login_form.action, {
-                method: "POST",
-                body: formData,
-            }).then(async (res) => {
+        const loadingFinish = () => {
+            loginForm.removeAttribute("aria-busy");
+            loadingSpinner?.classList.add("hidden");
+            loginSubmitButton.disabled = false;
+        };
+
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const toastId = loadingStart();
+
+            try {
+                const formData = new FormData(loginForm);
+                const res = await fetch(loginForm.action, {
+                    method: "POST",
+                    body: formData,
+                });
                 const message = await res.text();
 
                 if (!res.ok) throw new Error(message);
-                return message;
-            }),
-            {
-                loading: "Realizando o login...",
-                success: (message) => ({
-                    title: "Sucesso",
-                    description: message,
-                }),
-                error: (err) => ({
+
+                // Success
+                toast.dismiss();
+                // TODO: really necessary?
+                const usernameInput = confirmDialog.querySelector('input[name="username"]') as HTMLInputElement;
+                usernameInput.value = String(formData.get("username") ?? "");
+
+                confirmDialog.dispatchEvent(openDialogEvent);
+            } catch (err) {
+                const message = err instanceof Error ? err.message : "Erro inesperado";
+
+                toast.update(toastId, {
                     title: "Erro",
-                    description: err.message,
-                }),
-            },
-        );
-    });
+                    description: message,
+                    variant: "error",
+                });
+            } finally {
+                loadingFinish();
+            }
+        });
+    }
+
+    handleFormSubmit();
+    document.addEventListener("astro:after-swap", handleFormSubmit);
 </script>

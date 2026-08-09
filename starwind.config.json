@@ -164,10 +164,16 @@
       "registry": "default"
     },
     {
-      "framework": "astro",
       "name": "field",
+      "version": "1.0.1",
+      "framework": "astro",
+      "registry": "default"
+    },
+    {
+      "framework": "astro",
+      "name": "input-otp",
       "registry": "default",
-      "version": "1.0.1"
+      "version": "3.0.1"
     }
   ],
   "tailwind": {
