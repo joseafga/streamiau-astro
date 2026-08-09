@@ -12,12 +12,12 @@ import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/starwind/popover";
 
 import { $style } from "@/stores/counter.js";
-const default_style = $style.get();
+const defaultStyle = $style.get();
 const { class: className, ...rest } = Astro.props;
 
-const fonts_select = ["Inter", "Roboto", "Sniglet"];
-const font_size_prefix_marks = [0, 61, 122, 183, 244];
-const font_size_counter_marks = [0, 61, 122, 183, 244];
+const fontsSelect = ["Inter", "Roboto", "Sniglet"];
+const fontSizePrefixMarks = [0, 61, 122, 183, 244];
+const fontSizeCounterMarks = [0, 61, 122, 183, 244];
 ---
 
 <div class:list={[className]} {...rest}>
@@ -30,7 +30,7 @@ const font_size_counter_marks = [0, 61, 122, 183, 244];
                 <SelectTrigger class="w-full" placeholder="Selecione uma fonte..." />
                 <SelectContent>
                     {
-                        fonts_select.map((font) => (
+                        fontsSelect.map((font) => (
                             <SelectItem value={font} style={{ fontFamily: font }}>
                                 {font}
                             </SelectItem>
@@ -48,7 +48,7 @@ const font_size_counter_marks = [0, 61, 122, 183, 244];
             <Input
                 id="prefix-input"
                 name="prefix"
-                value={default_style.prefix}
+                value={defaultStyle.prefix}
                 placeholder="Prefixo"
                 autocomplete="off"
             />
@@ -61,7 +61,7 @@ const font_size_counter_marks = [0, 61, 122, 183, 244];
                     name="font-color"
                     format="rgb"
                     formats={["rgb", "hex"]}
-                    defaultValue={default_style.font_color}
+                    defaultValue={defaultStyle.fontColor}
                     size="lg"
                 />
             </div>
@@ -72,15 +72,15 @@ const font_size_counter_marks = [0, 61, 122, 183, 244];
             <Slider
                 id="font-size-prefix-slider"
                 name="font-size-prefix"
-                value={default_style.font_size_prefix}
+                value={defaultStyle.fontSizePrefix}
                 max={244}
             />
             <div class="flex items-center justify-between text-muted-foreground text-xs tabular-nums">
-                <span class="w-6 text-left">{font_size_prefix_marks[0]}</span>
-                <span class="w-6 text-center">{font_size_prefix_marks[1]}</span>
-                <span class="w-6 text-center">{font_size_prefix_marks[2]}</span>
-                <span class="w-6 text-center">{font_size_prefix_marks[3]}</span>
-                <span class="w-6 text-right">{font_size_prefix_marks[4]}</span>
+                <span class="w-6 text-left">{fontSizePrefixMarks[0]}</span>
+                <span class="w-6 text-center">{fontSizePrefixMarks[1]}</span>
+                <span class="w-6 text-center">{fontSizePrefixMarks[2]}</span>
+                <span class="w-6 text-center">{fontSizePrefixMarks[3]}</span>
+                <span class="w-6 text-right">{fontSizePrefixMarks[4]}</span>
             </div>
         </div>
 
@@ -89,15 +89,15 @@ const font_size_counter_marks = [0, 61, 122, 183, 244];
             <Slider
                 id="font-size-counter-slider"
                 name="font-size-counter"
-                value={default_style.font_size_counter}
+                value={defaultStyle.fontSizeCounter}
                 max={244}
             />
             <div class="flex items-center justify-between text-muted-foreground text-xs tabular-nums">
-                <span class="w-6 text-left">{font_size_counter_marks[0]}</span>
-                <span class="w-6 text-center">{font_size_counter_marks[1]}</span>
-                <span class="w-6 text-center">{font_size_counter_marks[2]}</span>
-                <span class="w-6 text-center">{font_size_counter_marks[3]}</span>
-                <span class="w-6 text-right">{font_size_counter_marks[4]}</span>
+                <span class="w-6 text-left">{fontSizeCounterMarks[0]}</span>
+                <span class="w-6 text-center">{fontSizeCounterMarks[1]}</span>
+                <span class="w-6 text-center">{fontSizeCounterMarks[2]}</span>
+                <span class="w-6 text-center">{fontSizeCounterMarks[3]}</span>
+                <span class="w-6 text-right">{fontSizeCounterMarks[4]}</span>
             </div>
         </div>
 
@@ -147,126 +147,134 @@ const font_size_counter_marks = [0, 61, 122, 183, 244];
 </div>
 
 <script>
-    import type { ColorPickerChangeEvent } from "@/components/starwind/color-picker/ColorPickerTypes";
-
-    type ProgrammaticColorPickerElement = HTMLElement & {
-        setValue: (newRgb: string) => void;
-    };
-
     import { $username, $uuid, $style } from "@/stores/counter.js";
 
-    // Elements
-    const widget_url_input = document.getElementById("widget-url") as HTMLInputElement;
-    const preview_prefix = document.getElementById("preview-prefix") as HTMLSpanElement;
-    const preview_counter = document.getElementById("preview-counter") as HTMLSpanElement;
-    const copy_url_button = document.getElementById("copy-widget-url") as HTMLButtonElement;
+    function handleSettingsPreview() {
+        // Elements
+        const widgetUrlInput = document.getElementById("widget-url") as HTMLInputElement;
+        const previewPrefix = document.getElementById("preview-prefix") as HTMLSpanElement;
+        const previewCounter = document.getElementById("preview-counter") as HTMLSpanElement;
+        const copyUrlButton = document.getElementById("copy-widget-url") as HTMLButtonElement;
 
-    const URL_ORIGIN = window.location.origin;
-    const update_url_preview = function () {
-        let settings_encoded = encodeURIComponent(JSON.stringify($style.get()));
-        let url = `${URL_ORIGIN}/widgets/counter/?username=${$username.get()}&uuid=${$uuid.get()}&settings=${settings_encoded}`;
+        const URL_ORIGIN = window.location.origin;
+        const updateUrlPreview = function () {
+            let settings_encoded = encodeURIComponent(JSON.stringify($style.get()));
+            let url = `${URL_ORIGIN}/widgets/counter/?username=${$username.get()}&uuid=${$uuid.get()}&settings=${settings_encoded}`;
 
-        widget_url_input.value = url;
-    };
+            widgetUrlInput.value = url;
+        };
 
-    const update_widget_preview = function () {
-        preview_prefix.style.fontFamily = $style.get().font_family;
-        preview_counter.style.fontFamily = $style.get().font_family;
-        preview_prefix.textContent = $style.get().prefix;
-        preview_prefix.style.color = $style.get().font_color;
-        preview_counter.style.color = $style.get().font_color;
-        preview_prefix.style.fontSize = `${$style.get().font_size_prefix}px`;
-        preview_counter.style.fontSize = `${$style.get().font_size_counter}px`;
+        const updateWidgetPreview = function () {
+            previewPrefix.style.fontFamily = $style.get().fontFamily;
+            previewCounter.style.fontFamily = $style.get().fontFamily;
+            previewPrefix.textContent = $style.get().prefix;
+            previewPrefix.style.color = $style.get().fontColor;
+            previewCounter.style.color = $style.get().fontColor;
+            previewPrefix.style.fontSize = `${$style.get().fontSizePrefix}px`;
+            previewCounter.style.fontSize = `${$style.get().fontSizeCounter}px`;
 
-        update_url_preview();
-    };
+            updateUrlPreview();
+        };
 
-    // Copy URL feature
-    widget_url_input.addEventListener("focus", () => widget_url_input.select());
-    copy_url_button.addEventListener("click", async () => {
-        try {
-            await navigator.clipboard.writeText(widget_url_input.value);
-            widget_url_input.select();
-        } catch (e) {
-            console.error("Fail to copy URL:", e);
-        }
-    });
+        // Copy URL feature
+        widgetUrlInput.addEventListener("focus", () => widgetUrlInput.select());
+        copyUrlButton.addEventListener("click", async () => {
+            try {
+                await navigator.clipboard.writeText(widgetUrlInput.value);
+                widgetUrlInput.select();
+            } catch (e) {
+                console.error("Fail to copy URL:", e);
+            }
+        });
 
-    $uuid.subscribe((value) => {
-        update_url_preview();
-    });
+        $uuid.subscribe((value) => {
+            updateUrlPreview();
+        });
 
-    $style.subscribe((value) => {
-        update_widget_preview();
-    });
+        $style.subscribe((value) => {
+            updateWidgetPreview();
+        });
 
-    document.addEventListener("DOMContentLoaded", () => {
-        update_widget_preview();
-    });
+        document.addEventListener("DOMContentLoaded", () => {
+            updateWidgetPreview();
+        });
 
-    // -- SETTINGS --
-    const font_family = document.getElementById("font-family-select") as HTMLDivElement;
-    font_family.addEventListener("starwind:value-change", (event) => {
-        const { value } = (event as CustomEvent<{ value: string | null }>).detail;
-        if (value) $style.setKey("font_family", value);
-    });
+        // -- SETTINGS --
+        const fontFamily = document.getElementById("font-family-select") as HTMLDivElement;
+        fontFamily.addEventListener("starwind:value-change", (event) => {
+            const { value } = (event as CustomEvent<{ value: string | null }>).detail;
+            if (value) $style.setKey("fontFamily", value);
+        });
 
-    const prefix = document.getElementById("prefix-input") as HTMLInputElement;
-    prefix.addEventListener("input", (e) => {
-        $style.setKey("prefix", prefix.value);
-    });
+        const prefix = document.getElementById("prefix-input") as HTMLInputElement;
+        prefix.addEventListener("input", (e) => {
+            $style.setKey("prefix", prefix.value);
+        });
 
-    const font_size_prefix_slider = document.getElementById("font-size-prefix-slider");
-    font_size_prefix_slider?.addEventListener("starwind:value-change", (event) => {
-        const { value } = (event as CustomEvent<{ value: number }>).detail;
-        $style.setKey("font_size_prefix", value);
-    });
+        const fontSizePrefixSlider = document.getElementById("font-size-prefix-slider");
+        fontSizePrefixSlider?.addEventListener("starwind:value-change", (event) => {
+            const { value } = (event as CustomEvent<{ value: number }>).detail;
+            $style.setKey("fontSizePrefix", value);
+        });
 
-    const font_size_counter_slider = document.getElementById("font-size-counter-slider");
-    font_size_counter_slider?.addEventListener("starwind:value-change", (event) => {
-        const { value } = (event as CustomEvent<{ value: number }>).detail;
-        $style.setKey("font_size_counter", value);
-    });
+        const fontSizeCounterSlider = document.getElementById("font-size-counter-slider");
+        fontSizeCounterSlider?.addEventListener("starwind:value-change", (event) => {
+            const { value } = (event as CustomEvent<{ value: number }>).detail;
+            $style.setKey("fontSizeCounter", value);
+        });
 
-    const color_picker = document.getElementById("color-picker") as ProgrammaticColorPickerElement;
-    color_picker.addEventListener("starwind:value-change", (event) => {
-        const { valueAsString } = (event as CustomEvent<{ valueAsString: string }>).detail;
-        console.log(event);
-        $style.setKey("font_color", valueAsString);
-    });
+        const colorPicker = document.getElementById("color-picker") as HTMLElement;
+        colorPicker.addEventListener("starwind:value-change", (event) => {
+            const { valueAsString } = (event as CustomEvent<{ valueAsString: string }>).detail;
+            console.log(event);
+            $style.setKey("fontColor", valueAsString);
+        });
 
-    const fixed_style_checkbox = document.getElementById("fixed-style-checkbox");
-    fixed_style_checkbox?.addEventListener("change", (e) => {
-        const target = e.target as HTMLInputElement;
-        $style.setKey("fixed_style", target.checked);
-    });
+        const fixedStyleCheckbox = document.getElementById("fixed-style-checkbox");
+        fixedStyleCheckbox?.addEventListener("change", (e) => {
+            const target = e.target as HTMLInputElement;
+            $style.setKey("fixedStyle", target.checked);
+        });
 
-    // -- FORM Submit --
-    const form = document.getElementById("counter-settings-form") as HTMLFormElement;
-    const submit_button = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
-    const loading_icon = document.getElementById("loading-form");
+        // -- FORM Submit --
+        const form = document.getElementById("counter-settings-form") as HTMLFormElement;
+        const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+        const loadingSpinner = form.querySelector('svg[data-slot="spinner"]') as HTMLElement;
 
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        submit_button.disabled = true;
-        loading_icon?.classList.remove("hidden");
+        const loadingStart = () => {
+            form.setAttribute("aria-busy", "true");
+            loadingSpinner?.classList.remove("hidden");
+            submitButton.disabled = true;
+        };
 
-        const form_data = new FormData(form);
+        const loadingFinish = () => {
+            form.removeAttribute("aria-busy");
+            loadingSpinner?.classList.add("hidden");
+            submitButton.disabled = false;
+        };
 
-        try {
-            const response = await fetch(`/counter/${$uuid.get()}/settings`, { method: "POST", body: form_data });
-            const result = await response.text();
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            loadingStart();
 
-            if (result != "Success") {
-                throw new Error(`Error ${response.status}: ${result}`);
+            try {
+                const formData = new FormData(form);
+                const response = await fetch(`/counter/${$uuid.get()}/settings`, { method: "POST", body: formData });
+                const result = await response.text();
+
+                if (result != "Success") {
+                    throw new Error(`Error ${response.status}: ${result}`);
+                }
+
+                console.log("Success:", result);
+            } catch (err) {
+                console.error("Fail:", err);
             }
 
-            console.log("Success:", result);
-        } catch (err) {
-            console.error("Fail:", err);
-        }
+            loadingFinish();
+        });
+    }
 
-        submit_button.disabled = false;
-        loading_icon?.classList.add("hidden");
-    });
+    handleSettingsPreview();
+    document.addEventListener("astro:after-swap", handleSettingsPreview);
 </script>

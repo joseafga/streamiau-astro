@@ -6,10 +6,10 @@ export const $username = atom("");
 export const $uuid = atom("");
 // default style options
 export const $style = map({
-    font_family: "Inter",
+    fontFamily: "Inter",
     prefix: "Prefixo:",
-    font_color: "rgb(112, 85, 189)",
-    font_size_prefix: 42,
-    font_size_counter: 100,
-    fixed_style: false,
+    fontColor: "rgb(112, 85, 189)",
+    fontSizePrefix: 42,
+    fontSizeCounter: 100,
+    fixedStyle: false,
 });
