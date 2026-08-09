@@ -63,12 +63,17 @@ import { Button } from "@/components/starwind/button";
 <script>
     import { $uuid } from "@/stores/counter.js";
 
-    const counter_radio = document.getElementById("counter-radio") as HTMLElement;
-    counter_radio.addEventListener("starwind:value-change", (event) => {
-        const { value } = (event as CustomEvent<{ value: string }>).detail;
-        $uuid.set(value);
-    });
+    function handleTableSelect() {
+        const counterRadio = document.getElementById("counter-radio") as HTMLElement;
+        counterRadio.addEventListener("starwind:value-change", (event) => {
+            const { value } = (event as CustomEvent<{ value: string }>).detail;
+            $uuid.set(value);
+        });
 
-    // initial state
-    $uuid.set(counter_radio.getAttribute("data-value") || "");
+        // initial state
+        $uuid.set(counterRadio.getAttribute("data-value") || "");
+    }
+
+    handleTableSelect();
+    document.addEventListener("astro:after-swap", handleTableSelect);
 </script>
