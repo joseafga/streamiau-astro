@@ -1,33 +1,39 @@
 ---
+import { Form } from "@/components/starwind/form";
+import { Field, FieldControl, FieldError, FieldGroup, FieldLabel } from "@/components/starwind/field";
 import { Button } from "@/components/starwind/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/starwind/card";
-import { Input } from "@/components/starwind/input";
 ---
 
-<Card class="mx-auto w-full max-w-sm">
-    <CardHeader>
-        <CardTitle class="text-2xl">Login</CardTitle>
-        <CardDescription>Entre com o seu nome de usuário, um email será enviado com o link de acesso.</CardDescription>
-    </CardHeader>
-    <form id="login-form" method="post" action="/login">
-        <CardContent class="flex flex-col gap-4">
+<div class="mx-auto w-full max-w-100 p-4">
+    <div class="mb-10">
+        <h1 class="font-heading mb-2 text-xl leading-none font-semibold tracking-tight">Login</h1>
+        <p class="text-muted-foreground">
+            Entre com o seu nome de usuário, um email será enviado com o código de acesso.
+        </p>
+    </div>
+    <Form id="login-form" method="post" action="/login">
+        <div class="flex flex-col gap-4">
             <input type="hidden" name="authenticity_token" value="ECR%= csrf_token %ECR" />
             ECR% if redirect_to %ECR
             <input type="hidden" name="redirect_to" value="ECR%= redirect_to %ECR" />
             ECR% end %ECR
-            <div class="flex w-full flex-col gap-2">
-                <Input id="username" name="username" type="text" placeholder="Nome de Usuário" required />
-            </div>
-            <Button variant="primary" type="submit" class="w-full">Login</Button>
+            <FieldGroup class="gap-4">
+                <Field name="username">
+                    <FieldControl id="username" type="text" placeholder="Nome de Usuário" required />
+                    <FieldError match="valueMissing">É necessário preencher o nome de usuário.</FieldError>
+                </Field>
+                <Button variant="primary" type="submit" class="w-full">Login</Button>
+            </FieldGroup>
+
             <p class="text-sm text-center text-muted-foreground">
                 Ainda não tem conta? <a
                     class="text-primary-accent whitespace-nowrap hover:underline"
                     href="mailto:streamiau@joseafga.com.br">streamiau@joseafga.com.br</a
                 >
             </p>
-        </CardContent>
-    </form>
-</Card>
+        </div>
+    </Form>
+</div>
 
 <script>
     import { toast } from "@starwind-ui/astro/toast";

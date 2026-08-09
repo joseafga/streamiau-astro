@@ -152,10 +152,22 @@
       "registry": "default"
     },
     {
-      "framework": "astro",
       "name": "theme-toggle",
+      "version": "2.0.0",
+      "framework": "astro",
+      "registry": "default"
+    },
+    {
+      "name": "form",
+      "version": "1.0.1",
+      "framework": "astro",
+      "registry": "default"
+    },
+    {
+      "framework": "astro",
+      "name": "field",
       "registry": "default",
-      "version": "2.0.0"
+      "version": "1.0.1"
     }
   ],
   "tailwind": {
