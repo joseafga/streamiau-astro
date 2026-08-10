@@ -25,9 +25,6 @@ import { InputOtp, InputOtpGroup, InputOtpSlot, REGEXP_ONLY_DIGITS_AND_CHARS } f
     <Form id="login-form" method="post" action="/login">
         <div class="flex flex-col gap-4">
             <input type="hidden" name="authenticity_token" value="ECR%= csrf_token %ECR" />
-            ECR% if redirect_to %ECR
-            <input type="hidden" name="redirect_to" value="ECR%= redirect_to %ECR" />
-            ECR% end %ECR
             <FieldGroup class="gap-4">
                 <Field name="username">
                     <FieldControl id="username" type="text" placeholder="Nome de Usuário" required />
@@ -59,14 +56,16 @@ import { InputOtp, InputOtpGroup, InputOtpSlot, REGEXP_ONLY_DIGITS_AND_CHARS } f
                 >
             </DialogHeader>
             <form id="confirm-form" method="get" action="/login/confirm">
-                <input type="hidden" name="username" />
+                ECR% if redirect_to %ECR
+                <input type="hidden" name="redirect_to" value="ECR%= redirect_to %ECR" />
+                ECR% end %ECR
                 <InputOtp
                     aria-label="Código de verificação"
                     name="code"
                     maxLength={8}
                     pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
                     size="lg"
-                    class="mx-auto my-8"
+                    class="mx-auto my-8 uppercase"
                 >
                     <InputOtpGroup>
                         <InputOtpSlot index={0} />
@@ -130,10 +129,6 @@ import { InputOtp, InputOtpGroup, InputOtpSlot, REGEXP_ONLY_DIGITS_AND_CHARS } f
 
                 // Success
                 toast.dismiss();
-                // TODO: really necessary?
-                const usernameInput = confirmDialog.querySelector('input[name="username"]') as HTMLInputElement;
-                usernameInput.value = String(formData.get("username") ?? "");
-
                 confirmDialog.dispatchEvent(openDialogEvent);
             } catch (err) {
                 const message = err instanceof Error ? err.message : "Erro inesperado";
