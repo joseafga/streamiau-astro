@@ -21,11 +21,26 @@ export default function htmlToEcr(config) {
           const fromPath = path.join(buildPath, file);
           const renamedPath = path.join(viewsPath, file).replace(EXT_REGEX, ".ecr");
 
+          // Ensure the destination directory exists
+          const destDir = path.dirname(renamedPath);
+          fs.mkdirSync(destDir, { recursive: true });
+
           // Remove if already exists
           if (fs.existsSync(renamedPath)) {
             fs.rmSync(renamedPath, { force: true });
           }
           fs.renameSync(fromPath, renamedPath);
+
+          // Remove directory if empty
+          const fromDir = path.dirname(fromPath) + path.sep;
+          if (fromDir != buildPath && fs.existsSync(fromDir)) {
+            try {
+              fs.rmdirSync(fromDir);
+              console.log(`\x1b[32m✓ Removed empty folder: ${path.relative(buildPath, fromDir)}`);
+            } catch {
+              // Not empty
+            }
+          }
 
           console.log(`\x1b[32m✓ ${file} → ${path.relative(buildPath, renamedPath)}`);
         });

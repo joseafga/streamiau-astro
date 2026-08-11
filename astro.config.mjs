@@ -16,8 +16,8 @@ export default defineConfig({
   },
   integrations: [
     htmlToEcr({
-      views: "../../crystal/streamiau/src/streamiau/views/",
-      assets: "../../crystal/streamiau/public",
+      views: "../streamiau/src/streamiau/views/",
+      assets: "../streamiau/public",
     }),
   ],
 });
