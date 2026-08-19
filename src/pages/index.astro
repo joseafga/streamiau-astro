@@ -4,14 +4,25 @@ import Layout from "@/layouts/Layout.astro";
 ---
 
 <Layout title="Streamiau!">
-    <main class="overflow-hidden">
-        <div class="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-            <div class="pointer-events-none w-full max-w-sm">
-                <Logo background="#090B0C" class="mx-auto size-64 sm:size-96 pr-4" />
-                <div class="mx-auto max-w-md text-center">
-                    <h1 class="font-streamiau text-4xl sm:text-6xl uppercase">Streamiau!</h1>
-                </div>
+    <main class="grid place-items-center min-h-svh gap-4 overflow-hidden">
+        <div class="w-100">
+            <Logo
+                catClass="fill-mist-50"
+                rectClass="fill-mist-900 dark:fill-transparent"
+                class="mx-auto size-64 sm:size-96 pr-4"
+            />
+            <div class="mx-auto max-w-md text-center">
+                <h1 class="font-streamiau text-4xl sm:text-6xl uppercase">Streamiau!</h1>
             </div>
+            <p class="text-muted-foreground text-sm text-center mt-6">
+                Como ainda estamos dando os primeiros passos, o acesso está restrito. Quer fazer parte dessa jornada com
+                a gente? <a
+                    class="text-primary-accent whitespace-nowrap hover:underline"
+                    href="mailto:streamiau@joseafga.com.br?subject=Pedido de acesso ao Streamiau!"
+                    target="_blank"
+                    rel="noopener noreferrer">Mande um e-mail para nós!</a
+                >
+            </p>
         </div>
     </main>
 </Layout>
