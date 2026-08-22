@@ -3,6 +3,7 @@
 @import "@fontsource-variable/inter";
 @import "@fontsource/roboto";
 @import "@fontsource/sniglet";
+@import "@fontsource/sniglet/800";
 
 @plugin "@tailwindcss/forms";
 @custom-variant dark (&:where(.dark, .dark *));
