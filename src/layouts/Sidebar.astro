@@ -6,6 +6,7 @@ import LibraryIcon from "@tabler/icons/outline/library.svg";
 import SettingsIcon from "@tabler/icons/outline/settings.svg";
 import ChevronUpIcon from "@tabler/icons/outline/chevron-up.svg";
 import LogoutIcon from "@tabler/icons/outline/logout.svg";
+import UserIcon from "@tabler/icons/filled/user.svg";
 
 import { ThemeToggle } from "@/components/starwind/theme-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/starwind/avatar";
@@ -89,10 +90,10 @@ for (let item of items) {
                             <DropdownTrigger asChild>
                                 <SidebarMenuButton size="lg">
                                     <Avatar class="size-10 shrink-0 rounded-lg">
-                                        <AvatarFallback class="rounded-full">ECR%= initials %ECR</AvatarFallback>
+                                        <AvatarFallback class="rounded-full">ECR%= user.initials %ECR</AvatarFallback>
                                     </Avatar>
                                     <div class="grid flex-1 text-left text-sm leading-tight">
-                                        <span class="truncate font-semibold">ECR%= username %ECR</span>
+                                        <span class="truncate font-semibold">ECR%= user.username %ECR</span>
                                     </div>
                                     <ChevronUpIcon class="ml-auto size-4" />
                                 </SidebarMenuButton>

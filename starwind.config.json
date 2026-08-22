@@ -174,6 +174,18 @@
       "version": "3.0.1",
       "framework": "astro",
       "registry": "default"
+    },
+    {
+      "name": "badge",
+      "version": "1.5.0",
+      "framework": "astro",
+      "registry": "default"
+    },
+    {
+      "name": "item",
+      "version": "1.2.1",
+      "framework": "astro",
+      "registry": "default"
     }
   ],
   "tailwind": {
