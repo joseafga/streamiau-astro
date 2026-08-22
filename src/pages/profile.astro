@@ -1,0 +1,205 @@
+---
+import UserIcon from "@tabler/icons/filled/user.svg";
+import MailIcon from "@tabler/icons/filled/mail.svg";
+import SteamIcon from "@tabler/icons/filled/brand-steam.svg";
+import YouTubeIcon from "@tabler/icons/filled/brand-youtube.svg";
+import KeyIcon from "@tabler/icons/filled/key.svg";
+import EyeIcon from "@tabler/icons/outline/eye.svg";
+import EyeOffIcon from "@tabler/icons/outline/eye-off.svg";
+import { Avatar, AvatarFallback } from "@/components/starwind/avatar";
+import { Card, CardContent } from "@/components/starwind/card";
+import { Badge } from "@/components/starwind/badge";
+import { Separator } from "@/components/starwind/separator";
+import { Item, ItemGroup, ItemActions, ItemContent } from "@/components/starwind/item";
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/starwind/input-group";
+
+import Layout from "@/layouts/Sidebar.astro";
+---
+
+<Layout title="Perfil - Streamiau!">
+    <div class="p-4">
+        <div class="bg-muted/50 flex-1 rounded-xl">
+            <div class="container mx-auto max-w-2xl px-4 py-12 sm:py-16">
+                <!-- Avantar and name -->
+                <div class="flex flex-col sm:flex-row justify-center items-center p-6 gap-4 sm:gap-6">
+                    <Avatar class="size-24 shrink-0 ring-4 ring-primary shadow-lg">
+                        <AvatarFallback class="text-4xl font-bold uppercase"> ECR%= user.initials %ECR </AvatarFallback>
+                    </Avatar>
+
+                    <div class="flex flex-col items-center sm:items-start text-center sm:text-left">
+                        <div class="flex justify-center sm:justify-start items-center gap-3">
+                            <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">ECR%= user.username %ECR</h1>
+                            <Badge variant="primary" class="capitalize">ECR%= user.role %ECR</Badge>
+                        </div>
+                        <p class="mt-1 text-sm text-muted-foreground">Informações e tokens de acesso</p>
+                    </div>
+                </div>
+
+                <Card>
+                    <CardContent>
+                        <!-- User info -->
+                        <div class="group flex items-start gap-4 rounded-xl p-3">
+                            <div class="flex size-10 items-center justify-center rounded-lg bg-accent">
+                                <UserIcon />
+                            </div>
+                            <div>
+                                <p class="text-sm text-muted-foreground">Nome de Usuário</p>
+                                <p>ECR%= user.username %ECR</p>
+                            </div>
+                        </div>
+                        <div class="group flex items-start gap-4 rounded-xl p-3">
+                            <div class="flex size-10 items-center justify-center rounded-lg bg-accent">
+                                <MailIcon />
+                            </div>
+                            <div>
+                                <p class="text-sm text-muted-foreground">E-mail</p>
+                                <p>ECR%= user.email %ECR</p>
+                            </div>
+                        </div>
+
+                        <Separator class="my-2" />
+
+                        <!-- Steam -->
+                        ECR% if user.steamid? %ECR
+                        <div class="group flex items-start gap-4 rounded-xl p-3">
+                            <div class="flex size-10 items-center justify-center rounded-lg bg-blue-900">
+                                <SteamIcon />
+                            </div>
+                            <div>
+                                <p class="text-sm text-muted-foreground">Steam</p>
+                                <a
+                                    href="https://steamcommunity.com/profiles/ECR%= user.steamid %ECR/"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    class="font-semibold hover:underline"
+                                >
+                                    ECR%= user.steamid %ECR
+                                </a>
+                            </div>
+                        </div>
+                        ECR% end %ECR
+
+                        <!-- YouTube -->
+                        ECR% if user.youtubeid? %ECR
+                        <div class="group flex items-start gap-4 rounded-xl p-3">
+                            <div class="flex size-10 items-center justify-center rounded-lg bg-red-700">
+                                <YouTubeIcon />
+                            </div>
+                            <div>
+                                <p class="text-sm text-muted-foreground">YouTube</p>
+                                <a
+                                    href="https://www.youtube.com/@ECR%= user.youtubeid %ECR"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    class="font-semibold hover:underline"
+                                >
+                                    ECR%= user.youtubeid %ECR
+                                </a>
+                            </div>
+                        </div>
+                        ECR% end %ECR
+
+                        <!-- SEPARATOR? -->
+                        ECR% if user.youtubeid? || user.steamid? %ECR
+                        <Separator class="my-2" />
+                        ECR% end %ECR
+
+                        <!-- Tokens -->
+                        <div class="group flex items-center gap-4 rounded-xl p-3">
+                            <div class="flex size-10 items-center justify-center rounded-lg bg-accent">
+                                <KeyIcon />
+                            </div>
+                            <h1 class="text-1xl font-bold">Tokens de Acesso</h1>
+                        </div>
+
+                        <ItemGroup class="gap-2">
+                            ECR% if user.tokens.empty? %ECR
+                            <p class="py-6 text-center text-sm text-muted-foreground">Nenhum token criado ainda.</p>
+                            ECR% else %ECR <!-- ECR Tokens START -->
+                            ECR% user.tokens.each do |token| %ECR
+                            <Item variant="outline">
+                                <ItemContent>
+                                    <span class="text-xs text-muted-foreground">
+                                        <time datetime="ECR%= token.created_at %ECR" data-date></time>
+                                    </span>
+                                    <div class="flex flex-wrap gap-1.5">
+                                        ECR% token.allow.each do |allowed| %ECR
+                                        <Badge variant="secondary" class="text-xs"> ECR%= allowed %ECR </Badge>
+                                        ECR% end %ECR
+                                    </div>
+                                </ItemContent>
+                                <ItemActions>
+                                    <InputGroup data-token-group>
+                                        <InputGroupInput
+                                            type="password"
+                                            value="ECR%= token.value %ECR"
+                                            readonly
+                                            aria-label="Token"
+                                        />
+                                        <InputGroupAddon align="inline-end">
+                                            <InputGroupButton
+                                                aria-label="Mostrar/Esconder Token"
+                                                title="Mostrar/Esconder Token"
+                                                size="icon-sm"
+                                                data-toggle-visibility
+                                            >
+                                                <EyeIcon data-icon-show class="size-4" />
+                                                <EyeOffIcon data-icon-hide class="hidden size-4" />
+                                            </InputGroupButton>
+                                        </InputGroupAddon>
+                                    </InputGroup>
+                                </ItemActions>
+                            </Item>
+                            ECR% end %ECR <!-- ECR Tokens END -->
+                            ECR% end %ECR
+                        </ItemGroup>
+                    </CardContent>
+                </Card>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<script>
+    function formatDates() {
+        document.querySelectorAll("[data-date]").forEach((el) => {
+            const iso = el.getAttribute("datetime") || el.textContent;
+            if (!iso) return;
+
+            el.textContent = new Date(iso).toLocaleDateString("pt-BR", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+            });
+        });
+    }
+
+    function initTokenVisibility() {
+        const groups = document.querySelectorAll("[data-token-group]");
+
+        groups.forEach((group) => {
+            const input = group.querySelector<HTMLInputElement>("input");
+            const button = group.querySelector<HTMLButtonElement>("[data-toggle-visibility]");
+            const iconShow = group.querySelector("[data-icon-show]");
+            const iconHide = group.querySelector("[data-icon-hide]");
+
+            if (!input || !button || !iconShow || !iconHide) return;
+
+            button.addEventListener("click", () => {
+                const isHidden = input.type === "password";
+
+                input.type = isHidden ? "text" : "password";
+
+                iconShow.classList.toggle("hidden", isHidden);
+                iconHide.classList.toggle("hidden", !isHidden);
+            });
+        });
+    }
+
+    formatDates();
+    initTokenVisibility();
+    document.addEventListener("astro:after-swap", formatDates);
+    document.addEventListener("astro:after-swap", initTokenVisibility);
+</script>

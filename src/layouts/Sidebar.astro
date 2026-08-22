@@ -99,7 +99,11 @@ for (let item of items) {
                                 </SidebarMenuButton>
                             </DropdownTrigger>
                             <DropdownContent class="min-w-48" side="top" align="end">
-                                <DropdownLinkItem href="/logout">
+                                <DropdownLinkItem class="hover:cursor-pointer" href="/profile">
+                                    <UserIcon class="mr-2 size-4" />
+                                    Perfil
+                                </DropdownLinkItem>
+                                <DropdownLinkItem class="hover:cursor-pointer" href="/logout">
                                     <LogoutIcon class="mr-2 size-4" />
                                     Sair
                                 </DropdownLinkItem>
