@@ -27,7 +27,8 @@ import { Button } from "@/components/starwind/button";
                 <TableHead>Selecione UUID</TableHead>
                 <TableHead>Valor</TableHead>
                 <TableHead>Data</TableHead>
-                <TableHead>Anotação</TableHead>
+                <TableHead>Origem</TableHead>
+                <TableHead>Mensagem</TableHead>
                 <TableHead class="text-right">Ações</TableHead>
             </TableRow>
         </TableHeader>
@@ -45,8 +46,9 @@ import { Button } from "@/components/starwind/button";
                     </div>
                 </TableCell>
                 <TableCell>ECR%= counter[:value] %ECR</TableCell>
-                <TableCell>ECR%= counter[:date] %ECR</TableCell>
-                <TableCell>ECR%= counter[:note] %ECR</TableCell>
+                <TableCell><time datetime="ECR%= counter[:date] %ECR" data-date></time></TableCell>
+                <TableCell>ECR%= counter[:sender] %ECR</TableCell>
+                <TableCell>ECR%= counter[:message] %ECR</TableCell>
                 <TableCell class="text-right">
                     <div class="flex flex-row-reverse gap-2">
                         <Button variant="error" size="icon" aria-label="Submit">
@@ -74,6 +76,23 @@ import { Button } from "@/components/starwind/button";
         $uuid.set(counterRadio.getAttribute("data-value") || "");
     }
 
+    function formatDates() {
+        document.querySelectorAll("[data-date]").forEach((el) => {
+            const iso = el.getAttribute("datetime") || el.textContent;
+            if (!iso) return;
+
+            el.textContent = new Date(iso).toLocaleDateString("pt-BR", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+            });
+        });
+    }
+
     handleTableSelect();
+    formatDates();
     document.addEventListener("astro:after-swap", handleTableSelect);
+    document.addEventListener("astro:after-swap", formatDates);
 </script>
