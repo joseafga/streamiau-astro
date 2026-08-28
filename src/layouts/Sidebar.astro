@@ -90,10 +90,12 @@ for (let item of items) {
                             <DropdownTrigger asChild>
                                 <SidebarMenuButton size="lg">
                                     <Avatar class="size-10 shrink-0 rounded-lg">
-                                        <AvatarFallback class="rounded-full">ECR%= user.initials %ECR</AvatarFallback>
+                                        <AvatarFallback class="rounded-full"
+                                            >ECR%= session_user.initials %ECR</AvatarFallback
+                                        >
                                     </Avatar>
                                     <div class="grid flex-1 text-left text-sm leading-tight">
-                                        <span class="truncate font-semibold">ECR%= user.username %ECR</span>
+                                        <span class="truncate font-semibold">ECR%= session_user.username %ECR</span>
                                     </div>
                                     <ChevronUpIcon class="ml-auto size-4" />
                                 </SidebarMenuButton>

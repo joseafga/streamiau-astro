@@ -23,13 +23,17 @@ import Layout from "@/layouts/Sidebar.astro";
                 <!-- Avantar and name -->
                 <div class="flex flex-col sm:flex-row justify-center items-center p-6 gap-4 sm:gap-6">
                     <Avatar class="size-24 shrink-0 ring-4 ring-primary shadow-lg">
-                        <AvatarFallback class="text-4xl font-bold uppercase"> ECR%= user.initials %ECR </AvatarFallback>
+                        <AvatarFallback class="text-4xl font-bold uppercase">
+                            ECR%= session_user.initials %ECR
+                        </AvatarFallback>
                     </Avatar>
 
                     <div class="flex flex-col items-center sm:items-start text-center sm:text-left">
                         <div class="flex justify-center sm:justify-start items-center gap-3">
-                            <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">ECR%= user.username %ECR</h1>
-                            <Badge variant="primary" class="capitalize">ECR%= user.role %ECR</Badge>
+                            <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">
+                                ECR%= session_user.username %ECR
+                            </h1>
+                            <Badge variant="primary" class="capitalize">ECR%= session_user.role %ECR</Badge>
                         </div>
                         <p class="mt-1 text-sm text-muted-foreground">Informações e tokens de acesso</p>
                     </div>
@@ -44,7 +48,7 @@ import Layout from "@/layouts/Sidebar.astro";
                             </div>
                             <div>
                                 <p class="text-sm text-muted-foreground">Nome de Usuário</p>
-                                <p>ECR%= user.username %ECR</p>
+                                <p>ECR%= session_user.username %ECR</p>
                             </div>
                         </div>
                         <div class="group flex items-start gap-4 rounded-xl p-3">
@@ -53,14 +57,14 @@ import Layout from "@/layouts/Sidebar.astro";
                             </div>
                             <div>
                                 <p class="text-sm text-muted-foreground">E-mail</p>
-                                <p>ECR%= user.email %ECR</p>
+                                <p>ECR%= session_user.email %ECR</p>
                             </div>
                         </div>
 
                         <Separator class="my-2" />
 
                         <!-- Steam -->
-                        ECR% if user.steamid? %ECR
+                        ECR% if session_user.steamid? %ECR
                         <div class="group flex items-start gap-4 rounded-xl p-3">
                             <div class="flex size-10 items-center justify-center rounded-lg bg-blue-900">
                                 <SteamIcon />
@@ -68,19 +72,19 @@ import Layout from "@/layouts/Sidebar.astro";
                             <div>
                                 <p class="text-sm text-muted-foreground">Steam</p>
                                 <a
-                                    href="https://steamcommunity.com/profiles/ECR%= user.steamid %ECR/"
+                                    href="https://steamcommunity.com/profiles/ECR%= session_user.steamid %ECR/"
                                     target="_blank"
                                     rel="noreferrer"
                                     class="font-semibold hover:underline"
                                 >
-                                    ECR%= user.steamid %ECR
+                                    ECR%= session_user.steamid %ECR
                                 </a>
                             </div>
                         </div>
                         ECR% end %ECR
 
                         <!-- YouTube -->
-                        ECR% if user.youtubeid? %ECR
+                        ECR% if session_user.youtubeid? %ECR
                         <div class="group flex items-start gap-4 rounded-xl p-3">
                             <div class="flex size-10 items-center justify-center rounded-lg bg-red-700">
                                 <YouTubeIcon />
@@ -88,19 +92,19 @@ import Layout from "@/layouts/Sidebar.astro";
                             <div>
                                 <p class="text-sm text-muted-foreground">YouTube</p>
                                 <a
-                                    href="https://www.youtube.com/@ECR%= user.youtubeid %ECR"
+                                    href="https://www.youtube.com/@ECR%= session_user.youtubeid %ECR"
                                     target="_blank"
                                     rel="noreferrer"
                                     class="font-semibold hover:underline"
                                 >
-                                    ECR%= user.youtubeid %ECR
+                                    ECR%= session_user.youtubeid %ECR
                                 </a>
                             </div>
                         </div>
                         ECR% end %ECR
 
                         <!-- SEPARATOR? -->
-                        ECR% if user.youtubeid? || user.steamid? %ECR
+                        ECR% if session_user.youtubeid? || session_user.steamid? %ECR
                         <Separator class="my-2" />
                         ECR% end %ECR
 
@@ -113,10 +117,10 @@ import Layout from "@/layouts/Sidebar.astro";
                         </div>
 
                         <ItemGroup class="gap-2">
-                            ECR% if user.tokens.empty? %ECR
+                            ECR% if session_user.tokens.empty? %ECR
                             <p class="py-6 text-center text-sm text-muted-foreground">Nenhum token criado ainda.</p>
                             ECR% else %ECR <!-- ECR Tokens START -->
-                            ECR% user.tokens.each do |token| %ECR
+                            ECR% session_user.tokens.each do |token| %ECR
                             <Item variant="outline">
                                 <ItemContent>
                                     <span class="text-xs text-muted-foreground">
