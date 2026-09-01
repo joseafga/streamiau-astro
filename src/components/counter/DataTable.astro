@@ -18,7 +18,7 @@ import { Button } from "@/components/starwind/button";
 <RadioGroup
     id="counter-radio"
     name="counter-radio"
-    defaultValue="ECR%= counters.first?.try(&.[:uuid]) %ECR"
+    defaultValue="ECR%= counters.first?.try(&.uuid) %ECR"
     legend="Choose an option"
 >
     <Table>
@@ -35,20 +35,26 @@ import { Button } from "@/components/starwind/button";
         <TableBody>
             ECR% counters.each_with_index do |counter, index| %ECR
             <TableRow>
-                <TableCell class="font-medium">
+                <TableCell class="font-semibold">
                     <div class="flex gap-2 items-center">
                         <RadioGroupItem
                             id="option-ECR%= index %ECR"
-                            value="ECR%= counter[:uuid] %ECR"
+                            value="ECR%= counter.uuid %ECR"
                             name="counter-radio-1"
                         />
-                        <Label for="option-ECR%= index %ECR">ECR%= counter[:uuid] %ECR</Label>
+                        <Label for="option-ECR%= index %ECR">ECR%= counter.uuid %ECR</Label>
                     </div>
                 </TableCell>
-                <TableCell>ECR%= counter[:value] %ECR</TableCell>
-                <TableCell><time datetime="ECR%= counter[:date] %ECR" data-date></time></TableCell>
-                <TableCell>ECR%= counter[:sender] %ECR</TableCell>
-                <TableCell>ECR%= counter[:message] %ECR</TableCell>
+                <TableCell>ECR%= counter.value %ECR</TableCell>
+                ECR% if metadata = counter.metadata %ECR
+                <TableCell><time datetime="ECR%= metadata.time %ECR" data-date></time></TableCell>
+                <TableCell>ECR%= metadata.sender %ECR</TableCell>
+                <TableCell>ECR%= metadata.message %ECR</TableCell>
+                ECR% else %ECR
+                <TableCell />
+                <TableCell />
+                <TableCell />
+                ECR% end %ECR
                 <TableCell class="text-right">
                     <div class="flex flex-row-reverse gap-2">
                         <Button variant="error" size="icon" aria-label="Submit">

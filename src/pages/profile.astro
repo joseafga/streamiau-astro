@@ -64,7 +64,7 @@ import Layout from "@/layouts/Sidebar.astro";
                         <Separator class="my-2" />
 
                         <!-- Steam -->
-                        ECR% if session_user.steamid? %ECR
+                        ECR% if steamid = session_user.steamid %ECR
                         <div class="group flex items-start gap-4 rounded-xl p-3">
                             <div class="flex size-10 items-center justify-center rounded-lg bg-blue-900">
                                 <SteamIcon />
@@ -72,19 +72,19 @@ import Layout from "@/layouts/Sidebar.astro";
                             <div>
                                 <p class="text-sm text-muted-foreground">Steam</p>
                                 <a
-                                    href="https://steamcommunity.com/profiles/ECR%= session_user.steamid %ECR/"
+                                    href="https://steamcommunity.com/profiles/ECR%= steamid %ECR/"
                                     target="_blank"
                                     rel="noreferrer"
                                     class="font-semibold hover:underline"
                                 >
-                                    ECR%= session_user.steamid %ECR
+                                    ECR%= steamid %ECR
                                 </a>
                             </div>
                         </div>
                         ECR% end %ECR
 
                         <!-- YouTube -->
-                        ECR% if session_user.youtubeid? %ECR
+                        ECR% if youtubeid = session_user.youtubeid %ECR
                         <div class="group flex items-start gap-4 rounded-xl p-3">
                             <div class="flex size-10 items-center justify-center rounded-lg bg-red-700">
                                 <YouTubeIcon />
@@ -92,19 +92,19 @@ import Layout from "@/layouts/Sidebar.astro";
                             <div>
                                 <p class="text-sm text-muted-foreground">YouTube</p>
                                 <a
-                                    href="https://www.youtube.com/@ECR%= session_user.youtubeid %ECR"
+                                    href="https://www.youtube.com/@ECR%= youtubeid %ECR"
                                     target="_blank"
                                     rel="noreferrer"
                                     class="font-semibold hover:underline"
                                 >
-                                    ECR%= session_user.youtubeid %ECR
+                                    ECR%= youtubeid %ECR
                                 </a>
                             </div>
                         </div>
                         ECR% end %ECR
 
                         <!-- SEPARATOR? -->
-                        ECR% if session_user.youtubeid? || session_user.steamid? %ECR
+                        ECR% if session_user.youtubeid || session_user.steamid %ECR
                         <Separator class="my-2" />
                         ECR% end %ECR
 
