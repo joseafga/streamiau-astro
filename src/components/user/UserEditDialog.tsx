@@ -57,6 +57,16 @@ export default function EditUserDialog({ open, setOpen, user, onSave }: Props) {
     setDraft(user);
   }, [user]);
 
+  function getCsrfToken(): string {
+    const csrfToken = document
+      .querySelector('meta[name="authenticity-token"]')
+      ?.getAttribute("content");
+
+    if (csrfToken) return csrfToken;
+
+    throw new Error("CSRF Token não foi encontrado.");
+  }
+
   function handleFieldChange(field: keyof User, value: string) {
     if (!draft) return;
     setDraft({ ...draft, [field]: value });
@@ -69,11 +79,7 @@ export default function EditUserDialog({ open, setOpen, user, onSave }: Props) {
 
   async function handleSave() {
     if (!draft) return;
-
-    const csrfToken = document
-      .querySelector('meta[name="authenticity-token"]')
-      ?.getAttribute("content");
-    if (!csrfToken) return;
+    const csrfToken = getCsrfToken();
 
     try {
       const response = await fetch(`/admin/users/${draft.username}`, {

@@ -36,6 +36,16 @@ export default function UserTokensDialog({ open, setOpen, user }: Props) {
     setDraft(user);
   }, [user]);
 
+  function getCsrfToken(): string {
+    const csrfToken = document
+      .querySelector('meta[name="authenticity-token"]')
+      ?.getAttribute("content");
+
+    if (csrfToken) return csrfToken;
+
+    throw new Error("CSRF Token não foi encontrado.");
+  }
+
   function handleToggle(value: Allow, checked: boolean) {
     if (checked) {
       setPermissions((prev) => [...prev, value]);
@@ -47,11 +57,7 @@ export default function UserTokensDialog({ open, setOpen, user }: Props) {
   async function handleGenerate() {
     if (!draft) return;
     if (permissions.length == 0) return;
-
-    const csrfToken = document
-      .querySelector('meta[name="authenticity-token"]')
-      ?.getAttribute("content");
-    if (!csrfToken) return;
+    const csrfToken = getCsrfToken();
 
     try {
       const response = await fetch(`/admin/users/${draft.username}/token`, {
@@ -77,11 +83,7 @@ export default function UserTokensDialog({ open, setOpen, user }: Props) {
 
   async function handleDelete(token: Token) {
     if (!draft) return;
-
-    const csrfToken = document
-      .querySelector('meta[name="authenticity-token"]')
-      ?.getAttribute("content");
-    if (!csrfToken) return;
+    const csrfToken = getCsrfToken();
 
     try {
       const response = await fetch(`/admin/users/${draft.username}/token`, {
