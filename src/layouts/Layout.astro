@@ -11,6 +11,25 @@ interface Props {
 const { title, csrfToken } = Astro.props;
 ---
 
+<script is:inline>
+    const getThemePreference = () => {
+        if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+            return localStorage.getItem("theme");
+        }
+        return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    };
+    const isDark = getThemePreference() === "dark";
+    document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+
+    if (typeof localStorage !== "undefined") {
+        const observer = new MutationObserver(() => {
+            const isDark = document.documentElement.classList.contains("dark");
+            localStorage.setItem("theme", isDark ? "dark" : "light");
+        });
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    }
+</script>
+
 <html lang="pt-BR">
     <head>
         <meta charset="utf-8" />
@@ -19,7 +38,6 @@ const { title, csrfToken } = Astro.props;
         <meta name="viewport" content="width=device-width" />
         <title>{title}</title>
         {csrfToken && <meta name="authenticity-token" content="ECR%= csrf_token %ECR" />}
-        <ThemeInitScript defaultTheme="system" />
     </head>
     <body>
         <slot />

@@ -8,7 +8,7 @@ import ChevronUpIcon from "@tabler/icons/outline/chevron-up.svg";
 import LogoutIcon from "@tabler/icons/outline/logout.svg";
 import UserIcon from "@tabler/icons/filled/user.svg";
 
-import { ThemeToggle } from "@/components/starwind/theme-toggle";
+import ThemeToggle from "@/components/ThemeToggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/starwind/avatar";
 import { Dropdown, DropdownContent, DropdownLinkItem, DropdownTrigger } from "@/components/starwind/dropdown";
 import {
@@ -139,7 +139,9 @@ for (let item of [...items, ...admin]) {
                 <SidebarTrigger />
                 <span class="text-muted-foreground text-sm">{currentPage}</span>
 
-                <ThemeToggle class="ml-auto" ariaLabel="Mudar tema" size="sm" variant="default" />
+                <div class="ml-auto">
+                    <ThemeToggle client:load />
+                </div>
             </header>
             <div class="relative flex w-full flex-1 flex-col mt-4">
                 <slot />
