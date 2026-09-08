@@ -3,7 +3,12 @@ import "@/styles/global.css";
 import { ThemeInitScript } from "@starwind-ui/astro/theme";
 import { Toaster } from "@/components/starwind/toast";
 
-const { title } = Astro.props;
+interface Props {
+    title: string;
+    csrfToken?: boolean;
+}
+
+const { title, csrfToken } = Astro.props;
 ---
 
 <html lang="pt-BR">
@@ -13,6 +18,7 @@ const { title } = Astro.props;
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width" />
         <title>{title}</title>
+        {csrfToken && <meta name="authenticity-token" content="ECR%= csrf_token %ECR" />}
         <ThemeInitScript defaultTheme="system" />
     </head>
     <body>
