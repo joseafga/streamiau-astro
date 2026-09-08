@@ -170,6 +170,7 @@ export default function TokensDialog({ open, setOpen, user, onSave }: Props) {
                     </FieldContent>
                     <Switch
                       id={key}
+                      checked={permissions.includes(value)}
                       onCheckedChange={(checked) =>
                         handleToggle(value, checked)
                       }
