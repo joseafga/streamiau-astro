@@ -50,8 +50,8 @@ export default function TokenItem(props: Props) {
           {formatDates(props.token.created_at)}
         </span>
         <div className="flex flex-wrap gap-1.5">
-          {props.token.allow.map((allowed) => (
-            <Badge variant="outline" className="text-xs">
+          {props.token.allow.map((allowed, index) => (
+            <Badge key={allowed} variant="outline" className="text-xs">
               {allowLabels[allowed as Allow]}
             </Badge>
           ))}

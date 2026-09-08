@@ -126,7 +126,11 @@ export default function TokensDialog({ open, setOpen, user, onSave }: Props) {
             <div className="grid gap-2">
               {draft &&
                 draft.tokens.map((token) => (
-                  <TokenItem token={token} onDelete={handleDelete} />
+                  <TokenItem
+                    key={token.value}
+                    token={token}
+                    onDelete={handleDelete}
+                  />
                 ))}
             </div>
           </TabsContent>
@@ -134,7 +138,7 @@ export default function TokensDialog({ open, setOpen, user, onSave }: Props) {
             <FieldSet>
               <FieldGroup className="gap-3 my-2">
                 {Object.entries(Allow).map(([key, value]) => (
-                  <Field orientation="horizontal" className="w-full">
+                  <Field key={key} orientation="horizontal" className="w-full">
                     <FieldContent>
                       <FieldLabel htmlFor={key}>
                         {allowLabels[value]}
