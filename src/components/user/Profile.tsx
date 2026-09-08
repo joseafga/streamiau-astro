@@ -55,7 +55,7 @@ export default function Profile() {
         <CardContent>
           <div className="group flex items-start gap-4 rounded-xl p-3">
             <div className="flex size-10 items-center justify-center rounded-lg bg-accent">
-              <UserRound />
+              <UserRound className="text-white" />
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Nome de Usuário</p>
@@ -64,7 +64,7 @@ export default function Profile() {
           </div>
           <div className="group flex items-start gap-4 rounded-xl p-3">
             <div className="flex size-10 items-center justify-center rounded-lg bg-accent">
-              <Mail />
+              <Mail className="text-white" />
             </div>
             <div>
               <p className="text-sm text-muted-foreground">E-mail</p>
@@ -75,7 +75,7 @@ export default function Profile() {
           {user?.steamid && (
             <div className="group flex items-start gap-4 rounded-xl p-3">
               <div className="flex size-10 items-center justify-center rounded-lg bg-blue-900">
-                <Gamepad2 />
+                <Gamepad2 className="text-white" />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Steam</p>
@@ -93,7 +93,7 @@ export default function Profile() {
           {user?.youtubeid && (
             <div className="group flex items-start gap-4 rounded-xl p-3">
               <div className="flex size-10 items-center justify-center rounded-lg bg-red-700">
-                <Play />
+                <Play className="text-white" />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">YouTube</p>
@@ -111,7 +111,7 @@ export default function Profile() {
           {(user?.steamid || user?.youtubeid) && <Separator className="my-2" />}
           <div className="group flex items-center gap-4 rounded-xl p-3">
             <div className="flex size-10 items-center justify-center rounded-lg bg-accent">
-              <KeyRound />
+              <KeyRound className="text-white" />
             </div>
             <h1 className="text-1xl font-bold">Tokens de Acesso</h1>
           </div>
