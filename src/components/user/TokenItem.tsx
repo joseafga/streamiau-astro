@@ -1,4 +1,5 @@
-import { useState } from "react";
+import * as React from "react";
+import { cn } from "cn";
 import {
   Item,
   ItemActions,
@@ -19,17 +20,17 @@ import { EyeIcon, EyeOffIcon, Trash } from "lucide-react";
 import type { Token, Allow } from "./types";
 import { allowLabels } from "./types";
 
-interface Props {
+interface Props extends React.ComponentPropsWithoutRef<typeof Item> {
   token: Token;
   onDelete?: (token: Token) => void;
 }
 
-export default function TokenItem(props: Props) {
-  const [showPassword, setShowPassword] = useState(false);
+function TokenItem({ className, token, onDelete, ...props }: Props) {
+  const [showPassword, setShowPassword] = React.useState(false);
 
   function handleDelete(token: Token) {
-    if (props.onDelete) {
-      props.onDelete(token);
+    if (onDelete) {
+      onDelete(token);
     }
   }
 
@@ -44,13 +45,13 @@ export default function TokenItem(props: Props) {
   }
 
   return (
-    <Item variant="muted">
+    <Item className={cn(className)} {...props}>
       <ItemContent>
         <span className="text-xs text-muted-foreground">
-          {formatDates(props.token.created_at)}
+          {formatDates(token.created_at)}
         </span>
         <div className="flex flex-wrap gap-1.5">
-          {props.token.allow.map((allowed, index) => (
+          {token.allow.map((allowed, index) => (
             <Badge key={allowed} variant="outline" className="text-xs">
               {allowLabels[allowed as Allow]}
             </Badge>
@@ -62,7 +63,7 @@ export default function TokenItem(props: Props) {
           <InputGroupInput
             id="inline-end-input"
             type={showPassword ? "text" : "password"}
-            value={props.token.value}
+            value={token.value}
             readOnly
           />
 
@@ -77,12 +78,12 @@ export default function TokenItem(props: Props) {
             </InputGroupButton>
           </InputGroupAddon>
         </InputGroup>
-        {props.onDelete && (
+        {onDelete && (
           <Button
             variant="destructive"
             size="icon"
             aria-label="Remover"
-            onClick={() => handleDelete(props.token)}
+            onClick={() => handleDelete(token)}
           >
             <Trash />
           </Button>
@@ -91,3 +92,5 @@ export default function TokenItem(props: Props) {
     </Item>
   );
 }
+
+export { TokenItem };

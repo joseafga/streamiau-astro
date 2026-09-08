@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import TokenItem from "./TokenItem";
+import { TokenItem } from "./TokenItem";
 import type { User, Token } from "./types";
 import { allowLabels, allowDescriptions, Allow } from "./types";
 
