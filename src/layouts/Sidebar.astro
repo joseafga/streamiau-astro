@@ -32,10 +32,11 @@ const items = [
     { title: "Frases", url: "#", icon: LibraryIcon, active: false },
     { title: "Configurações", url: "#", icon: SettingsIcon, active: false },
 ];
+const admin = [{ title: "Usuários", url: "/admin/users", icon: UserIcon, active: false }];
 
 // Set current page as active
 let currentPage = "";
-for (let item of items) {
+for (let item of [...items, ...admin]) {
     if (props.title.startsWith(item.title)) {
         item.active = true;
         currentPage = item.title;
@@ -80,6 +81,23 @@ for (let item of items) {
                             }
                         </SidebarMenu>
                     </SidebarGroupContent>
+                    ECR% if session_user.role.admin? %ECR
+                    <SidebarGroupLabel>Administrador</SidebarGroupLabel>
+                    <SidebarGroupContent>
+                        <SidebarMenu>
+                            {
+                                admin.map((item) => (
+                                    <SidebarMenuItem>
+                                        <SidebarMenuButton href={item.url} isActive={item.active}>
+                                            <item.icon />
+                                            <span>{item.title}</span>
+                                        </SidebarMenuButton>
+                                    </SidebarMenuItem>
+                                ))
+                            }
+                        </SidebarMenu>
+                    </SidebarGroupContent>
+                    ECR% end %ECR
                 </SidebarGroup>
             </SidebarContent>
 
