@@ -26,9 +26,15 @@ interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
   user?: User;
+  onSave: (user: User) => void;
 }
 
-export default function UserTokensDialog({ open, setOpen, user }: Props) {
+export default function UserTokensDialog({
+  open,
+  setOpen,
+  user,
+  onSave,
+}: Props) {
   const [draft, setDraft] = useState<User | undefined>(undefined);
   const [permissions, setPermissions] = useState<Allow[]>([]);
 
@@ -73,9 +79,9 @@ export default function UserTokensDialog({ open, setOpen, user }: Props) {
         throw new Error(`Error ${response.status}`);
       }
 
-      // onSave(draft);
-      const result = await response.text();
-      console.log("Success:", result);
+      const resultToken = (await response.json()) as Token;
+      draft.tokens.push(resultToken);
+      onSave(draft);
     } catch (err) {
       console.error("Fail:", err);
     }
@@ -99,9 +105,9 @@ export default function UserTokensDialog({ open, setOpen, user }: Props) {
         throw new Error(`Error ${response.status}`);
       }
 
-      // onSave(draft);
-      const result = await response.text();
-      console.log("Success:", result);
+      // const result = await response.text(); // response will be null
+      draft.tokens = draft.tokens.filter((t) => t.value !== token.value);
+      onSave(draft);
     } catch (err) {
       console.error("Fail:", err);
     }

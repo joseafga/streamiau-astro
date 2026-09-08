@@ -108,6 +108,7 @@ export default function UserManagement() {
         open={openTokens}
         setOpen={setOpenTokens}
         user={selectedUser}
+        onSave={handleSave}
       />
     </>
   );
