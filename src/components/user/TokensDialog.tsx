@@ -29,12 +29,7 @@ interface Props {
   onSave: (user: User) => void;
 }
 
-export default function UserTokensDialog({
-  open,
-  setOpen,
-  user,
-  onSave,
-}: Props) {
+export default function TokensDialog({ open, setOpen, user, onSave }: Props) {
   const [draft, setDraft] = useState<User | undefined>(undefined);
   const [permissions, setPermissions] = useState<Allow[]>([]);
 

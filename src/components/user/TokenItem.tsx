@@ -24,7 +24,7 @@ interface Props {
   onDelete?: (token: Token) => void;
 }
 
-export default function Token(props: Props) {
+export default function TokenItem(props: Props) {
   const [showPassword, setShowPassword] = useState(false);
 
   function handleDelete(token: Token) {

@@ -9,21 +9,21 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { SquarePen, KeyRound, Trash } from "lucide-react";
-import UserEditDialog from "./UserEditDialog";
-import UserTokensDialog from "./UserTokensDialog";
+import EditDialog from "./EditDialog";
+import TokensDialog from "./TokensDialog";
 import type { User } from "./types";
 
-export default function UserManagement() {
+export default function DataTable() {
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | undefined>(undefined);
   const [openEdit, setOpenEdit] = useState(false);
   const [openTokens, setOpenTokens] = useState(false);
 
   useEffect(() => {
-    const userData = document.getElementById("users-data");
+    const usersData = document.getElementById("users-data");
 
-    if (userData?.textContent) {
-      setUsers(JSON.parse(userData.textContent));
+    if (usersData?.textContent) {
+      setUsers(JSON.parse(usersData.textContent));
     }
   }, []);
 
@@ -98,13 +98,13 @@ export default function UserManagement() {
           ))}
         </TableBody>
       </Table>
-      <UserEditDialog
+      <EditDialog
         open={openEdit}
         setOpen={setOpenEdit}
         user={selectedUser}
         onSave={handleSave}
       />
-      <UserTokensDialog
+      <TokensDialog
         open={openTokens}
         setOpen={setOpenTokens}
         user={selectedUser}

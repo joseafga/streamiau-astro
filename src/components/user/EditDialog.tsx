@@ -50,7 +50,7 @@ const roles = [
   { label: "Member", value: 20 },
 ];
 
-export default function EditUserDialog({ open, setOpen, user, onSave }: Props) {
+export default function EditDialog({ open, setOpen, user, onSave }: Props) {
   const [draft, setDraft] = useState<User | undefined>(undefined);
 
   useEffect(() => {
