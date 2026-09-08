@@ -1,4 +1,5 @@
 import tailwindcss from "@tailwindcss/vite";
+import react from "@astrojs/react";
 import { defineConfig } from "astro/config";
 import htmlToEcr from "./astro-html-to-ecr.js";
 
@@ -15,6 +16,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   integrations: [
+    react(),
     htmlToEcr({
       views: "../streamiau/src/streamiau/views/",
       assets: "../streamiau/public",

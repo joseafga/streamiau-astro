@@ -312,12 +312,12 @@ const fontSizeCounterMarks = [0, 61, 122, 183, 244];
             try {
                 const formData = new FormData(form);
                 const response = await fetch(`/counter/${$uuid.get()}/settings`, { method: "POST", body: formData });
-                const result = await response.text();
 
-                if (result != "Success") {
-                    throw new Error(`Error ${response.status}: ${result}`);
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}`);
                 }
 
+                const result = await response.text();
                 console.log("Success:", result);
             } catch (err) {
                 console.error("Fail:", err);
