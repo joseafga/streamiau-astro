@@ -1,7 +1,6 @@
 ---
 import "@/styles/global.css";
-import { ThemeInitScript } from "@starwind-ui/astro/theme";
-import { Toaster } from "@/components/starwind/toast";
+import { Toaster } from "@/components/ui/sonner";
 
 interface Props {
     title: string;
@@ -42,6 +41,6 @@ const { title, csrfToken } = Astro.props;
     <body>
         <slot />
 
-        <Toaster position="top-center" />
+        <Toaster position="top-center" client:load />
     </body>
 </html>

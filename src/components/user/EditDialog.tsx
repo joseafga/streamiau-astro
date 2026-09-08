@@ -34,6 +34,8 @@ import {
   InputGroupText,
   InputGroupTextarea,
 } from "@/components/ui/input-group";
+import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
 import type { User } from "./types";
 
 interface Props {
@@ -52,6 +54,7 @@ const roles = [
 
 export default function EditDialog({ open, setOpen, user, onSave }: Props) {
   const [draft, setDraft] = useState<User | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setDraft(user);
@@ -79,9 +82,12 @@ export default function EditDialog({ open, setOpen, user, onSave }: Props) {
 
   async function handleSave() {
     if (!draft) return;
-    const csrfToken = getCsrfToken();
+
+    setIsLoading(true);
+    const toastId = toast.loading("Salvando mudanças…");
 
     try {
+      const csrfToken = getCsrfToken();
       const response = await fetch(`/admin/users/${draft.username}`, {
         method: "PATCH",
         headers: {
@@ -92,14 +98,15 @@ export default function EditDialog({ open, setOpen, user, onSave }: Props) {
       });
 
       if (!response.ok) {
-        throw new Error(`Error ${response.status}`);
+        throw new Error(response.status.toString());
       }
 
       onSave(draft);
-      // const result = await response.text();
-      // console.log("Success:", result);
+      toast.success("Editado com sucesso.", { id: toastId });
+      setIsLoading(false);
     } catch (err) {
-      console.error("Fail:", err);
+      toast.error(`Falha - ${err}`, { id: toastId });
+      setIsLoading(false);
     }
   }
 
@@ -206,7 +213,13 @@ export default function EditDialog({ open, setOpen, user, onSave }: Props) {
           <Button variant="ghost" onClick={() => setOpen(false)}>
             Cancelar
           </Button>
-          <Button onClick={handleSave}>Salvar</Button>
+          <Button onClick={handleSave} disabled={isLoading}>
+            <Spinner
+              data-icon="inline-start"
+              className={isLoading ? "" : "hidden"}
+            />
+            Salvar
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

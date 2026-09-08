@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
 import { TokenItem } from "./TokenItem";
 import type { User, Token } from "./types";
 import { allowLabels, allowDescriptions, Allow } from "./types";
@@ -32,6 +34,7 @@ interface Props {
 export default function TokensDialog({ open, setOpen, user, onSave }: Props) {
   const [draft, setDraft] = useState<User | undefined>(undefined);
   const [permissions, setPermissions] = useState<Allow[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setDraft(user);
@@ -58,9 +61,12 @@ export default function TokensDialog({ open, setOpen, user, onSave }: Props) {
   async function handleGenerate() {
     if (!draft) return;
     if (permissions.length == 0) return;
-    const csrfToken = getCsrfToken();
+
+    setIsLoading(true);
+    const toastId = toast.loading("Gerando token…");
 
     try {
+      const csrfToken = getCsrfToken();
       const response = await fetch(`/admin/users/${draft.username}/token`, {
         method: "POST",
         headers: {
@@ -71,22 +77,28 @@ export default function TokensDialog({ open, setOpen, user, onSave }: Props) {
       });
 
       if (!response.ok) {
-        throw new Error(`Error ${response.status}`);
+        throw new Error(response.status.toString());
       }
 
       const resultToken = (await response.json()) as Token;
       draft.tokens.push(resultToken);
       onSave(draft);
+      toast.success("Token gerado com sucesso.", { id: toastId });
+      setIsLoading(false);
     } catch (err) {
-      console.error("Fail:", err);
+      toast.error(`Falha - ${err}`, { id: toastId });
+      setIsLoading(false);
     }
   }
 
   async function handleDelete(token: Token) {
     if (!draft) return;
-    const csrfToken = getCsrfToken();
+
+    setIsLoading(true);
+    const toastId = toast.loading("Deletando token…");
 
     try {
+      const csrfToken = getCsrfToken();
       const response = await fetch(`/admin/users/${draft.username}/token`, {
         method: "DELETE",
         headers: {
@@ -103,8 +115,11 @@ export default function TokensDialog({ open, setOpen, user, onSave }: Props) {
       // const result = await response.text(); // response will be null
       draft.tokens = draft.tokens.filter((t) => t.value !== token.value);
       onSave(draft);
+      toast.success("Token deletado com sucesso.", { id: toastId });
+      setIsLoading(false);
     } catch (err) {
-      console.error("Fail:", err);
+      toast.error(`Falha - ${err}`, { id: toastId });
+      setIsLoading(false);
     }
 
     console.log(token);
@@ -130,6 +145,12 @@ export default function TokensDialog({ open, setOpen, user, onSave }: Props) {
                     key={token.value}
                     token={token}
                     onDelete={handleDelete}
+                    variant="muted"
+                    className={
+                      isLoading
+                        ? "transition-opacity opacity-70 pointer-events-none"
+                        : "transition-opacity"
+                    }
                   />
                 ))}
             </div>
@@ -156,7 +177,13 @@ export default function TokensDialog({ open, setOpen, user, onSave }: Props) {
                   </Field>
                 ))}
               </FieldGroup>
-              <Button onClick={handleGenerate}>Gerar novo Token</Button>
+              <Button onClick={handleGenerate} disabled={isLoading}>
+                <Spinner
+                  data-icon="inline-start"
+                  className={isLoading ? "" : "hidden"}
+                />
+                Gerar novo Token
+              </Button>
             </FieldSet>
           </TabsContent>
         </Tabs>

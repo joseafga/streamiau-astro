@@ -12,7 +12,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { UserRound, Mail, KeyRound, Gamepad2, Play } from "lucide-react";
-import TokenItem from "@/components/user/TokenItem";
+import { TokenItem } from "@/components/user/TokenItem";
 import type { User, Role } from "./types";
 import { roleLabels } from "./types";
 
