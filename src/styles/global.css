@@ -6,7 +6,6 @@
 @import "@fontsource/sniglet";
 @import "@fontsource/sniglet/800";
 
-@plugin "@tailwindcss/forms";
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
