@@ -201,11 +201,6 @@ export default function EditDialog({ open, setOpen, user, onSave }: Props) {
                 </InputGroup>
               </Field>
             </div>
-            <input
-              type="hidden"
-              name="authenticity_token"
-              value="ECR%= csrf_token %ECR"
-            />
           </FieldGroup>
         )}
 

@@ -20,7 +20,7 @@ import { EyeIcon, EyeOffIcon, Trash } from "lucide-react";
 import type { Token, Allow } from "./types";
 import { allowLabels } from "./types";
 
-interface Props extends React.ComponentPropsWithoutRef<typeof Item> {
+interface Props extends React.ComponentProps<typeof Item> {
   token: Token;
   onDelete?: (token: Token) => void;
 }
