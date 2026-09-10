@@ -39,7 +39,7 @@ export default function DataTable() {
 
   function handleSave(updatedUser: User) {
     setUsers((prev) =>
-      prev.map((u) => (u._id.$oid === updatedUser._id.$oid ? updatedUser : u)),
+      prev.map((u) => (u.username === updatedUser.username ? updatedUser : u)),
     );
     setOpenEdit(false);
   }
@@ -68,7 +68,7 @@ export default function DataTable() {
         </TableHeader>
         <TableBody>
           {users.map((user) => (
-            <TableRow key={user._id.$oid}>
+            <TableRow key={user.username}>
               <TableCell className="font-medium">{user.username}</TableCell>
               <TableCell>{user.realname}</TableCell>
               <TableCell>{user.email}</TableCell>

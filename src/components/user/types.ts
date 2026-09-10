@@ -5,7 +5,7 @@ export type Token = {
 };
 
 export type User = {
-  _id: { $oid: string };
+  _id?: { $oid: string };
   username: string;
   realname: string;
   email: string;
