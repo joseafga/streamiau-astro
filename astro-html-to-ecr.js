@@ -4,6 +4,14 @@ import { fileURLToPath } from "node:url";
 
 const EXT_REGEX = /\.html$/;
 
+globalThis.__ecr = (fallback, val, opts) => {
+  if (process.env.NODE_ENV === "production") {
+    return `ECR%= ${val} %ECR${opts ?? ""}`;
+  }
+
+  return fallback;
+};
+
 export default function htmlToEcr(config) {
   return {
     name: "html-to-ecr",
