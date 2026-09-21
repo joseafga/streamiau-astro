@@ -1,16 +1,16 @@
 ---
 import Layout from "@/layouts/Sidebar.astro";
 import UserDataTable from "@/components/user/DataTable";
+
+const data = "ECR%= users.to_json %ECR";
 ---
 
-<script id="users-data" type="application/json" is:inline >
-  ECR%= users.to_json %ECR
-</script>
-<Layout title="Usuários - Streamiau!" csrfToken>
-    <div class="grid auto-rows-min gap-4 p-4">
-        <div class="bg-muted/50 rounded-xl p-4">
-            <!-- <DataTable /> -->
-            <UserDataTable client:load />
-        </div>
+<Layout title="Usuários" csrfToken>
+  <div class="grid auto-rows-min gap-4">
+    <div class="bg-muted/50 rounded-xl p-4">
+      <UserDataTable client:load />
     </div>
+  </div>
+
+  <script id="users-data" type="application/json" is:inline set:html={data} />
 </Layout>
