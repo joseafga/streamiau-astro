@@ -20,18 +20,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
-import {
-  ArrowDown01,
-  WholeWord,
-  Settings2Icon,
-  UsersRound,
-  Code2,
-} from "lucide-react";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { ArrowDown01, WholeWord, Settings2Icon, UsersRound, Code2 } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
 import { Logo } from "@/components/Logo";
 import type { User } from "./user/types";
@@ -77,12 +67,7 @@ interface Props extends React.ComponentProps<typeof Sidebar> {
   children?: React.ReactNode;
 }
 
-export default function LayoutSidebar({
-  title,
-  user,
-  children,
-  ...props
-}: Props) {
+export default function LayoutSidebar({ title, user, children, ...props }: Props) {
   function isAdmin() {
     return user.role === 0;
   }
@@ -95,16 +80,10 @@ export default function LayoutSidebar({
             <SidebarMenuItem>
               <SidebarMenuButton size="lg" render={<a href="/home" />}>
                 <div className="flex aspect-square size-10 [&_svg]:size-8 [&_svg]:shrink-0 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <Logo
-                    size={40}
-                    cat-class="fill-mist-50"
-                    rect-class="fill-primary"
-                  />
+                  <Logo size={40} cat-class="fill-mist-50" rect-class="fill-primary" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-streamiau font-extrabold uppercase text-xl">
-                    Streamiau!
-                  </span>
+                  <span className="truncate font-streamiau font-extrabold uppercase text-xl">Streamiau!</span>
                 </div>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -113,9 +92,7 @@ export default function LayoutSidebar({
 
         <SidebarContent>
           <NavMain label="Módulos" items={navigation.main} />
-          {isAdmin() && (
-            <NavMain label="Administrador" items={navigation.admin} />
-          )}
+          {isAdmin() && <NavMain label="Administrador" items={navigation.admin} />}
           <NavBottom items={navigation.bottom} className="mt-auto" />
         </SidebarContent>
         <SidebarFooter>

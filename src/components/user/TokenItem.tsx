@@ -1,19 +1,7 @@
 import * as React from "react";
 import { cn } from "cn";
-import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
-  ItemMedia,
-  ItemTitle,
-} from "@/components/ui/item";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-  InputGroupButton,
-} from "@/components/ui/input-group";
+import { Item, ItemActions, ItemContent } from "@/components/ui/item";
+import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupButton } from "@/components/ui/input-group";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EyeIcon, EyeOffIcon, Trash } from "lucide-react";
@@ -47,9 +35,7 @@ function TokenItem({ className, token, onDelete, ...props }: Props) {
   return (
     <Item className={cn(className)} {...props}>
       <ItemContent>
-        <span className="text-xs text-muted-foreground">
-          {formatDates(token.created_at)}
-        </span>
+        <span className="text-xs text-muted-foreground">{formatDates(token.created_at)}</span>
         <div className="flex flex-wrap gap-1.5">
           {token.allow.map((allowed, index) => (
             <Badge key={allowed} variant="outline" className="text-xs">
@@ -79,12 +65,7 @@ function TokenItem({ className, token, onDelete, ...props }: Props) {
           </InputGroupAddon>
         </InputGroup>
         {onDelete && (
-          <Button
-            variant="destructive"
-            size="icon"
-            aria-label="Remover"
-            onClick={() => handleDelete(token)}
-          >
+          <Button variant="destructive" size="icon" aria-label="Remover" onClick={() => handleDelete(token)}>
             <Trash />
           </Button>
         )}

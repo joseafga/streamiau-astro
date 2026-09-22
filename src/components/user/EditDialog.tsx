@@ -1,39 +1,10 @@
 import { useState, useEffect } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogFooter, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-  FieldLegend,
-  FieldSeparator,
-  FieldSet,
-} from "@/components/ui/field";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-  InputGroupText,
-  InputGroupTextarea,
-} from "@/components/ui/input-group";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/ui/input-group";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import type { User } from "./types";
@@ -129,9 +100,7 @@ export default function EditDialog({ open, setOpen, user, onSave }: Props) {
                   id="realname"
                   placeholder="Nome"
                   value={draft.realname}
-                  onChange={(e) =>
-                    handleFieldChange("realname", e.target.value)
-                  }
+                  onChange={(e) => handleFieldChange("realname", e.target.value)}
                   autoFocus
                 />
               </Field>
@@ -139,11 +108,7 @@ export default function EditDialog({ open, setOpen, user, onSave }: Props) {
             <div className="grid col-span-2 gap-2">
               <Field>
                 <FieldLabel htmlFor="role-trigger">Cargo</FieldLabel>
-                <Select
-                  items={roles}
-                  value={draft.role}
-                  onValueChange={(e) => handleRoleChange("role", e)}
-                >
+                <Select items={roles} value={draft.role} onValueChange={(e) => handleRoleChange("role", e)}>
                   <SelectTrigger id="role-trigger" className="w-full">
                     <SelectValue />
                   </SelectTrigger>
@@ -188,9 +153,7 @@ export default function EditDialog({ open, setOpen, user, onSave }: Props) {
                     id="youtubeid"
                     placeholder="Identificador do canal"
                     value={draft.youtubeid ?? ""}
-                    onChange={(e) =>
-                      handleFieldChange("youtubeid", e.target.value)
-                    }
+                    onChange={(e) => handleFieldChange("youtubeid", e.target.value)}
                   />
                   <InputGroupAddon align="inline-start">
                     <InputGroupText>@</InputGroupText>
@@ -206,10 +169,7 @@ export default function EditDialog({ open, setOpen, user, onSave }: Props) {
             Cancelar
           </Button>
           <Button onClick={handleSave} disabled={isLoading}>
-            <Spinner
-              data-icon="inline-start"
-              className={isLoading ? "" : "hidden"}
-            />
+            <Spinner data-icon="inline-start" className={isLoading ? "" : "hidden"} />
             Salvar
           </Button>
         </DialogFooter>

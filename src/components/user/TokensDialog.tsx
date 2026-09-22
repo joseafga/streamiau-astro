@@ -1,10 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Field,
@@ -143,11 +138,7 @@ export default function TokensDialog({ open, setOpen, user, onSave }: Props) {
                     token={token}
                     onDelete={handleDelete}
                     variant="muted"
-                    className={
-                      isLoading
-                        ? "transition-opacity opacity-70 pointer-events-none"
-                        : "transition-opacity"
-                    }
+                    className={isLoading ? "transition-opacity opacity-70 pointer-events-none" : "transition-opacity"}
                   />
                 ))}
             </div>
@@ -158,28 +149,19 @@ export default function TokensDialog({ open, setOpen, user, onSave }: Props) {
                 {Object.entries(Allow).map(([key, value]) => (
                   <Field key={key} orientation="horizontal" className="w-full">
                     <FieldContent>
-                      <FieldLabel htmlFor={key}>
-                        {allowLabels[value]}
-                      </FieldLabel>
-                      <FieldDescription>
-                        {allowDescriptions[value]}
-                      </FieldDescription>
+                      <FieldLabel htmlFor={key}>{allowLabels[value]}</FieldLabel>
+                      <FieldDescription>{allowDescriptions[value]}</FieldDescription>
                     </FieldContent>
                     <Switch
                       id={key}
                       checked={permissions.includes(value)}
-                      onCheckedChange={(checked) =>
-                        handleToggle(value, checked)
-                      }
+                      onCheckedChange={(checked) => handleToggle(value, checked)}
                     />
                   </Field>
                 ))}
               </FieldGroup>
               <Button onClick={handleGenerate} disabled={isLoading}>
-                <Spinner
-                  data-icon="inline-start"
-                  className={isLoading ? "" : "hidden"}
-                />
+                <Spinner data-icon="inline-start" className={isLoading ? "" : "hidden"} />
                 Gerar novo Token
               </Button>
             </FieldSet>
