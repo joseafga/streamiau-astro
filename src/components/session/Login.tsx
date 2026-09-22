@@ -11,7 +11,6 @@ import { toast } from "sonner";
 import ConfirmationDialog from "./ConfirmationDialog";
 
 const formSchema = z.object({
-  authenticity_token: z.string().nonempty("CSRF Token não foi encontrado."),
   username: z.string().min(3, "Nome de usuário é inválido"),
 });
 
@@ -24,13 +23,13 @@ export default function Login() {
   function getCsrfToken(): string {
     const csrfToken = document.querySelector('meta[name="authenticity-token"]')?.getAttribute("content");
 
-    return csrfToken ?? "";
+    if (csrfToken) return csrfToken;
+    throw new Error("CSRF Token não foi encontrado.");
   }
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      authenticity_token: getCsrfToken(),
       username: "",
     },
   });
@@ -41,7 +40,7 @@ export default function Login() {
 
     try {
       const formData = new FormData();
-      formData.append("authenticity_token", data.authenticity_token);
+      formData.append("authenticity_token", getCsrfToken());
       formData.append("username", data.username);
 
       const res = await fetch("/login", {
@@ -77,15 +76,6 @@ export default function Login() {
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <Input {...field} id="username" placeholder="Nome de Usuário" aria-invalid={fieldState.invalid} />
-                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-              </Field>
-            )}
-          />
-          <Controller
-            name="authenticity_token"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
                 {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               </Field>
             )}

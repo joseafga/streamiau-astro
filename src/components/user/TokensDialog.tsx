@@ -41,12 +41,9 @@ export default function TokensDialog({ open, setOpen, user, onSave }: Props) {
   }, [user]);
 
   function getCsrfToken(): string {
-    const csrfToken = document
-      .querySelector('meta[name="authenticity-token"]')
-      ?.getAttribute("content");
+    const csrfToken = document.querySelector('meta[name="authenticity-token"]')?.getAttribute("content");
 
     if (csrfToken) return csrfToken;
-
     throw new Error("CSRF Token não foi encontrado.");
   }
 
