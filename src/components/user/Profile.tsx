@@ -1,14 +1,6 @@
 import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { UserRound, Mail, KeyRound, Gamepad2, Play } from "lucide-react";
@@ -29,7 +21,7 @@ export default function Profile() {
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row justify-center items-center p-6 gap-4 sm:gap-6">
+      <div className="flex flex-col sm:flex-row justify-center items-center pb-12 gap-4 sm:gap-6">
         <Avatar className="size-24 shrink-0 ring-4 ring-primary shadow-lg">
           <AvatarFallback className="text-4xl font-bold uppercase">
             {user?.realname.slice(0, 2).toUpperCase()}
@@ -38,16 +30,12 @@ export default function Profile() {
 
         <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
           <div className="flex justify-center sm:justify-start items-center gap-3">
-            <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              {user?.realname}
-            </h1>
+            <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">{user?.realname}</h1>
             <Badge variant="default" className="capitalize">
               {roleLabels[user?.role as Role]}
             </Badge>
           </div>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Informações e tokens de acesso
-          </p>
+          <p className="mt-1 text-sm text-muted-foreground">Informações e tokens de acesso</p>
         </div>
       </div>
 
@@ -116,7 +104,7 @@ export default function Profile() {
             <h1 className="text-1xl font-bold">Tokens de Acesso</h1>
           </div>
           {user?.tokens.map((token) => (
-            <TokenItem key={token.value} token={token} />
+            <TokenItem key={token.value} token={token} variant="muted" />
           ))}
         </CardContent>
       </Card>
