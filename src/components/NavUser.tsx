@@ -19,7 +19,6 @@ export function NavUser({ user }: { user: User }) {
     if (words.length === 0 || words[0] === "") return "";
 
     const firstInitial = words[0].charAt(0);
-
     const lastInitial = words.length > 1 ? words[words.length - 1].charAt(0) : "";
 
     return (firstInitial + lastInitial).toUpperCase();
