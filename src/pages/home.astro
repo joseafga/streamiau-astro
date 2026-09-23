@@ -1,18 +1,18 @@
 ---
-import Logo from "@/components/Logo.astro";
 import Layout from "@/layouts/Sidebar.astro";
+import { Logo } from "@/components/Logo";
 ---
 
 <Layout title="Home - Streamiau!">
   <main class="grid place-items-center h-full gap-4">
     <div>
-      <Logo
-        cat-class="fill-zinc-50 dark:fill-zinc-900"
-        rect-class="fill-zinc-200 dark:fill-transparent"
-        class="mx-auto size-64 sm:size-96 pr-4"
-      />
+      <div class="mx-auto max-w-md [&_svg]:size-64 [&_svg]:md:size-96 grid place-content-center pr-4">
+        <Logo catClass="fill-zinc-50 dark:fill-zinc-900" rectClass="fill-zinc-200 dark:fill-transparent" />
+      </div>
       <div class="mx-auto max-w-md text-center">
-        <h1 class="font-streamiau text-zinc-200 dark:text-zinc-900 text-4xl sm:text-6xl uppercase">Streamiau!</h1>
+        <h1 class="text-zinc-200 dark:text-zinc-900 font-streamiau font-extrabold uppercase text-4xl md:text-6xl">
+          Streamiau!
+        </h1>
       </div>
     </div>
   </main>
