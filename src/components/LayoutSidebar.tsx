@@ -80,7 +80,7 @@ export default function LayoutSidebar({ title, user, children, ...props }: Props
             <SidebarMenuItem>
               <SidebarMenuButton size="lg" render={<a href="/home" />}>
                 <div className="flex aspect-square size-10 [&_svg]:size-8 [&_svg]:shrink-0 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <Logo size={40} cat-class="fill-mist-50" rect-class="fill-primary" />
+                  <Logo size={40} catClass="fill-mist-50" rectClass="fill-primary" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-streamiau font-extrabold uppercase text-xl">Streamiau!</span>
