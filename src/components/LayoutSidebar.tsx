@@ -61,15 +61,52 @@ const navigation = {
   ],
 };
 
-interface Props extends React.ComponentProps<typeof Sidebar> {
+type ActiveBreadcrumbItem = {
   title: string;
+  url: string;
+};
+
+interface ActiveBreadcrumbProps {
+  items: ActiveBreadcrumbItem[];
+}
+
+interface Props extends React.ComponentProps<typeof Sidebar> {
+  breadcrumb: ActiveBreadcrumbItem[];
   user: User;
   children?: React.ReactNode;
 }
 
-export default function LayoutSidebar({ title, user, children, ...props }: Props) {
+export default function LayoutSidebar({ breadcrumb, user, children, ...props }: Props) {
   function isAdmin() {
     return user.role === 0;
+  }
+
+  function ActiveBreadcrumb({ items }: ActiveBreadcrumbProps) {
+    return (
+      <Breadcrumb>
+        <BreadcrumbList>
+          {items.map((item, index) => {
+            const isLast = index === items.length - 1;
+
+            return (
+              <>
+                {isLast ? (
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>{item.title}</BreadcrumbPage>
+                  </BreadcrumbItem>
+                ) : (
+                  <BreadcrumbItem className="hidden md:block">
+                    <BreadcrumbLink href={item.url}>{item.title}</BreadcrumbLink>
+                  </BreadcrumbItem>
+                )}
+
+                {!isLast && <BreadcrumbSeparator className="hidden md:block" />}
+              </>
+            );
+          })}
+        </BreadcrumbList>
+      </Breadcrumb>
+    );
   }
 
   return (
@@ -103,17 +140,7 @@ export default function LayoutSidebar({ title, user, children, ...props }: Props
         <header className="flex h-12 shrink-0 items-center gap-2">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1 mr-2" />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="/home">Home</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>{title}</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
+            <ActiveBreadcrumb items={breadcrumb} />
           </div>
           <div className="ml-auto mr-4">
             <ThemeToggle />

@@ -1,9 +1,11 @@
 ---
 import Layout from "@/layouts/Sidebar.astro";
 import { Logo } from "@/components/Logo";
+
+const breadcrumb = [{ title: "Home", url: "/home" }];
 ---
 
-<Layout title="Home - Streamiau!">
+<Layout breadcrumb={breadcrumb}>
   <main class="grid place-items-center h-full gap-4">
     <div>
       <div class="mx-auto max-w-md [&_svg]:size-64 [&_svg]:md:size-96 grid place-content-center pr-4">

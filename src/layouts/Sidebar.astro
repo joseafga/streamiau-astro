@@ -2,7 +2,8 @@
 import Layout from "@/layouts/Layout.astro";
 import LayoutSidebar from "@/components/LayoutSidebar";
 
-const { title, ...props } = Astro.props;
+const { breadcrumb, ...props } = Astro.props;
+const title = breadcrumb.at(-1).title;
 
 const user = {
   username: __ecr("johndoe", "session_user.username"),
@@ -14,7 +15,7 @@ const user = {
 ---
 
 <Layout title={`${title} - Streamiau!`} {...props}>
-  <LayoutSidebar title={title} user={user} client:load>
+  <LayoutSidebar breadcrumb={breadcrumb} user={user} client:only>
     <slot />
   </LayoutSidebar>
 </Layout>

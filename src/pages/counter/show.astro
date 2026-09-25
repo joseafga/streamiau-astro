@@ -2,13 +2,19 @@
 import Layout from "@/layouts/Sidebar.astro";
 import SettingsWithPreview from "@/components/counter/SettingsWithPreview.astro";
 
+const breadcrumb = [
+  { title: "Home", url: "/home" },
+  { title: "Contadores", url: "/counter" },
+  { title: "Contador", url: "#" },
+];
+
 const data = {
   username: "ECR%= session_user.username %ECR",
   uuid: "ECR%= uuid %ECR",
 };
 ---
 
-<Layout title="Contadores">
+<Layout breadcrumb={breadcrumb}>
   <div class="grid auto-rows-min gap-4 md:grid-cols-2">
     <SettingsWithPreview class="bg-muted/50 rounded-xl" />
   </div>

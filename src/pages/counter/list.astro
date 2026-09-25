@@ -3,10 +3,15 @@ import Layout from "@/layouts/Sidebar.astro";
 import DataTable from "@/components/counter/DataTable.astro";
 import SettingsWithPreview from "@/components/counter/SettingsWithPreview.astro";
 
+const breadcrumb = [
+  { title: "Home", url: "/home" },
+  { title: "Contadores", url: "/counter" },
+];
+
 const data = "ECR%= session_user.username %ECR";
 ---
 
-<Layout title="Contadores">
+<Layout breadcrumb={breadcrumb}>
   <div class="grid auto-rows-min gap-4 md:grid-cols-2">
     <div class="bg-muted/50 flex-1 rounded-xl min-h-min p-4 md:col-span-2">
       <DataTable />

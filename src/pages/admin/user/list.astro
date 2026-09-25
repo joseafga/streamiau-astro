@@ -2,10 +2,15 @@
 import Layout from "@/layouts/Sidebar.astro";
 import UserDataTable from "@/components/user/DataTable";
 
+const breadcrumb = [
+  { title: "Home", url: "/home" },
+  { title: "Usuários", url: "/admin/users" },
+];
+
 const data = "ECR%= users.to_json %ECR";
 ---
 
-<Layout title="Usuários" csrfToken>
+<Layout breadcrumb={breadcrumb} csrfToken>
   <div class="grid auto-rows-min gap-4">
     <div class="bg-muted/50 rounded-xl p-4">
       <UserDataTable client:load />
