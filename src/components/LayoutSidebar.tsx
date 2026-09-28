@@ -89,7 +89,7 @@ export default function LayoutSidebar({ breadcrumb, user, children, ...props }: 
             const isLast = index === items.length - 1;
 
             return (
-              <>
+              <React.Fragment key={item.title}>
                 {isLast ? (
                   <BreadcrumbItem>
                     <BreadcrumbPage>{item.title}</BreadcrumbPage>
@@ -101,7 +101,7 @@ export default function LayoutSidebar({ breadcrumb, user, children, ...props }: 
                 )}
 
                 {!isLast && <BreadcrumbSeparator className="hidden md:block" />}
-              </>
+              </React.Fragment>
             );
           })}
         </BreadcrumbList>
