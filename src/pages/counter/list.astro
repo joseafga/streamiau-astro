@@ -1,7 +1,7 @@
 ---
 import Layout from "@/layouts/Sidebar.astro";
 import DataTable from "@/components/counter/DataTable";
-import Preview from "@/components/counter/PreviewObsPlugin";
+import ObsPlugin from "@/components/counter/ObsPlugin";
 
 const breadcrumb = [
   { title: "Home", url: "/home" },
@@ -18,7 +18,7 @@ const data = "ECR%= counters.to_json %ECR";
       <DataTable client:only />
     </div>
     <div class="bg-muted/50 rounded-xl">
-      <Preview username={username} client:only />
+      <ObsPlugin username={username} client:only />
     </div>
   </div>
 

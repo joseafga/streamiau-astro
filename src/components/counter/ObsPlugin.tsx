@@ -12,7 +12,7 @@ interface Props {
   username: string;
 }
 
-export default function PreviewObsPlugin({ username }: Props) {
+export default function ObsPlugin({ username }: Props) {
   const [copyToClipboard, isCopied] = useCopyToClipboard();
   const selectedUuid = useStore(uuid);
 
