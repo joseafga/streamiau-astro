@@ -1,32 +1,26 @@
 ---
 import Layout from "@/layouts/Sidebar.astro";
-import DataTable from "@/components/counter/DataTable.astro";
-import SettingsWithPreview from "@/components/counter/SettingsWithPreview.astro";
+import DataTable from "@/components/counter/DataTable";
+import Preview from "@/components/counter/PreviewObsPlugin";
 
 const breadcrumb = [
   { title: "Home", url: "/home" },
   { title: "Contadores", url: "/counter" },
 ];
 
-const data = "ECR%= session_user.username %ECR";
+const username = __ecr("johndoe", "session_user.username");
+const data = "ECR%= counters.to_json %ECR";
 ---
 
 <Layout breadcrumb={breadcrumb}>
   <div class="grid auto-rows-min gap-4 md:grid-cols-2">
     <div class="bg-muted/50 flex-1 rounded-xl min-h-min p-4 md:col-span-2">
-      <DataTable />
+      <DataTable client:only />
     </div>
-    <SettingsWithPreview class="bg-muted/50 rounded-xl" />
+    <div class="bg-muted/50 rounded-xl">
+      <Preview username={username} client:only />
+    </div>
   </div>
 
-  <script id="page-data" type="application/json" is:inline set:html={data} />
+  <script id="counters-data" type="application/json" is:inline set:html={data} />
 </Layout>
-
-<script>
-  import { $username } from "@/stores/counter.js";
-
-  const page_data = document.getElementById("page-data") as HTMLScriptElement;
-  const data = JSON.parse(page_data.textContent);
-
-  $username.set(data.username);
-</script>

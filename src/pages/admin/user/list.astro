@@ -13,7 +13,7 @@ const data = "ECR%= users.to_json %ECR";
 <Layout breadcrumb={breadcrumb} csrfToken>
   <div class="grid auto-rows-min gap-4">
     <div class="bg-muted/50 rounded-xl p-4">
-      <UserDataTable client:load />
+      <UserDataTable client:only />
     </div>
   </div>
 
