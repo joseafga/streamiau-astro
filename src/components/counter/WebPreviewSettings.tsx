@@ -26,11 +26,7 @@ const fonts = [
 const fontSizePrefixMarks = [0, 61, 122, 183, 244];
 const fontSizeCounterMarks = [0, 61, 122, 183, 244];
 
-interface Props {
-  username: string;
-}
-
-export default function WebPreviewSettings({ username }: Props) {
+export default function WebPreviewSettings() {
   const [isLoading, setIsLoading] = useState(false);
   const selectedUuid = useStore($uuid);
   const defaultStyle = useStore($style);
@@ -65,6 +61,8 @@ export default function WebPreviewSettings({ username }: Props) {
 
   return (
     <div className="mx-auto flex flex-col gap-5 p-6">
+      <h1 className="text-lg font-extrabold w-full text-center">Aparência do Widget - Web (Obsoleto)</h1>
+
       <Field>
         <Select
           items={fonts}
