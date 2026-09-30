@@ -8,8 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { Spinner } from "@/components/ui/spinner";
 import { getCsrfToken } from "@/helpers/use-csrf-token";
 import { TokenItem } from "@/components/user/TokenItem";
-import type { User, Token } from "@/components/user/types";
-import { allowLabels, allowDescriptions, Allow } from "@/components/user/types";
+import { type User, type Token, allowLabels, allowDescriptions, Allow } from "@/components/user/types";
 
 interface Props {
   open: boolean;

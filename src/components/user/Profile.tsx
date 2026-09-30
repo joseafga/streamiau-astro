@@ -5,8 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { TokenItem } from "@/components/user/TokenItem";
-import type { User, Role } from "@/components/user/types";
-import { roleLabels } from "@/components/user/types";
+import { type User, type Role, roleLabels } from "@/components/user/types";
 
 export default function Profile() {
   const [user, setUser] = useState<User>();

@@ -5,8 +5,7 @@ import { Item, ItemActions, ItemContent } from "@/components/ui/item";
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupButton } from "@/components/ui/input-group";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import type { Token, Allow } from "@/components/user/types";
-import { allowLabels } from "@/components/user/types";
+import { type Token, type Allow, allowLabels } from "@/components/user/types";
 
 interface Props extends React.ComponentProps<typeof Item> {
   token: Token;

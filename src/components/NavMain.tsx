@@ -1,63 +1,31 @@
-import { ChevronRightIcon } from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import type { LucideIcon } from "lucide-react";
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 
-export function NavMain({
-  label,
-  items,
-}: {
-  label: string;
-  items: {
-    title: string;
-    url: string;
-    icon: React.ReactNode;
-    isActive?: boolean;
-    items?: {
-      title: string;
-      url: string;
-    }[];
-  }[];
-}) {
+export type NavigationItem = {
+  title: string;
+  url: string;
+  icon: LucideIcon;
+  isActive?: boolean;
+};
+
+export function NavMain({ label, items }: { label: string; items: NavigationItem[] }) {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>{label}</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
-          <Collapsible key={item.title} defaultOpen={item.isActive} render={<SidebarMenuItem />}>
-            <SidebarMenuButton tooltip={item.title} render={<a href={item.url} />}>
-              {item.icon}
+          <SidebarMenuItem key={item.title}>
+            <SidebarMenuButton render={<a href={item.url} />} isActive={item.isActive}>
+              <item.icon />
               <span>{item.title}</span>
             </SidebarMenuButton>
-            {item.items?.length ? (
-              <>
-                <CollapsibleTrigger render={<SidebarMenuAction className="aria-expanded:rotate-90" />}>
-                  <ChevronRightIcon />
-                  <span className="sr-only">Toggle</span>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <SidebarMenuSub>
-                    {item.items?.map((subItem) => (
-                      <SidebarMenuSubItem key={subItem.title}>
-                        <SidebarMenuSubButton render={<a href={subItem.url} />}>
-                          <span>{subItem.title}</span>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                    ))}
-                  </SidebarMenuSub>
-                </CollapsibleContent>
-              </>
-            ) : null}
-          </Collapsible>
+          </SidebarMenuItem>
         ))}
       </SidebarMenu>
     </SidebarGroup>

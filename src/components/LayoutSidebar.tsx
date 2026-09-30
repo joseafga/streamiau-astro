@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ArrowDown01, WholeWord, Settings2Icon, UsersRound, Code2 } from "lucide-react";
+import { type LucideIcon, ArrowDown01, WholeWord, Settings2Icon, UsersRound, Code2 } from "lucide-react";
 import { NavMain } from "@/components/NavMain";
 import { NavBottom } from "@/components/NavBottom";
 import { NavUser } from "@/components/NavUser";
@@ -24,38 +24,38 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/s
 import ThemeToggle from "@/components/ThemeToggle";
 import { Logo } from "@/components/Logo";
 import type { User } from "@/components/user/types";
+import type { NavigationItem } from "@/components/NavMain";
 
 const navigation = {
   main: [
     {
       title: "Contadores",
       url: "/counter",
-      icon: <ArrowDown01 />,
-      isActive: true,
+      icon: ArrowDown01,
     },
     {
       title: "Frases",
       url: "#",
-      icon: <WholeWord />,
+      icon: WholeWord,
     },
     {
       title: "Configurações",
       url: "#",
-      icon: <Settings2Icon />,
+      icon: Settings2Icon,
     },
   ],
   admin: [
     {
       title: "Usuários",
       url: "/admin/users",
-      icon: <UsersRound />,
+      icon: UsersRound,
     },
   ],
   bottom: [
     {
       title: "Github",
       url: "https://github.com/joseafga/streamiau",
-      icon: <Code2 />,
+      icon: Code2,
     },
   ],
 };
@@ -64,10 +64,6 @@ type ActiveBreadcrumbItem = {
   title: string;
   url: string;
 };
-
-interface ActiveBreadcrumbProps {
-  items: ActiveBreadcrumbItem[];
-}
 
 interface Props extends React.ComponentProps<typeof Sidebar> {
   breadcrumb: ActiveBreadcrumbItem[];
@@ -80,7 +76,7 @@ export default function LayoutSidebar({ breadcrumb, user, children, ...props }: 
     return user.role === 0;
   }
 
-  function ActiveBreadcrumb({ items }: ActiveBreadcrumbProps) {
+  function ActiveBreadcrumb({ items }: { items: ActiveBreadcrumbItem[] }) {
     return (
       <Breadcrumb>
         <BreadcrumbList>
@@ -108,6 +104,19 @@ export default function LayoutSidebar({ breadcrumb, user, children, ...props }: 
     );
   }
 
+  function setActiveNavModule(items: NavigationItem[]): NavigationItem[] {
+    const activeItem = breadcrumb[1]; // home > (module) > pages...
+
+    if (!activeItem) {
+      return items;
+    }
+
+    return items.map((item) => ({
+      ...item,
+      isActive: item.url === activeItem.url,
+    }));
+  }
+
   return (
     <SidebarProvider>
       <Sidebar variant="sidebar" {...props}>
@@ -127,8 +136,8 @@ export default function LayoutSidebar({ breadcrumb, user, children, ...props }: 
         </SidebarHeader>
 
         <SidebarContent>
-          <NavMain label="Módulos" items={navigation.main} />
-          {isAdmin() && <NavMain label="Administrador" items={navigation.admin} />}
+          <NavMain label="Módulos" items={setActiveNavModule(navigation.main)} />
+          {isAdmin() && <NavMain label="Administrador" items={setActiveNavModule(navigation.admin)} />}
           <NavBottom items={navigation.bottom} className="mt-auto" />
         </SidebarContent>
         <SidebarFooter>
