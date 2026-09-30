@@ -62,8 +62,8 @@ export default function Login() {
 
   return (
     <div className="mx-auto w-full max-w-100 p-4">
-      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-2">
-        <div className="mb-10">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-5">
+        <div className="mb-4">
           <h1 className="font-heading mb-2 text-xl leading-none font-semibold tracking-tight">Login</h1>
           <p className="text-muted-foreground">
             Entre com o seu nome de usuário, um email será enviado com o código de acesso.
