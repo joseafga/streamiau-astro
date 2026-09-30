@@ -1,13 +1,13 @@
 import { atom, map } from "nanostores";
 
 // current uuid
-export const uuid = atom("");
+export const $uuid = atom("");
 // default style options
-export const style = map({
-  fontFamily: "Inter",
+export const $style = map({
+  font_family: "Inter",
   prefix: "Prefixo:",
-  fontColor: "rgb(112, 85, 189)",
-  fontSizePrefix: 42,
-  fontSizeCounter: 100,
-  fixedStyle: false,
+  font_color: "#7055BD",
+  font_size_prefix: 42,
+  font_size_counter: 100,
+  fixed_style: false,
 });

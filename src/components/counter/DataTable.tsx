@@ -6,11 +6,11 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import type { Counter } from "@/components/counter/types";
-import { uuid } from "@/stores/counter";
+import { $uuid } from "@/stores/counter";
 
 export default function DataTable() {
   const [counters, setCounters] = useState<Counter[]>([]);
-  const selectedUuid = useStore(uuid);
+  const selectedUuid = useStore($uuid);
   const [openEdit, setOpenEdit] = useState(false);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function DataTable() {
 
   // Select first when load data
   useEffect(() => {
-    uuid.set(counters.at(0)?.uuid ?? "");
+    $uuid.set(counters.at(0)?.uuid ?? "");
   }, [counters]);
 
   function handleEdit(counter: Counter) {
@@ -37,7 +37,7 @@ export default function DataTable() {
   }
 
   return (
-    <RadioGroup value={selectedUuid} onValueChange={uuid.set}>
+    <RadioGroup value={selectedUuid} onValueChange={$uuid.set}>
       <Table>
         <TableHeader>
           <TableRow>

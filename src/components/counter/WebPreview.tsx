@@ -3,21 +3,22 @@ import { useStore } from "@nanostores/react";
 import { Link, Check, Copy } from "lucide-react";
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupButton } from "@/components/ui/input-group";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
-import { $uuid } from "@/stores/counter";
+import { $style, $uuid } from "@/stores/counter";
 
-const WS_URL_PROTOCOL = window.location.protocol == "http:" ? "ws:" : "wss:";
-const WS_URL_HOST = window.location.host;
+const URL_ORIGIN = window.location.origin;
 
 interface Props {
   username: string;
 }
 
-export default function ObsPlugin({ username }: Props) {
+export default function WebPreview({ username }: Props) {
   const [copyToClipboard, isCopied] = useCopyToClipboard();
   const selectedUuid = useStore($uuid);
+  const defaultStyle = useStore($style);
 
   function getUrl() {
-    return `${WS_URL_PROTOCOL}//${WS_URL_HOST}/api/v1/counter/${username}/${selectedUuid}/ws`;
+    let settings_encoded = encodeURIComponent(JSON.stringify(defaultStyle));
+    return `${URL_ORIGIN}/widgets/counter/?username=${username}&uuid=${selectedUuid}&settings=${settings_encoded}`;
   }
 
   let url: string = getUrl();
@@ -28,19 +29,29 @@ export default function ObsPlugin({ username }: Props) {
 
   return (
     <div className="flex flex-col h-full items-center text-center gap-4 p-6">
-      <h1 className="text-lg font-extrabold">WebSocket - OBS Plugin</h1>
+      <h1 className="text-lg font-extrabold">Prévia do Widget - Web (Obsoleto)</h1>
+
       <div className="flex-1 flex items-center justify-center gap-2">
-        <p>
-          Para utilização com o{" "}
-          <a
-            href="https://github.com/joseafga/streamiau-obs-counter"
-            target="_blank"
-            className="text-primary hover:underline"
-          >
-            Plugin do OBS
-          </a>
-          . Insira o valor abaixo no campo de <strong>`WebSocket`</strong> das configurações do plugin.
-        </p>
+        <span
+          className="mr-[0.2em] transition-all duration-200"
+          style={{
+            fontFamily: defaultStyle.font_family,
+            color: defaultStyle.font_color,
+            fontSize: defaultStyle.font_size_prefix,
+          }}
+        >
+          {defaultStyle.prefix}
+        </span>
+        <span
+          className="font-bold transition-all duration-200"
+          style={{
+            fontFamily: defaultStyle.font_family,
+            color: defaultStyle.font_color,
+            fontSize: defaultStyle.font_size_counter,
+          }}
+        >
+          150
+        </span>
       </div>
       <div className="flex flex-row items-center w-full">
         <InputGroup>
