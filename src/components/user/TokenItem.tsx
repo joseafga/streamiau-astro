@@ -1,12 +1,12 @@
 import * as React from "react";
 import { cn } from "cn";
+import { EyeIcon, EyeOffIcon, Trash } from "lucide-react";
 import { Item, ItemActions, ItemContent } from "@/components/ui/item";
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupButton } from "@/components/ui/input-group";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { EyeIcon, EyeOffIcon, Trash } from "lucide-react";
-import type { Token, Allow } from "./types";
-import { allowLabels } from "./types";
+import type { Token, Allow } from "@/components/user/types";
+import { allowLabels } from "@/components/user/types";
 
 interface Props extends React.ComponentProps<typeof Item> {
   token: Token;

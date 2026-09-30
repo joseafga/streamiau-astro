@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import { ArrowDown01, WholeWord, Settings2Icon, UsersRound, Code2 } from "lucide-react";
 import { NavMain } from "@/components/NavMain";
 import { NavBottom } from "@/components/NavBottom";
 import { NavUser } from "@/components/NavUser";
@@ -21,10 +21,9 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { ArrowDown01, WholeWord, Settings2Icon, UsersRound, Code2 } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
 import { Logo } from "@/components/Logo";
-import type { User } from "./user/types";
+import type { User } from "@/components/user/types";
 
 const navigation = {
   main: [

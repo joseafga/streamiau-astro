@@ -11,6 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { getCsrfToken } from "@/helpers/use-csrf-token";
 import { $style, $uuid } from "@/stores/counter";
 
 const fonts = [
@@ -35,13 +36,6 @@ export default function WebPreviewSettings({ username }: Props) {
   const defaultStyle = useStore($style);
   const [color, setColor] = useState(() => parseColor(defaultStyle.font_color)!);
   const [hex, setHex] = useState(defaultStyle.font_color);
-
-  function getCsrfToken(): string {
-    const csrfToken = document.querySelector('meta[name="authenticity-token"]')?.getAttribute("content");
-
-    if (csrfToken) return csrfToken;
-    throw new Error("CSRF Token não foi encontrado.");
-  }
 
   async function handleApply() {
     setIsLoading(true);

@@ -2,13 +2,13 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
-
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Field, FieldError } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
-import { toast } from "sonner";
-import ConfirmationDialog from "./ConfirmationDialog";
+import { getCsrfToken } from "@/helpers/use-csrf-token";
+import ConfirmationDialog from "@/components/session/ConfirmationDialog";
 
 const formSchema = z.object({
   username: z.string().min(3, "Nome de usuário é inválido"),
@@ -19,13 +19,6 @@ type FormValues = z.infer<typeof formSchema>;
 export default function Login() {
   const [openConfirmation, setOpenConfirmation] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  function getCsrfToken(): string {
-    const csrfToken = document.querySelector('meta[name="authenticity-token"]')?.getAttribute("content");
-
-    if (csrfToken) return csrfToken;
-    throw new Error("CSRF Token não foi encontrado.");
-  }
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),

@@ -1,23 +1,15 @@
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-  FieldLegend,
-  FieldSeparator,
-  FieldContent,
-  FieldSet,
-} from "@/components/ui/field";
+import { Field, FieldDescription, FieldGroup, FieldLabel, FieldContent, FieldSet } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Spinner } from "@/components/ui/spinner";
-import { toast } from "sonner";
-import { TokenItem } from "./TokenItem";
-import type { User, Token } from "./types";
-import { allowLabels, allowDescriptions, Allow } from "./types";
+import { getCsrfToken } from "@/helpers/use-csrf-token";
+import { TokenItem } from "@/components/user/TokenItem";
+import type { User, Token } from "@/components/user/types";
+import { allowLabels, allowDescriptions, Allow } from "@/components/user/types";
 
 interface Props {
   open: boolean;
@@ -35,13 +27,6 @@ export default function TokensDialog({ open, setOpen, user, onSave }: Props) {
     setDraft(user);
   }, [user]);
 
-  function getCsrfToken(): string {
-    const csrfToken = document.querySelector('meta[name="authenticity-token"]')?.getAttribute("content");
-
-    if (csrfToken) return csrfToken;
-    throw new Error("CSRF Token não foi encontrado.");
-  }
-
   function handleToggle(value: Allow, checked: boolean) {
     if (checked) {
       setPermissions((prev) => [...prev, value]);
@@ -58,12 +43,11 @@ export default function TokensDialog({ open, setOpen, user, onSave }: Props) {
     const toastId = toast.loading("Gerando token…");
 
     try {
-      const csrfToken = getCsrfToken();
       const response = await fetch(`/admin/users/${draft.username}/token`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-CSRF-Token": csrfToken,
+          "X-CSRF-Token": getCsrfToken(),
         },
         body: JSON.stringify(permissions),
       });
@@ -90,12 +74,11 @@ export default function TokensDialog({ open, setOpen, user, onSave }: Props) {
     const toastId = toast.loading("Deletando token…");
 
     try {
-      const csrfToken = getCsrfToken();
       const response = await fetch(`/admin/users/${draft.username}/token`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          "X-CSRF-Token": csrfToken,
+          "X-CSRF-Token": getCsrfToken(),
         },
         body: token.value,
       });

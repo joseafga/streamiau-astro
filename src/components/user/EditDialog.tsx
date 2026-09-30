@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogFooter, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,8 +7,8 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/ui/input-group";
 import { Spinner } from "@/components/ui/spinner";
-import { toast } from "sonner";
-import type { User } from "./types";
+import { getCsrfToken } from "@/helpers/use-csrf-token";
+import type { User } from "@/components/user/types";
 
 interface Props {
   open: boolean;
@@ -31,13 +32,6 @@ export default function EditDialog({ open, setOpen, user, onSave }: Props) {
     setDraft(user);
   }, [user]);
 
-  function getCsrfToken(): string {
-    const csrfToken = document.querySelector('meta[name="authenticity-token"]')?.getAttribute("content");
-
-    if (csrfToken) return csrfToken;
-    throw new Error("CSRF Token não foi encontrado.");
-  }
-
   function handleFieldChange(field: keyof User, value: string) {
     if (!draft) return;
     setDraft({ ...draft, [field]: value });
@@ -55,12 +49,11 @@ export default function EditDialog({ open, setOpen, user, onSave }: Props) {
     const toastId = toast.loading("Salvando mudanças…");
 
     try {
-      const csrfToken = getCsrfToken();
       const response = await fetch(`/admin/users/${draft.username}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          "X-CSRF-Token": csrfToken,
+          "X-CSRF-Token": getCsrfToken(),
         },
         body: JSON.stringify(draft),
       });

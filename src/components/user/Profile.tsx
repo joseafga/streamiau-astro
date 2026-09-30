@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
+import { UserRound, Mail, KeyRound, Gamepad2, Play } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { UserRound, Mail, KeyRound, Gamepad2, Play } from "lucide-react";
 import { TokenItem } from "@/components/user/TokenItem";
-import type { User, Role } from "./types";
-import { roleLabels } from "./types";
+import type { User, Role } from "@/components/user/types";
+import { roleLabels } from "@/components/user/types";
 
 export default function Profile() {
   const [user, setUser] = useState<User>();

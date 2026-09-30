@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
+import { SquarePen, KeyRound, Trash } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { SquarePen, KeyRound, Trash } from "lucide-react";
-import EditDialog from "./EditDialog";
-import TokensDialog from "./TokensDialog";
-import type { User } from "./types";
+import EditDialog from "@/components/user/EditDialog";
+import TokensDialog from "@/components/user/TokensDialog";
+import type { User } from "@/components/user/types";
 
 export default function DataTable() {
   const [users, setUsers] = useState<User[]>([]);
