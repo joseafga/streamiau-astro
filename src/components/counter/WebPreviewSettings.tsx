@@ -26,9 +26,13 @@ const fonts = [
 const fontSizePrefixMarks = [0, 61, 122, 183, 244];
 const fontSizeCounterMarks = [0, 61, 122, 183, 244];
 
-export default function WebPreviewSettings() {
+interface Props {
+  uuid?: string;
+}
+
+export default function WebPreviewSettings({ uuid }: Props) {
   const [isLoading, setIsLoading] = useState(false);
-  const selectedUuid = useStore($uuid);
+  const selectedUuid = uuid ?? useStore($uuid);
   const defaultStyle = useStore($style);
   const [color, setColor] = useState(() => parseColor(defaultStyle.font_color)!);
   const [hex, setHex] = useState(defaultStyle.font_color);

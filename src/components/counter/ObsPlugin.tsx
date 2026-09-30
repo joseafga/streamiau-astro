@@ -10,11 +10,12 @@ const WS_URL_HOST = window.location.host;
 
 interface Props {
   username: string;
+  uuid?: string;
 }
 
-export default function ObsPlugin({ username }: Props) {
+export default function ObsPlugin({ username, uuid }: Props) {
   const [copyToClipboard, isCopied] = useCopyToClipboard();
-  const selectedUuid = useStore($uuid);
+  const selectedUuid = uuid ?? useStore($uuid);
 
   function getUrl() {
     return `${WS_URL_PROTOCOL}//${WS_URL_HOST}/api/v1/counter/${username}/${selectedUuid}/ws`;

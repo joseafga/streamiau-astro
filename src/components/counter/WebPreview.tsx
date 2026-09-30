@@ -9,11 +9,12 @@ const URL_ORIGIN = window.location.origin;
 
 interface Props {
   username: string;
+  uuid?: string;
 }
 
-export default function WebPreview({ username }: Props) {
+export default function WebPreview({ username, uuid }: Props) {
   const [copyToClipboard, isCopied] = useCopyToClipboard();
-  const selectedUuid = useStore($uuid);
+  const selectedUuid = uuid ?? useStore($uuid);
   const defaultStyle = useStore($style);
 
   function getUrl() {
