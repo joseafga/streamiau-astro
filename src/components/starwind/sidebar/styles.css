@@ -1,3 +1,0 @@
-:root:not([data-starwind-sidebar-tooltips="enabled"]) [data-sw-sidebar-tooltip-content] {
-  display: none !important;
-}
