@@ -5,11 +5,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import EditDialog from "@/components/counter/EditDialog";
 import type { Counter } from "@/components/counter/types";
 import { $uuid } from "@/stores/counter";
 
-export default function DataTable() {
+export default function DataTable({ username }: { username: string }) {
   const [counters, setCounters] = useState<Counter[]>([]);
+  const [selectedCounter, setSelectedCounter] = useState<Counter>();
   const selectedUuid = useStore($uuid);
   const [openEdit, setOpenEdit] = useState(false);
 
@@ -27,7 +29,7 @@ export default function DataTable() {
   }, [counters]);
 
   function handleEdit(counter: Counter) {
-    // setSelectedCounter(counter);
+    setSelectedCounter(counter);
     setOpenEdit(true);
   }
 
@@ -59,9 +61,9 @@ export default function DataTable() {
                 </div>
               </TableCell>
               <TableCell>{counter.value}</TableCell>
-              <TableCell>{counter.metadata && counter.metadata.time}</TableCell>
-              <TableCell>{counter.metadata && counter.metadata.sender}</TableCell>
-              <TableCell>{counter.metadata && counter.metadata.message}</TableCell>
+              <TableCell>{counter.metadata?.time}</TableCell>
+              <TableCell>{counter.metadata?.sender}</TableCell>
+              <TableCell>{counter.metadata?.message}</TableCell>
               <TableCell className="text-right">
                 <Button variant="ghost" size="icon" aria-label="Editar" onClick={() => handleEdit(counter)}>
                   <SquarePen />
@@ -74,7 +76,13 @@ export default function DataTable() {
           ))}
         </TableBody>
       </Table>
-      {/*<EditDialog open={openEdit} setOpen={setOpenEdit} user={selectedCounter} onSave={handleSave} />*/}
+      <EditDialog
+        open={openEdit}
+        setOpen={setOpenEdit}
+        username={username}
+        counter={selectedCounter}
+        onSave={handleSave}
+      />
     </RadioGroup>
   );
 }

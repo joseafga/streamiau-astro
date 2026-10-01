@@ -17,7 +17,7 @@ const data = "ECR%= counters.to_json %ECR";
 <Layout breadcrumb={breadcrumb} csrfToken>
   <div class="grid auto-rows-min gap-4 md:grid-cols-2">
     <div class="bg-muted/50 flex-1 rounded-xl min-h-min p-4 md:col-span-2">
-      <DataTable client:only />
+      <DataTable username={username} client:only />
     </div>
     <div class="bg-muted/50 rounded-xl row-span-2">
       <WebPreviewSettings client:only />

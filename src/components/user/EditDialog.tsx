@@ -25,7 +25,7 @@ const roles = [
 ];
 
 export default function EditDialog({ open, setOpen, user, onSave }: Props) {
-  const [draft, setDraft] = useState<User | undefined>(undefined);
+  const [draft, setDraft] = useState<User>();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -33,13 +33,17 @@ export default function EditDialog({ open, setOpen, user, onSave }: Props) {
   }, [user]);
 
   function handleFieldChange(field: keyof User, value: string) {
-    if (!draft) return;
-    setDraft({ ...draft, [field]: value });
+    setDraft((prev) => {
+      if (!prev) return prev;
+      return { ...prev, [field]: value };
+    });
   }
 
-  function handleRoleChange(field: keyof User, value: number | null) {
-    if (!draft || value === null) return;
-    setDraft({ ...draft, [field]: value });
+  function handleRoleChange(value: number | null) {
+    setDraft((prev) => {
+      if (!prev || value === null) return prev;
+      return { ...prev, role: value };
+    });
   }
 
   async function handleSave() {
@@ -101,7 +105,7 @@ export default function EditDialog({ open, setOpen, user, onSave }: Props) {
             <div className="grid col-span-2 gap-2">
               <Field>
                 <FieldLabel htmlFor="role-trigger">Cargo</FieldLabel>
-                <Select items={roles} value={draft.role} onValueChange={(e) => handleRoleChange("role", e)}>
+                <Select items={roles} value={draft.role} onValueChange={(e) => handleRoleChange(e)}>
                   <SelectTrigger id="role-trigger" className="w-full">
                     <SelectValue />
                   </SelectTrigger>

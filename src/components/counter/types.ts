@@ -1,7 +1,7 @@
 export type Metadata = {
   time: string;
   sender: string;
-  message: string;
+  message?: string;
 };
 
 export type Counter = {
