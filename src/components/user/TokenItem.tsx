@@ -21,8 +21,8 @@ function TokenItem({ className, token, onDelete, ...props }: Props) {
     }
   }
 
-  function formatDates(isodate: string) {
-    return new Date(isodate).toLocaleDateString("pt-BR", {
+  function formatDates(isoDate: string) {
+    return new Date(isoDate).toLocaleDateString("pt-BR", {
       day: "2-digit",
       month: "short",
       year: "numeric",

@@ -28,6 +28,16 @@ export default function DataTable({ username }: { username: string }) {
     $uuid.set(counters.at(0)?.uuid ?? "");
   }, [counters]);
 
+  function formatDate(isoDateTime: string) {
+    return new Date(isoDateTime).toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+
   function handleEdit(counter: Counter) {
     setSelectedCounter(counter);
     setOpenEdit(true);
@@ -61,7 +71,7 @@ export default function DataTable({ username }: { username: string }) {
                 </div>
               </TableCell>
               <TableCell>{counter.value}</TableCell>
-              <TableCell>{counter.metadata?.time}</TableCell>
+              <TableCell>{counter.metadata && formatDate(counter.metadata.time)}</TableCell>
               <TableCell>{counter.metadata?.sender}</TableCell>
               <TableCell>{counter.metadata?.message}</TableCell>
               <TableCell className="text-right">
