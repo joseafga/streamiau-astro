@@ -59,9 +59,9 @@ export default function TokensDialog({ open, setOpen, user, onSave }: Props) {
       draft.tokens.push(resultToken);
       onSave(draft);
       toast.success("Token gerado com sucesso.", { id: toastId });
-      setIsLoading(false);
     } catch (err) {
       toast.error(`Falha - ${err}`, { id: toastId });
+    } finally {
       setIsLoading(false);
     }
   }

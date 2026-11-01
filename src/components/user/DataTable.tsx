@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import { SquarePen, KeyRound, Trash } from "lucide-react";
+import { SquarePen, KeyRound, Trash, Plus } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import ClearCacheButton from "@/components/user/ClearCacheButton";
+import NewDialog from "@/components/user/NewDialog";
 import EditDialog from "@/components/user/EditDialog";
 import TokensDialog from "@/components/user/TokensDialog";
 import type { User } from "@/components/user/types";
@@ -9,6 +11,7 @@ import type { User } from "@/components/user/types";
 export default function DataTable() {
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | undefined>(undefined);
+  const [openNew, setOpenNew] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openTokens, setOpenTokens] = useState(false);
 
@@ -30,6 +33,11 @@ export default function DataTable() {
     setOpenTokens(true);
   }
 
+  function handleCreate(createdUser: User) {
+    setUsers((prev) => [createdUser, ...prev]);
+    setOpenNew(false);
+  }
+
   function handleSave(updatedUser: User) {
     setUsers((prev) => prev.map((u) => (u.username === updatedUser.username ? updatedUser : u)));
     setOpenEdit(false);
@@ -37,6 +45,20 @@ export default function DataTable() {
 
   return (
     <>
+      <div className="flex flex-col gap-4 mb-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">Usuários</h1>
+          <p className="text-muted-foreground text-sm">Gerencie os usuários</p>
+        </div>
+
+        <div className="flex items-center justify-end gap-2">
+          <ClearCacheButton />
+          <Button onClick={() => setOpenNew(true)}>
+            <Plus />
+            Novo Usuário
+          </Button>
+        </div>
+      </div>
       <Table>
         <TableHeader>
           <TableRow>
@@ -69,6 +91,7 @@ export default function DataTable() {
           ))}
         </TableBody>
       </Table>
+      <NewDialog open={openNew} setOpen={setOpenNew} onCreate={handleCreate} />
       <EditDialog open={openEdit} setOpen={setOpenEdit} user={selectedUser} onSave={handleSave} />
       <TokensDialog open={openTokens} setOpen={setOpenTokens} user={selectedUser} onSave={handleSave} />
     </>

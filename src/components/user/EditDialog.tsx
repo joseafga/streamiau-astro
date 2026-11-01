@@ -68,9 +68,9 @@ export default function EditDialog({ open, setOpen, user, onSave }: Props) {
 
       onSave(draft);
       toast.success("Editado com sucesso.", { id: toastId });
-      setIsLoading(false);
     } catch (err) {
       toast.error(`Falha - ${err}`, { id: toastId });
+    } finally {
       setIsLoading(false);
     }
   }
