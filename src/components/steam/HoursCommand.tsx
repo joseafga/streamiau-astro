@@ -7,9 +7,10 @@ import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
 interface Props {
   username: string;
+  steamid?: string;
 }
 
-export default function HoursCommand({ username }: Props) {
+export default function HoursCommand({ username, steamid }: Props) {
   const [appid, setAppid] = useState("0");
   const [commandText, setCommandText] = useState(`${username} possui {horas} horas de jogo.`);
   const [copyToClipboard, isCopied] = useCopyToClipboard();
@@ -18,10 +19,10 @@ export default function HoursCommand({ username }: Props) {
     return `${window.location.protocol}//${window.location.host}/api/v1/steam/${username}/${appid}/hours`;
   }
 
-  const command = "!command add horas " + commandText.replace("{horas}", `$(customapi ${getUrl()})`);
+  const command = "!command add !horas " + commandText.replace("{horas}", `$(customapi ${getUrl()})`);
   const hasCommandWord = commandText.includes("{horas}");
 
-  return (
+  return steamid ? (
     <div className="flex flex-col h-full gap-4 p-6 mx-auto">
       <h1 className="text-lg font-extrabold text-center">Horas jogadas - Comando para Bot (StreamElements)</h1>
 
@@ -86,5 +87,7 @@ export default function HoursCommand({ username }: Props) {
         </InputGroupAddon>
       </InputGroup>
     </div>
+  ) : (
+    <p className="p-6 text-center">Nenhuma conta Steam vinculada ao usuário.</p>
   );
 }
