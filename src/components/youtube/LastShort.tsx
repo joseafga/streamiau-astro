@@ -70,6 +70,6 @@ export default function LastShort({ username, youtubeid }: Props) {
       </InputGroup>
     </div>
   ) : (
-    <p className="p-6 text-center">Nenhuma conta Steam vinculada ao usuário.</p>
+    <p className="p-6 text-center">Nenhuma conta Youtube vinculada ao usuário.</p>
   );
 }
