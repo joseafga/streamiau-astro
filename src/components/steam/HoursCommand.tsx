@@ -24,9 +24,9 @@ export default function HoursCommand({ username, steamid }: Props) {
 
   return steamid ? (
     <div className="flex flex-col h-full gap-4 p-6 mx-auto">
-      <h1 className="text-lg font-extrabold text-center">Horas jogadas - Comando para Bot (StreamElements)</h1>
+      <h1 className="text-lg font-extrabold text-center">Horas jogadas - Comando para Bot</h1>
 
-      <p className="text-center">Exiba o número de horas jogadas num comando de seu Bot.</p>
+      <p className="text-center">Exiba o número de horas jogadas através de um comando de Bot (StreamElements).</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-[240px_1fr] gap-4 mb-4">
         <Field>
@@ -55,12 +55,11 @@ export default function HoursCommand({ username, steamid }: Props) {
             value={commandText}
             onChange={(e) => setCommandText(e.target.value)}
           />
-          {hasCommandWord && (
+          {hasCommandWord ? (
             <FieldDescription>
               O termo <em>{"{horas}"}</em> será substituído pelas suas horas jogadas na Steam.
             </FieldDescription>
-          )}
-          {!hasCommandWord && (
+          ) : (
             <FieldError>
               Inclua o termo <em>{"{horas}"}</em> para o valor ser substituído.
             </FieldError>
