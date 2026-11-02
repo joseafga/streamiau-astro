@@ -23,7 +23,7 @@ import {
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import ThemeToggle from "@/components/ThemeToggle";
 import { Logo } from "@/components/Logo";
-import type { User } from "@/components/user/types";
+import type { User } from "@/components/users/types";
 import type { NavigationItem } from "@/components/NavMain";
 
 const navigation = {

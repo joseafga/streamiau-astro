@@ -8,7 +8,7 @@ import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/ui/input-group";
 import { Spinner } from "@/components/ui/spinner";
 import { getCsrfToken } from "@/helpers/use-csrf-token";
-import type { User } from "@/components/user/types";
+import type { User } from "@/components/users/types";
 
 interface Props {
   open: boolean;

@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Spinner } from "@/components/ui/spinner";
 import { getCsrfToken } from "@/helpers/use-csrf-token";
-import { TokenItem } from "@/components/user/TokenItem";
-import { type User, type Token, allowLabels, allowDescriptions, Allow } from "@/components/user/types";
+import { TokenItem } from "@/components/users/TokenItem";
+import { type User, type Token, allowLabels, allowDescriptions, Allow } from "@/components/users/types";
 
 interface Props {
   open: boolean;

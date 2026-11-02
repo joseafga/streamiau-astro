@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
-import type { User } from "@/components/user/types";
+import type { User } from "@/components/users/types";
 
 export function NavUser({ user }: { user: User }) {
   const { isMobile } = useSidebar();
