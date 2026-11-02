@@ -1,0 +1,21 @@
+---
+import Layout from "@/layouts/Sidebar.astro";
+import HoursCommandWidget from "@/components/steam/HoursCommand";
+
+const breadcrumb = [
+  { title: "Home", url: "/home" },
+  { title: "Steam", url: "/steam" },
+];
+
+const username = __ecr("johndoe", "session_user.username");
+const uuid = __ecr("01a0f3a6-d6e4-7e33-bda3-4c667f16980b", "uuid");
+---
+
+<Layout breadcrumb={breadcrumb} csrfToken>
+  <div class="grid auto-rows-min gap-4 md:grid-cols-1">
+    <!-- <div class="bg-muted/50 rounded-xl row-span-2"></div> -->
+    <div class="bg-muted/50 rounded-xl">
+      <HoursCommandWidget username={username} client:only />
+    </div>
+  </div>
+</Layout>

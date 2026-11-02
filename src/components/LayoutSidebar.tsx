@@ -1,5 +1,14 @@
 import * as React from "react";
-import { type LucideIcon, ArrowDown01, WholeWord, Settings2Icon, UsersRound, Code2 } from "lucide-react";
+import {
+  type LucideIcon,
+  ArrowDown01,
+  WholeWord,
+  Settings2Icon,
+  UsersRound,
+  Code2,
+  Gamepad2,
+  Play,
+} from "lucide-react";
 import { NavMain } from "@/components/NavMain";
 import { NavBottom } from "@/components/NavBottom";
 import { NavUser } from "@/components/NavUser";
@@ -37,6 +46,16 @@ const navigation = {
       title: "Frases",
       url: "#",
       icon: WholeWord,
+    },
+    {
+      title: "Youtube",
+      url: "/youtube",
+      icon: Play,
+    },
+    {
+      title: "Steam",
+      url: "/steam",
+      icon: Gamepad2,
     },
     {
       title: "Configurações",
