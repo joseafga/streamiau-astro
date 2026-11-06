@@ -44,7 +44,7 @@ const navigation = {
     },
     {
       title: "Frases",
-      url: "#",
+      url: "/phrases",
       icon: WholeWord,
     },
     {

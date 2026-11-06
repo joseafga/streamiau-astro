@@ -1,0 +1,84 @@
+---
+import Layout from "@/layouts/Sidebar.astro";
+import PhrasesCommand from "@/components/phrases/PhrasesCommand";
+import PhrasesDataTable from "@/components/phrases/DataTable";
+
+const breadcrumb = [
+  { title: "Home", url: "/home" },
+  { title: "Frases", url: "/phrases" },
+];
+
+const username = __ecr("johndoe", "session_user.username");
+const token = __ecr(
+  "abcdef1234567890",
+  "session_user.tokens.find { |token| token.allow.includes?(User::Token::Type::Phrases) }",
+);
+
+const data = "ECR%= phrases.to_json %ECR";
+---
+
+<Layout breadcrumb={breadcrumb} csrfToken>
+  <div class="grid auto-rows-min gap-4 md:grid-cols-2">
+    <div class="bg-muted/50 flex-1 rounded-xl min-h-min p-4 md:col-span-2">
+      <PhrasesDataTable client:only />
+    </div>
+
+    <div class="bg-muted/50 rounded-xl">
+      <PhrasesCommand username={username} token={token} client:only />
+    </div>
+    <div class="bg-muted/50 rounded-xl">
+      <div class="flex flex-col h-full gap-4 p-6 mx-auto">
+        <h1 class="text-lg font-extrabold text-center">Utilização</h1>
+
+        <section class="grid gap-2">
+          <h3>1. Registre o comando</h3>
+          <ul class="grid gap-1 text-muted-foreground text-sm">
+            <li>Apenas visualização: copie o comando e cole no chat da Twitch.</li>
+            <li>Com a opção de <em>adicionar</em> e <em>remover</em>: cadastre pelo painel do StreamElements.</li>
+          </ul>
+        </section>
+
+        <section class="grid gap-2">
+          <h3>2. Consulte as frases</h3>
+          <ul class="grid gap-1 text-muted-foreground text-sm">
+            <li>
+              <span class="text-foreground text-base">!categoria</span> - retorna uma frase aleatória.
+            </li>
+            <li>
+              <span class="text-foreground text-base">!categoria &lt;texto&gt;</span> - busca aproximada, encontra mesmo com
+              erros de digitação.
+            </li>
+            <li>
+              <span class="text-foreground text-base">!categoria find &lt;texto&gt;</span> - a mesma busca, mas de forma explícita.
+            </li>
+            <li>
+              <span class="text-foreground text-base">!categoria @usuário</span> - responde mencionando o usuário.
+            </li>
+          </ul>
+        </section>
+
+        <section class="grid gap-2">
+          <h3>3. Adicione e remova frases</h3>
+          <p class="text-muted-foreground text-sm">
+            Requer a opção <em>editável</em> e um token com a permissão <em>Frases</em>. O texto após o subcomando é
+            enviado à API com seu token e nível de acesso, e só passa quem tiver permissão igual ou superior à
+            selecionada.
+          </p>
+          <ul class="grid gap-1 text-muted-foreground text-sm">
+            <li>
+              <span class="text-foreground text-base">!categoria add &lt;frase&gt;</span> (ou{" "}
+              <span class="text-foreground text-base">+</span>) - adiciona a frase.
+            </li>
+            <li>
+              <span class="text-foreground text-base">!categoria remove &lt;frase&gt;</span> (ou{" "}
+              <span class="text-foreground text-base">rem</span>,{" "}
+              <span class="text-foreground text-base">-</span>) - remove a frase, que precisa ser idêntica à cadastrada.
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script id="phrases-data" type="application/json" is:inline set:html={data} />
+</Layout>
