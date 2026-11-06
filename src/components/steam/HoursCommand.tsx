@@ -15,11 +15,11 @@ export default function HoursCommand({ username, steamid }: Props) {
   const [commandText, setCommandText] = useState(`${username} possui {horas} horas de jogo.`);
   const [copyToClipboard, isCopied] = useCopyToClipboard();
 
-  function getUrl() {
+  function getApiUrl() {
     return `${window.location.protocol}//${window.location.host}/api/v1/steam/${username}/${appid}/hours`;
   }
 
-  const command = "!command add !horas " + commandText.replace("{horas}", `$(customapi ${getUrl()})`);
+  const command = "!command add !horas " + commandText.replace("{horas}", `$(customapi ${getApiUrl()})`);
   const hasCommandWord = commandText.includes("{horas}");
 
   return steamid ? (

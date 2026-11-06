@@ -14,11 +14,11 @@ export default function LastVideo({ username, youtubeid }: Props) {
   const [commandText, setCommandText] = useState(`Confira o último vídeo do canal: {video}`);
   const [copyToClipboard, isCopied] = useCopyToClipboard();
 
-  function getUrl() {
+  function getApiUrl() {
     return `${window.location.protocol}//${window.location.host}/api/v1/youtube/${youtubeid}/videos/last`;
   }
 
-  const command = "!command add !video " + commandText.replace("{video}", `$(customapi ${getUrl()})`);
+  const command = "!command add !video " + commandText.replace("{video}", `$(customapi ${getApiUrl()})`);
   const hasCommandWord = commandText.includes("{video}");
 
   return youtubeid ? (

@@ -14,11 +14,11 @@ export default function LastShort({ username, youtubeid }: Props) {
   const [commandText, setCommandText] = useState(`Confira o último shorts do canal: {short}`);
   const [copyToClipboard, isCopied] = useCopyToClipboard();
 
-  function getUrl() {
+  function getApiUrl() {
     return `${window.location.protocol}//${window.location.host}/api/v1/youtube/${youtubeid}/shorts/last`;
   }
 
-  const command = "!command add !short " + commandText.replace("{short}", `$(customapi ${getUrl()})`);
+  const command = "!command add !short " + commandText.replace("{short}", `$(customapi ${getApiUrl()})`);
   const hasCommandWord = commandText.includes("{short}");
 
   return youtubeid ? (
