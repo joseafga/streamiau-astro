@@ -3,8 +3,7 @@ import { SquarePen, KeyRound, Trash, Plus } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import ClearCacheButton from "@/components/users/ClearCacheButton";
-import NewDialog from "@/components/users/NewDialog";
-import EditDialog from "@/components/users/EditDialog";
+import UserDialog from "@/components/users/UserDialog";
 import TokensDialog from "@/components/users/TokensDialog";
 import type { User } from "@/components/users/types";
 
@@ -48,7 +47,7 @@ export default function DataTable() {
       <div className="flex flex-col gap-4 mb-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Usuários</h1>
-          <p className="text-muted-foreground text-sm">Gerencie os usuários e seus tokens.</p>
+          <p className="text-muted-foreground text-sm">{users.length} usuário(s)</p>
         </div>
 
         <div className="flex items-center justify-end gap-2">
@@ -91,8 +90,8 @@ export default function DataTable() {
           ))}
         </TableBody>
       </Table>
-      <NewDialog open={openNew} setOpen={setOpenNew} onCreate={handleCreate} />
-      <EditDialog open={openEdit} setOpen={setOpenEdit} user={selectedUser} onSave={handleSave} />
+      <UserDialog open={openNew} setOpen={setOpenNew} onSave={handleCreate} />
+      <UserDialog open={openEdit} setOpen={setOpenEdit} user={selectedUser} onSave={handleSave} />
       <TokensDialog open={openTokens} setOpen={setOpenTokens} user={selectedUser} onSave={handleSave} />
     </>
   );

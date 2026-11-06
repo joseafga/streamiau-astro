@@ -66,7 +66,7 @@ export default function ClearCacheButton() {
 
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isLoading}>Cancelar</AlertDialogCancel>
-          <AlertDialogAction disabled={isLoading} onClick={handleClearCache}>
+          <AlertDialogAction variant="destructive" disabled={isLoading} onClick={handleClearCache}>
             {isLoading ? "Limpando…" : "Confirmar"}
           </AlertDialogAction>
         </AlertDialogFooter>

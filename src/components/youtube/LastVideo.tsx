@@ -29,7 +29,7 @@ export default function LastVideo({ username, youtubeid }: Props) {
         Exiba o último vídeo de seu canal do youtube através de um comando de Bot (StreamElements).
       </p>
 
-      <div className="grid grid-cols-1 gap-4 mb-4">
+      <div className="grid grid-cols-1 gap-4">
         <Field>
           <FieldLabel htmlFor="command-text">Texto</FieldLabel>
           <Input
@@ -50,7 +50,7 @@ export default function LastVideo({ username, youtubeid }: Props) {
         </Field>
       </div>
 
-      <InputGroup>
+      <InputGroup className="mt-4">
         <InputGroupInput value={command} readOnly />
         <InputGroupAddon>
           <Terminal />
