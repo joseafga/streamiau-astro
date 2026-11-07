@@ -1,10 +1,22 @@
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
 import { SquarePen, KeyRound, Trash, Plus } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import ClearCacheButton from "@/components/users/ClearCacheButton";
 import UserDialog from "@/components/users/UserDialog";
 import TokensDialog from "@/components/users/TokensDialog";
+import { getCsrfToken } from "@/helpers/use-csrf-token";
 import type { User } from "@/components/users/types";
 
 export default function DataTable() {
@@ -13,6 +25,8 @@ export default function DataTable() {
   const [openNew, setOpenNew] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openTokens, setOpenTokens] = useState(false);
+  const [deleting, setDeleting] = useState<User>();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const usersData = document.getElementById("users-data");
@@ -40,6 +54,34 @@ export default function DataTable() {
   function handleSave(updatedUser: User) {
     setUsers((prev) => prev.map((u) => (u.username === updatedUser.username ? updatedUser : u)));
     setOpenEdit(false);
+  }
+
+  async function handleDelete() {
+    if (!deleting) return;
+
+    setIsLoading(true);
+    const toastId = toast.loading("Removendo usuário…");
+
+    try {
+      const response = await fetch(`/admin/users/${deleting.username}`, {
+        method: "DELETE",
+        headers: {
+          "X-CSRF-Token": getCsrfToken(),
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(response.status.toString());
+      }
+
+      setUsers((prev) => prev.filter((u) => u.username !== deleting.username));
+      toast.success("Usuário removido com sucesso.", { id: toastId });
+      setDeleting(undefined);
+    } catch (err) {
+      toast.error(`Falha - ${err}`, { id: toastId });
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -82,7 +124,7 @@ export default function DataTable() {
                 <Button variant="ghost" size="icon" aria-label="Tokens" onClick={() => handleTokens(user)}>
                   <KeyRound />
                 </Button>
-                <Button variant="destructive" size="icon" aria-label="Submit">
+                <Button variant="destructive" size="icon" aria-label="Remover" onClick={() => setDeleting(user)}>
                   <Trash />
                 </Button>
               </TableCell>
@@ -93,6 +135,25 @@ export default function DataTable() {
       <UserDialog open={openNew} setOpen={setOpenNew} onSave={handleCreate} />
       <UserDialog open={openEdit} setOpen={setOpenEdit} user={selectedUser} onSave={handleSave} />
       <TokensDialog open={openTokens} setOpen={setOpenTokens} user={selectedUser} onSave={handleSave} />
+
+      <AlertDialog open={!!deleting} onOpenChange={(open) => !open && setDeleting(undefined)}>
+        <AlertDialogContent size="sm">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Remover usuário?</AlertDialogTitle>
+            <AlertDialogDescription>
+              O usuário "<span className="font-medium text-foreground">{deleting?.username}</span>" será removido.
+              Deseja continuar?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isLoading}>Cancelar</AlertDialogCancel>
+            <AlertDialogAction variant="destructive" disabled={isLoading} onClick={handleDelete}>
+              {isLoading ? "Removendo…" : "Confirmar"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }
