@@ -74,7 +74,7 @@ export default function UserDialog({ open, setOpen, onSave, user }: Props) {
         throw new Error(response.status.toString());
       }
 
-      onSave(draft);
+      onSave(await response.json());
       if (!isEdit) setDraft(EMPTY_USER);
       toast.success(isEdit ? "Editado com sucesso." : "Criado com sucesso.", { id: toastId });
     } catch (err) {
