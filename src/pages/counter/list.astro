@@ -16,7 +16,7 @@ const token = __ecr(
   "abcdef1234567890",
   "session_user.tokens.find { |token| token.allow.includes?(User::Token::Type::Counter) }",
 );
-const data = "ECR%= counters.to_json %ECR";
+const data = __ecr("[]", "counters.to_json");
 ---
 
 <Layout breadcrumb={breadcrumb} csrfToken>
