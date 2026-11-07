@@ -14,13 +14,19 @@ export default function HoursCommand({ username, steamid }: Props) {
   const [appid, setAppid] = useState("0");
   const [commandText, setCommandText] = useState(`${username} possui {horas} horas de jogo.`);
   const [copyToClipboard, isCopied] = useCopyToClipboard();
+  const hasCommandWord = commandText.includes("{horas}");
 
   function getApiUrl() {
     return `${window.location.protocol}//${window.location.host}/api/v1/steam/${username}/${appid}/hours`;
   }
 
-  const command = "!command add !horas " + commandText.replace("{horas}", `$(customapi ${getApiUrl()})`);
-  const hasCommandWord = commandText.includes("{horas}");
+  function getCommand() {
+    if (!hasCommandWord) return "";
+
+    return "!command add !horas " + commandText.replace("{horas}", `$(customapi ${getApiUrl()})`);
+  }
+
+  const command = getCommand();
 
   return steamid ? (
     <div className="flex flex-col h-full gap-4 p-6 mx-auto">
@@ -68,7 +74,7 @@ export default function HoursCommand({ username, steamid }: Props) {
       </div>
 
       <InputGroup className="mt-4">
-        <InputGroupInput value={command} readOnly />
+        <InputGroupInput value={command} readOnly placeholder="Inclua o termo {horas}…" />
         <InputGroupAddon>
           <Terminal />
         </InputGroupAddon>
@@ -77,6 +83,7 @@ export default function HoursCommand({ username, steamid }: Props) {
             aria-label="Copiar"
             title="Copiar"
             size="icon-xs"
+            disabled={!command}
             onClick={() => {
               copyToClipboard(command);
             }}

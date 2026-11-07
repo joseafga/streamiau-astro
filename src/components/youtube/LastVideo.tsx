@@ -13,13 +13,19 @@ interface Props {
 export default function LastVideo({ username, youtubeid }: Props) {
   const [commandText, setCommandText] = useState(`Confira o último vídeo do canal: {video}`);
   const [copyToClipboard, isCopied] = useCopyToClipboard();
+  const hasCommandWord = commandText.includes("{video}");
 
   function getApiUrl() {
     return `${window.location.protocol}//${window.location.host}/api/v1/youtube/${youtubeid}/videos/last`;
   }
 
-  const command = "!command add !video " + commandText.replace("{video}", `$(customapi ${getApiUrl()})`);
-  const hasCommandWord = commandText.includes("{video}");
+  function getCommand() {
+    if (!hasCommandWord) return "";
+
+    return "!command add !video " + commandText.replace("{video}", `$(customapi ${getApiUrl()})`);
+  }
+
+  const command = getCommand();
 
   return youtubeid ? (
     <div className="flex flex-col h-full gap-4 p-6 mx-auto">
@@ -51,7 +57,7 @@ export default function LastVideo({ username, youtubeid }: Props) {
       </div>
 
       <InputGroup className="mt-4">
-        <InputGroupInput value={command} readOnly />
+        <InputGroupInput value={command} readOnly placeholder="Inclua o termo {video}…" />
         <InputGroupAddon>
           <Terminal />
         </InputGroupAddon>
@@ -60,6 +66,7 @@ export default function LastVideo({ username, youtubeid }: Props) {
             aria-label="Copiar"
             title="Copiar"
             size="icon-xs"
+            disabled={!command}
             onClick={() => {
               copyToClipboard(command);
             }}

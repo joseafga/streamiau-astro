@@ -13,13 +13,19 @@ interface Props {
 export default function LastShort({ username, youtubeid }: Props) {
   const [commandText, setCommandText] = useState(`Confira o último shorts do canal: {short}`);
   const [copyToClipboard, isCopied] = useCopyToClipboard();
+  const hasCommandWord = commandText.includes("{short}");
 
   function getApiUrl() {
     return `${window.location.protocol}//${window.location.host}/api/v1/youtube/${youtubeid}/shorts/last`;
   }
 
-  const command = "!command add !short " + commandText.replace("{short}", `$(customapi ${getApiUrl()})`);
-  const hasCommandWord = commandText.includes("{short}");
+  function getCommand() {
+    if (!hasCommandWord) return "";
+
+    return "!command add !short " + commandText.replace("{short}", `$(customapi ${getApiUrl()})`);
+  }
+
+  const command = getCommand();
 
   return youtubeid ? (
     <div className="flex flex-col h-full gap-4 p-6 mx-auto">
@@ -51,7 +57,7 @@ export default function LastShort({ username, youtubeid }: Props) {
       </div>
 
       <InputGroup className="mt-4">
-        <InputGroupInput value={command} readOnly />
+        <InputGroupInput value={command} readOnly placeholder="Inclua o termo {short}…" />
         <InputGroupAddon>
           <Terminal />
         </InputGroupAddon>
@@ -60,6 +66,7 @@ export default function LastShort({ username, youtubeid }: Props) {
             aria-label="Copiar"
             title="Copiar"
             size="icon-xs"
+            disabled={!command}
             onClick={() => {
               copyToClipboard(command);
             }}

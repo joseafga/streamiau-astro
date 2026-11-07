@@ -45,7 +45,7 @@ export default function PhrasesCommand({ username, token }: Props) {
 
     const query = "args=$(queryescape ${1:|random})";
 
-    // Read-only; not token
+    // Read-only; no token
     if (!editable) {
       return `!command add !${category} $(customapi ${getApiUrl()}?${query})`;
     }
@@ -64,7 +64,7 @@ export default function PhrasesCommand({ username, token }: Props) {
 
   return (
     <div className="grid h-full grid-rows-[auto_1fr_auto] gap-6 p-6">
-      <header className="grid justify-items-center gap-2 text-center">
+      <header className="grid justify-items-center gap-4 text-center">
         <h1 className="text-lg font-extrabold">Comando para Bot</h1>
 
         <p className="text-center">Exiba frases de uma categoria através de um comando de Bot (StreamElements).</p>
@@ -99,7 +99,7 @@ export default function PhrasesCommand({ username, token }: Props) {
           />
           <div className="grid gap-1">
             <Label htmlFor="editable">Permitir adicionar e remover frases pelo chat</Label>
-            <FieldDescription>Usa seu token de acesso para autorizar alterações pelo bate-papo.</FieldDescription>
+            <FieldDescription>Usa seu token de acesso para autorizar alterações.</FieldDescription>
           </div>
         </Field>
 
