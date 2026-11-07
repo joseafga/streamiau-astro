@@ -35,7 +35,7 @@ export default function NewDialog({ open, setOpen }: Props) {
       const response = await fetch(`/phrases/${draft.category}`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "text/plain",
           "X-CSRF-Token": getCsrfToken(),
         },
         body: draft.phrase.trim(),

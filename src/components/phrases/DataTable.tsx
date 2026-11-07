@@ -56,7 +56,7 @@ export default function DataTable() {
       const response = await fetch(`/phrases/${category}`, {
         method: "DELETE",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "text/plain",
           "X-CSRF-Token": getCsrfToken(),
         },
         body: phrase,
