@@ -18,10 +18,14 @@ export const $categories = computed($phrases, (phrases) => Object.keys(phrases?.
 
 // The table and the command builder are separate React roots, so each hydrates
 // the store on mount; the guard keeps the document from being parsed twice.
-export function loadPhrases() {
-  if ($phrases.get()) return;
+export function loadPhrases(newPhrases?: Phrases) {
+  if (newPhrases) {
+    $phrases.set(newPhrases);
+  } else {
+    if ($phrases.get()) return;
 
-  $phrases.set(readPhrases());
+    $phrases.set(readPhrases());
+  }
 }
 
 export function removePhrase(category: string, index: number) {
@@ -37,26 +41,6 @@ export function removePhrase(category: string, index: number) {
       [category]: {
         ...phrasesOfCategory,
         phrases: phrasesOfCategory.phrases.filter((_, phraseIndex) => phraseIndex !== index),
-      },
-    },
-  });
-}
-
-export function addPhrase(category: string, phrase: string) {
-  const phrases = $phrases.get();
-
-  if (!phrases) return;
-
-  // Use empty phrases if category not exists yet
-  const phrasesOfCategory = phrases.categories[category] ?? { phrases: [] };
-
-  $phrases.set({
-    ...phrases,
-    categories: {
-      ...phrases.categories,
-      [category]: {
-        ...phrasesOfCategory,
-        phrases: [...phrasesOfCategory.phrases, phrase],
       },
     },
   });

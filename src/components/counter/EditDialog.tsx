@@ -41,7 +41,6 @@ export default function EditDialog({ open, setOpen, counter, username, onSave }:
     const counter = {
       ...draft,
       metadata: {
-        time: new Date().toISOString(),
         sender: username,
         message: message,
       },
@@ -61,7 +60,7 @@ export default function EditDialog({ open, setOpen, counter, username, onSave }:
         throw new Error(response.status.toString());
       }
 
-      onSave(counter);
+      onSave(await response.json());
       toast.success("Editado com sucesso.", { id: toastId });
       setIsLoading(false);
     } catch (err) {

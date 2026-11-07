@@ -1,0 +1,5 @@
+# Vendored shadcn components: keep their original formatting,
+# they come straight from the generator.
+src/components/ui/
+src/lib/utils.ts
+src/hooks/use-mobile.ts

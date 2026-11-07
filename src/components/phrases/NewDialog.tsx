@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Field, FieldGroup, FieldLabel, FieldDescription, FieldError } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
 import { getCsrfToken } from "@/helpers/use-csrf-token";
-import { $categories, addPhrase } from "@/stores/phrases";
+import { $categories, loadPhrases } from "@/stores/phrases";
 
 const EMPTY_PHRASE = { category: "", phrase: "" };
 
@@ -45,7 +45,7 @@ export default function NewDialog({ open, setOpen }: Props) {
         throw new Error(response.status.toString());
       }
 
-      addPhrase(draft.category, draft.phrase);
+      loadPhrases(await response.json());
       setOpen(false);
       setDraft(EMPTY_PHRASE);
       toast.success("Frase adicionada com sucesso.", { id: toastId });
