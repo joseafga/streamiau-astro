@@ -9,16 +9,16 @@ import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { $categories, loadPhrases } from "@/stores/phrases";
-import { Level, levelLabels } from "@/components/phrases/types";
+import { Level, levelLabels } from "@/lib/levels";
+
+const SENDER_NAME = "$(sender.name)";
+const SENDER_LEVEL = "$(sender.level)";
+const NO_CATEGORY = "Selecione uma categoria…";
 
 interface Props {
   username: string;
   token?: string;
 }
-
-const SENDER_NAME = "$(sender.name)";
-const SENDER_LEVEL = "$(sender.level)";
-const NO_CATEGORY = "Selecione uma categoria…";
 
 const permissionItems = Object.values(Level).map((level) => ({
   label: `${level} - ${levelLabels[level as Level]}`,
