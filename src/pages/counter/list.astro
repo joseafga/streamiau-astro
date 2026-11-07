@@ -14,7 +14,7 @@ const breadcrumb = [
 const username = __ecr("johndoe", "session_user.username");
 const token = __ecr(
   "abcdef1234567890",
-  "session_user.tokens.find { |token| token.allow.includes?(User::Token::Type::Counter) }",
+  "session_user.tokens.find { |token| token.allow.includes?(User::Token::Type::Counter) }.try(&.value)",
 );
 const data = __ecr("[]", "counters.to_json");
 ---
