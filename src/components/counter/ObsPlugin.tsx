@@ -7,6 +7,7 @@ import { $uuid } from "@/stores/counter";
 
 const WS_URL_PROTOCOL = window.location.protocol == "http:" ? "ws:" : "wss:";
 const WS_URL_HOST = window.location.host;
+const NO_COUNTER = "Selecione um contador na tabela…";
 
 interface Props {
   username: string;
@@ -18,6 +19,8 @@ export default function ObsPlugin({ username, uuid }: Props) {
   const selectedUuid = uuid ?? useStore($uuid);
 
   function getUrl() {
+    if (!selectedUuid) return "";
+
     return `${WS_URL_PROTOCOL}//${WS_URL_HOST}/api/v1/counter/${username}/${selectedUuid}/ws`;
   }
 
@@ -46,7 +49,7 @@ export default function ObsPlugin({ username, uuid }: Props) {
       </div>
       <div className="flex flex-row items-center w-full">
         <InputGroup>
-          <InputGroupInput value={url} readOnly />
+          <InputGroupInput value={url} readOnly placeholder={NO_COUNTER} />
           <InputGroupAddon>
             <Link />
           </InputGroupAddon>
@@ -55,6 +58,7 @@ export default function ObsPlugin({ username, uuid }: Props) {
               aria-label="Copiar"
               title="Copiar"
               size="icon-xs"
+              disabled={!url}
               onClick={() => {
                 copyToClipboard(url);
               }}
