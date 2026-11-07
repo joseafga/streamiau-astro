@@ -27,6 +27,7 @@ export default function DataTable({ username }: { username: string }) {
   const selectedUuid = useStore($uuid);
   const [openEdit, setOpenEdit] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
+  const [deleting, setDeleting] = useState<Counter>();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -94,6 +95,42 @@ export default function DataTable({ username }: { username: string }) {
     }
   }
 
+  async function handleDelete() {
+    if (!deleting) return;
+
+    setIsLoading(true);
+    const toastId = toast.loading("Removendo contador…");
+
+    try {
+      const response = await fetch(`/counter/${deleting.uuid}`, {
+        method: "DELETE",
+        headers: {
+          "X-CSRF-Token": getCsrfToken(),
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(response.status.toString());
+      }
+
+      const remaining = counters.filter((c) => c.uuid !== deleting.uuid);
+
+      setCounters(remaining);
+
+      // Select another counter when the selected one is removed
+      if (deleting.uuid === selectedUuid) {
+        $uuid.set(remaining.at(0)?.uuid ?? "");
+      }
+
+      toast.success("Contador removido com sucesso.", { id: toastId });
+      setDeleting(undefined);
+    } catch (err) {
+      toast.error(`Falha - ${err}`, { id: toastId });
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <div className="mx-auto flex flex-col gap-4">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -146,7 +183,7 @@ export default function DataTable({ username }: { username: string }) {
                     <Button variant="ghost" size="icon" aria-label="Editar" onClick={() => handleEdit(counter)}>
                       <SquarePen />
                     </Button>
-                    <Button variant="destructive" size="icon" aria-label="Submit">
+                    <Button variant="destructive" size="icon" aria-label="Remover" onClick={() => setDeleting(counter)}>
                       <Trash />
                     </Button>
                   </TableCell>
@@ -175,6 +212,25 @@ export default function DataTable({ username }: { username: string }) {
             <AlertDialogCancel disabled={isLoading}>Cancelar</AlertDialogCancel>
             <AlertDialogAction disabled={isLoading} onClick={handleCreate}>
               {isLoading ? "Criando…" : "Confirmar"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={!!deleting} onOpenChange={(open) => !open && setDeleting(undefined)}>
+        <AlertDialogContent size="sm">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Remover contador?</AlertDialogTitle>
+            <AlertDialogDescription>
+              O contador "<span className="font-medium text-foreground">{deleting?.uuid}</span>" será removido. Deseja
+              continuar?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isLoading}>Cancelar</AlertDialogCancel>
+            <AlertDialogAction variant="destructive" disabled={isLoading} onClick={handleDelete}>
+              {isLoading ? "Removendo…" : "Confirmar"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
