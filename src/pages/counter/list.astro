@@ -1,5 +1,6 @@
 ---
 import Layout from "@/layouts/Sidebar.astro";
+import CounterCommand from "@/components/counter/CounterCommand";
 import DataTable from "@/components/counter/DataTable";
 import ObsPlugin from "@/components/counter/ObsPlugin";
 import WebPreviewSettings from "@/components/counter/WebPreviewSettings";
@@ -11,6 +12,10 @@ const breadcrumb = [
 ];
 
 const username = __ecr("johndoe", "session_user.username");
+const token = __ecr(
+  "abcdef1234567890",
+  "session_user.tokens.find { |token| token.allow.includes?(User::Token::Type::Counter) }",
+);
 const data = "ECR%= counters.to_json %ECR";
 ---
 
@@ -19,11 +24,70 @@ const data = "ECR%= counters.to_json %ECR";
     <div class="bg-muted/50 flex-1 rounded-xl min-h-min p-4 md:col-span-2">
       <DataTable username={username} client:only />
     </div>
-    <div class="bg-muted/50 rounded-xl row-span-2">
-      <WebPreviewSettings client:only />
-    </div>
     <div class="bg-muted/50 rounded-xl">
       <ObsPlugin username={username} client:only />
+    </div>
+    <div class="bg-muted/50 rounded-xl row-span-2">
+      <div class="flex flex-col h-full gap-4 p-6 mx-auto">
+        <h1 class="text-lg font-extrabold text-center">Utilização</h1>
+
+        <section class="grid gap-2">
+          <h3>1. Registre o comando</h3>
+          <ul class="grid gap-1 text-muted-foreground text-sm">
+            <li>Copie o comando e cole no chat da Twitch.</li>
+            <li>Com a opção de <em>alterar o valor</em>: cadastre pelo painel do StreamElements.</li>
+          </ul>
+        </section>
+
+        <section class="grid gap-2">
+          <h3>2. Consulte o valor</h3>
+          <ul class="grid gap-1 text-muted-foreground text-sm">
+            <li>
+              <span class="text-foreground text-base">!contador</span> - retorna o valor atual do contador.
+            </li>
+          </ul>
+        </section>
+
+        <section class="grid gap-2">
+          <h3>3. Altere o valor</h3>
+          <p class="text-muted-foreground text-sm">
+            Requer a opção <em>alterar o valor</em> e um token com a permissão <em>Contador</em>. O valor é enviado à
+            API com seu token e nível de acesso, e só passa quem tiver permissão igual ou superior à selecionada.
+          </p>
+          <ul class="grid gap-1 text-muted-foreground text-sm">
+            <li>
+              <span class="text-foreground text-base">!contador add</span> - soma 1 ao valor.
+            </li>
+            <li>
+              <span class="text-foreground text-base">!contador add 5</span> (ou{" "}
+              <span class="text-foreground text-base">+</span>,{" "}
+              <span class="text-foreground text-base">increment</span>) - soma 5 ao valor atual.
+            </li>
+            <li>
+              <span class="text-foreground text-base">!contador remove 5</span> (ou{" "}
+              <span class="text-foreground text-base">-</span>,{" "}
+              <span class="text-foreground text-base">decrement</span>) - subtrai 5 do valor atual.
+            </li>
+            <li>
+              <span class="text-foreground text-base">!contador 10</span> (ou{" "}
+              <span class="text-foreground text-base">set 10</span>) - define o valor atual como 10.
+            </li>
+            <li>
+              <span class="text-foreground text-base">!contador reset</span> - zera o contador.
+            </li>
+            <li>
+              <span class="text-foreground text-base">!contador + 5 &lt;mensagem&gt;</span> - mensagem de alteração opcional.
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+    <div class="bg-muted/50 rounded-xl">
+      <CounterCommand username={username} token={token} client:only />
+    </div>
+
+    <div class="bg-muted/50 rounded-xl">
+      <WebPreviewSettings client:only />
     </div>
     <div class="bg-muted/50 rounded-xl overflow-clip">
       <WebPreview username={username} client:only />

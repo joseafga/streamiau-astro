@@ -32,15 +32,16 @@ export default function ObsPlugin({ username, uuid }: Props) {
       <h1 className="text-lg font-extrabold">WebSocket - OBS Plugin</h1>
       <div className="flex-1 flex items-center justify-center gap-2">
         <p>
-          Para utilização com o{" "}
+          Utilize com o{" "}
           <a
             href="https://github.com/joseafga/streamiau-obs-counter"
             target="_blank"
             className="text-primary hover:underline"
           >
             Plugin do OBS
-          </a>
-          . Insira o valor abaixo no campo de <strong>`WebSocket`</strong> das configurações do plugin.
+          </a>{" "}
+          para exibir o contador em sua transmissão de forma dinâmica e com atualização em tempo real. Insira o valor
+          abaixo no campo de <strong>`WebSocket`</strong> das configurações do plugin.
         </p>
       </div>
       <div className="flex flex-row items-center w-full">
