@@ -1,5 +1,7 @@
 ---
 import Layout from "@/layouts/Sidebar.astro";
+import CounterCommand from "@/components/counter/CounterCommand";
+import CounterCommandUsage from "@/components/counter/CounterCommandUsage";
 import ObsPlugin from "@/components/counter/ObsPlugin";
 import WebPreviewSettings from "@/components/counter/WebPreviewSettings";
 import WebPreview from "@/components/counter/WebPreview";
@@ -11,16 +13,27 @@ const breadcrumb = [
 ];
 
 const username = __ecr("johndoe", "session_user.username");
+const token = __ecr(
+  "abcdef1234567890",
+  "session_user.tokens.find { |token| token.allow.includes?(User::Token::Type::Counter) }.try(&.value)",
+);
 const uuid = __ecr("01a0f3a6-d6e4-7e33-bda3-4c667f16980b", "uuid");
 ---
 
 <Layout breadcrumb={breadcrumb} csrfToken>
   <div class="grid auto-rows-min gap-4 md:grid-cols-2">
-    <div class="bg-muted/50 rounded-xl row-span-2">
-      <WebPreviewSettings uuid={uuid} client:only />
-    </div>
     <div class="bg-muted/50 rounded-xl">
       <ObsPlugin username={username} uuid={uuid} client:only />
+    </div>
+    <div class="bg-muted/50 rounded-xl row-span-2">
+      <CounterCommandUsage client:only />
+    </div>
+    <div class="bg-muted/50 rounded-xl">
+      <CounterCommand username={username} uuid={uuid} token={token} client:only />
+    </div>
+
+    <div class="bg-muted/50 rounded-xl">
+      <WebPreviewSettings uuid={uuid} client:only />
     </div>
     <div class="bg-muted/50 rounded-xl overflow-clip">
       <WebPreview username={username} uuid={uuid} client:only />
